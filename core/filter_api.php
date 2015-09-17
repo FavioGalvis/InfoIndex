@@ -1510,7 +1510,7 @@ function filter_get_bug_rows( &$p_page_number, &$p_per_page, &$p_page_count, &$p
 		}
 	}
 
-	# product build
+	# project build
 	if( !filter_field_is_any( $t_filter[FILTER_PROPERTY_BUILD] ) ) {
 		$t_clauses = array();
 
@@ -1536,7 +1536,7 @@ function filter_get_bug_rows( &$p_page_number, &$p_per_page, &$p_page_count, &$p
 		}
 	}
 
-	# product version
+	# project version
 	if( !filter_field_is_any( $t_filter[FILTER_PROPERTY_VERSION] ) ) {
 		$t_clauses = array();
 
@@ -2266,8 +2266,8 @@ function filter_draw_selection_area2( $p_page_number, $p_for_screen = true, $p_e
 		}
 		$t_filters_url = $t_filters_url . '&amp;target_field=';
 
-		$t_show_product_version =  version_should_show_product_version( $t_project_id );
-		$t_show_build = $t_show_product_version && ( config_get( 'enable_product_build' ) == ON );
+		$t_show_project_version =  version_should_show_project_version( $t_project_id );
+		$t_show_build = $t_show_project_version && ( config_get( 'enable_project_build' ) == ON );
 
 		# overload handler_id setting if user isn't supposed to see them (ref #6189)
 		if( !access_has_any_project( config_get( 'view_handler_threshold' ) ) ) {
@@ -2537,12 +2537,12 @@ function filter_draw_selection_area2( $p_page_number, $p_for_screen = true, $p_e
 			</td-->
 			<!--td class="small category">
 			<?php //if( $t_show_build ) { ?>
-				<a href="<?php //echo $t_filters_url . FILTER_PROPERTY_BUILD . '[]';?>" id="show_build_filter"<?php //echo $t_dynamic_filter_expander_class ?>><?php //echo lang_get( 'product_build_label' )?></a>
+				<a href="<?php //echo $t_filters_url . FILTER_PROPERTY_BUILD . '[]';?>" id="show_build_filter"<?php //echo $t_dynamic_filter_expander_class ?>><?php //echo lang_get( 'project_build_label' )?></a>
 			<?php //} ?>
 			</td-->
-			<?php /*if( $t_show_product_version ) {?>
+			<?php /*if( $t_show_project_version ) {?>
 			<td colspan="2" class="small category">
-				<a href="<?php echo $t_filters_url . FILTER_PROPERTY_VERSION . '[]';?>" id="show_version_filter"<?php echo $t_dynamic_filter_expander_class ?>><?php echo lang_get( 'product_version_label' )?></a>
+				<a href="<?php echo $t_filters_url . FILTER_PROPERTY_VERSION . '[]';?>" id="show_version_filter"<?php echo $t_dynamic_filter_expander_class ?>><?php echo lang_get( 'project_version_label' )?></a>
 			</td>
 			<td colspan="1" class="small category">
 				<a href="<?php echo $t_filters_url . FILTER_PROPERTY_FIXED_IN_VERSION . '[]';?>" id="show_fixed_in_version_filter"<?php echo $t_dynamic_filter_expander_class ?>><?php echo lang_get( 'fixed_in_version_label' )?></a>
@@ -2561,7 +2561,7 @@ function filter_draw_selection_area2( $p_page_number, $p_for_screen = true, $p_e
                         <td colspan="2" class="small category col-sm-3 col-xs-3">
 				<a href="<?php echo $t_filters_url . FILTER_PROPERTY_ISSUES_PER_PAGE;?>" id="per_page_filter"<?php echo $t_dynamic_filter_expander_class ?>><?php echo lang_get( 'show_label' )?></a>
 			</td>
-			<?php /*if( $t_show_product_version ) {?>
+			<?php /*if( $t_show_project_version ) {?>
 			<td colspan="1" class="small category">
 				<a href="<?php echo $t_filters_url . FILTER_PROPERTY_TARGET_VERSION . '[]';?>" id="show_target_version_filter"<?php echo $t_dynamic_filter_expander_class ?>><?php echo lang_get( 'target_version_label' )?></a>
 			</td>
@@ -2717,7 +2717,7 @@ function filter_draw_selection_area2( $p_page_number, $p_for_screen = true, $p_e
 			<?php } else { ?>
 			<td class="small"></td>
 			<?php }*/
-				/*if( $t_show_product_version ) {
+				/*if( $t_show_project_version ) {
 			?>
 			<td colspan="2" class="small" id="show_version_filter_target">
 							<?php
@@ -2832,7 +2832,7 @@ function filter_draw_selection_area2( $p_page_number, $p_for_screen = true, $p_e
 		echo '<input type="hidden" name="', FILTER_PROPERTY_ISSUES_PER_PAGE, '" value="', string_attribute( $t_filter[FILTER_PROPERTY_ISSUES_PER_PAGE] ), '" />';
 		?>
 		</td>
-		<?php /*if( $t_show_product_version ) { ?>
+		<?php /*if( $t_show_project_version ) { ?>
 		<td colspan="1" class="small" id="show_target_version_filter_target">
 							<?php
 								$t_output = '';

@@ -23,10 +23,10 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term>$g_show_product_build</term>
+			<term>$g_show_project_build</term>
 			<listitem>
 				<para>
-					Enable or disable usage of 'Product Build' field.  Default is OFF.
+					Enable or disable usage of 'project Build' field.  Default is OFF.
 				</para>
 			</listitem>
 		</varlistentry>
@@ -47,8 +47,8 @@
 					os_version,
 					platform,
 					priority,
-					product_build,
-					product_version,
+					project_build,
+					project_version,
 					reproducibility,
 					resolution,
 					severity,
@@ -94,8 +94,8 @@
 					os_version,
 					platform,
 					priority,
-					product_build,
-					product_version,
+					project_build,
+					project_version,
 					project,
 					projection,
 					reporter,
@@ -144,8 +144,8 @@
 					os_version,
 					platform,
 					priority,
-					product_build,
-					product_version,
+					project_build,
+					project_version,
 					project,
 					projection,
 					reporter,
@@ -193,8 +193,8 @@
 					os_version,
 					platform,
 					priority,
-					product_build,
-					product_version,
+					project_build,
+					project_version,
 					project,
 					projection,
 					reporter,
@@ -246,8 +246,8 @@
 					os_version,
 					platform,
 					priority,
-					product_build,
-					product_version,
+					project_build,
+					project_version,
 					project,
 					projection,
 					reporter,

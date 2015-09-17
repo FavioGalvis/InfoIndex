@@ -241,12 +241,12 @@ foreach( $f_bug_arr as $t_bug_id ) {
 				$t_failed_ids[$t_bug_id] = lang_get( 'bug_actiongroup_access' );
 			}
 			break;
-		case 'UP_PRODUCT_VERSION':
-			$f_product_version = gpc_get_string( 'product_version' );
+		case 'UP_PROJECT_VERSION':
+			$f_project_version = gpc_get_string( 'project_version' );
 			if( access_has_bug_level( config_get( 'update_bug_threshold' ), $t_bug_id ) ) {
-				if( $f_product_version === '' || version_get_id( $f_product_version, $t_bug->project_id ) !== false ) {
+				if( $f_project_version === '' || version_get_id( $f_project_version, $t_bug->project_id ) !== false ) {
 					/** @todo we need to issue a helper_call_custom_function( 'issue_update_validate', array( $t_bug_id, $t_bug_data, $f_bugnote_text ) ); */
-					bug_set_field( $t_bug_id, 'version', $f_product_version );
+					bug_set_field( $t_bug_id, 'version', $f_project_version );
 					email_generic( $t_bug_id, 'updated', 'email_notification_title_for_action_bug_updated' );
 					helper_call_custom_function( 'issue_update_notify', array( $t_bug_id ) );
 				} else {

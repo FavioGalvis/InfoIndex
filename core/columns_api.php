@@ -98,7 +98,7 @@ function columns_filter_disabled( array $p_columns ) {
 				break;
 
 			case 'build':
-				if( config_get( 'enable_product_build' ) == OFF ) {
+				if( config_get( 'enable_project_build' ) == OFF ) {
 					continue 2;
 				}
 				break;
@@ -142,7 +142,7 @@ function columns_get_standard( $p_enabled_columns_only = true ) {
 		unset( $t_columns['projection'] );
 	}
 
-	if( $p_enabled_columns_only && config_get( 'enable_product_build' ) == OFF ) {
+	if( $p_enabled_columns_only && config_get( 'enable_project_build' ) == OFF ) {
 		unset( $t_columns['build'] );
 	}
 
@@ -356,7 +356,7 @@ function column_get_title( $p_column ) {
 		case 'sponsorship_total':
 			return sponsorship_get_currency();
 		case 'version':
-			return lang_get( 'product_version' );
+			return lang_get( 'project_version' );
 		case 'view_state':
 			return lang_get( 'view_status' );
 		default:
@@ -723,7 +723,7 @@ function print_column_title_platform( $p_sort, $p_dir, $p_columns_target = COLUM
  */
 function print_column_title_version( $p_sort, $p_dir, $p_columns_target = COLUMNS_TARGET_VIEW_PAGE ) {
 	echo '<th class="column-version">';
-	print_view_bug_sort_link( lang_get( 'product_version' ), 'version', $p_sort, $p_dir, $p_columns_target );
+	print_view_bug_sort_link( lang_get( 'project_version' ), 'version', $p_sort, $p_dir, $p_columns_target );
 	print_sort_icon( $p_dir, $p_sort, 'version' );
 	echo '</th>';
 }

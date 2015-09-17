@@ -337,7 +337,7 @@ function excel_format_resolution( BugData $p_bug ) {
 /**
  * Gets the formatted version.
  * @param BugData $p_bug A bug object.
- * @return string the product version.
+ * @return string the project version.
  */
 function excel_format_version( BugData $p_bug ) {
 	return excel_prepare_string( $p_bug->version );
@@ -389,9 +389,9 @@ function excel_format_os_build( BugData $p_bug ) {
 }
 
 /**
- * Gets the formatted product build,
+ * Gets the formatted project build,
  * @param BugData $p_bug A bug object.
- * @return string the product build.
+ * @return string the project build.
  */
 function excel_format_build( BugData $p_bug ) {
 	return excel_prepare_string( $p_bug->build );

@@ -251,10 +251,10 @@ function bug_group_action_get_commands( array $p_project_ids = null ) {
 			$t_commands['VIEW_STATUS'] = lang_get( 'actiongroup_menu_update_view_status' );
 		}
 
-		if( !isset( $t_commands['EXT_UPDATE_PRODUCT_BUILD'] ) &&
-			config_get( 'enable_product_build', null, null, $t_project_id ) == ON &&
+		if( !isset( $t_commands['EXT_UPDATE_PROJECT_BUILD'] ) &&
+			config_get( 'enable_project_build', null, null, $t_project_id ) == ON &&
 			access_has_project_level( config_get( 'update_bug_threshold', null, null, $t_project_id ), $t_project_id ) ) {
-			$t_commands['EXT_UPDATE_PRODUCT_BUILD'] = lang_get( 'actiongroup_menu_update_product_build' );
+			$t_commands['EXT_UPDATE_PROJECT_BUILD'] = lang_get( 'actiongroup_menu_update_project_build' );
 		}
 
 		if( !isset( $t_commands['EXT_ADD_NOTE'] ) &&
@@ -267,20 +267,20 @@ function bug_group_action_get_commands( array $p_project_ids = null ) {
 			$t_commands['EXT_ATTACH_TAGS'] = lang_get( 'actiongroup_menu_attach_tags' );
 		}
 
-		if( !isset( $t_commands['UP_PRODUCT_VERSION'] ) &&
-			version_should_show_product_version( $t_project_id ) &&
+		if( !isset( $t_commands['UP_PROJECT_VERSION'] ) &&
+			version_should_show_project_version( $t_project_id ) &&
 			access_has_project_level( config_get( 'update_bug_threshold', null, null, $t_project_id ), $t_project_id ) ) {
-			$t_commands['UP_PRODUCT_VERSION'] = lang_get( 'actiongroup_menu_update_product_version' );
+			$t_commands['UP_PROJECT_VERSION'] = lang_get( 'actiongroup_menu_update_project_version' );
 		}
 
 		if( !isset( $t_commands['UP_FIXED_IN_VERSION'] ) &&
-			version_should_show_product_version( $t_project_id ) &&
+			version_should_show_project_version( $t_project_id ) &&
 			access_has_project_level( config_get( 'update_bug_threshold', null, null, $t_project_id ), $t_project_id ) ) {
 			$t_commands['UP_FIXED_IN_VERSION'] = lang_get( 'actiongroup_menu_update_fixed_in_version' );
 		}
 
 		if( !isset( $t_commands['UP_TARGET_VERSION'] ) &&
-			version_should_show_product_version( $t_project_id ) &&
+			version_should_show_project_version( $t_project_id ) &&
 			access_has_project_level( config_get( 'roadmap_update_threshold', null, null, $t_project_id ), $t_project_id ) ) {
 			$t_commands['UP_TARGET_VERSION'] = lang_get( 'actiongroup_menu_update_target_version' );
 		}

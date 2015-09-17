@@ -1004,13 +1004,13 @@ $g_action_button_position = POSITION_BOTTOM;
  * ON forces display even if none are defined
  * OFF suppresses display
  * AUTO suppresses the display if there are no versions defined for the project
- * @global integer $g_show_product_version
+ * @global integer $g_show_project_version
  */
-$g_show_product_version = AUTO;
+$g_show_project_version = AUTO;
 
 /**
  * The access level threshold at which users will see the date of release
- * for product versions. Dates will be shown next to the product version,
+ * for project versions. Dates will be shown next to the project version,
  * target version and fixed in version fields. Set this threshold to NOBODY
  * to disable the feature.
  * @global integer $g_show_version_dates_threshold
@@ -2194,10 +2194,10 @@ $g_enable_eta = OFF;
 $g_enable_projection = OFF;
 
 /**
- * Enable or disable usage of the Product Build field.
- * @global integer $g_enable_product_build
+ * Enable or disable usage of the Project Build field.
+ * @global integer $g_enable_project_build
  */
-$g_enable_product_build = OFF;
+$g_enable_project_build = OFF;
 
 /**
  * An array of optional fields to show on the bug report page.
@@ -2212,8 +2212,8 @@ $g_enable_product_build = OFF;
  *   - os_version
  *   - platform
  *   - priority
- *   - product_build
- *   - product_version
+ *   - project_build
+ *   - project_version
  *   - reproducibility
  *   - resolution
  *   - severity
@@ -2242,8 +2242,8 @@ $g_bug_report_page_fields = array(
 	'os_version',
 	'platform',
 	'priority',
-	'product_build',
-	'product_version',
+	'project_build',
+	'project_version',
 	'reproducibility',
 	'severity',
 	'steps_to_reproduce',
@@ -2270,8 +2270,8 @@ $g_bug_report_page_fields = array(
  *   - os_version
  *   - platform
  *   - priority
- *   - product_build
- *   - product_version
+ *   - project_build
+ *   - project_version
  *   - project
  *   - projection
  *   - reporter
@@ -2310,8 +2310,8 @@ $g_bug_view_page_fields = array (
 	'os_version',
 	'platform',
 	'priority',
-	'product_build',
-	'product_version',
+	'project_build',
+	'project_version',
 	'project',
 	'projection',
 	'reporter',
@@ -2345,8 +2345,8 @@ $g_bug_view_page_fields = array (
  *   - os_version
  *   - platform
  *   - priority
- *   - product_build
- *   - product_version
+ *   - project_build
+ *   - project_version
  *   - project
  *   - projection
  *   - reporter
@@ -2384,8 +2384,8 @@ $g_bug_print_page_fields = array (
 	'os_version',
 	'platform',
 	'priority',
-	'product_build',
-	'product_version',
+	'project_build',
+	'project_version',
 	'project',
 	'projection',
 	'reporter',
@@ -2418,8 +2418,8 @@ $g_bug_print_page_fields = array (
  *   - os_version
  *   - platform
  *   - priority
- *   - product_build
- *   - product_version
+ *   - project_build
+ *   - project_version
  *   - project
  *   - projection
  *   - reporter
@@ -2456,8 +2456,8 @@ $g_bug_update_page_fields = array (
 	'os_version',
 	'platform',
 	'priority',
-	'product_build',
-	'product_version',
+	'project_build',
+	'project_version',
 	'project',
 	'projection',
 	'reporter',
@@ -2492,8 +2492,8 @@ $g_bug_update_page_fields = array (
  *   - os_version
  *   - platform
  *   - priority
- *   - product_build
- *   - product_version
+ *   - project_build
+ *   - project_version
  *   - project
  *   - projection
  *   - reporter
@@ -2533,8 +2533,8 @@ $g_bug_change_status_page_fields = array (
 	'os_version',
 	'platform',
 	'priority',
-	'product_build',
-	'product_version',
+	'project_build',
+	'project_version',
 	'project',
 	'projection',
 	'reporter',
@@ -2851,7 +2851,7 @@ $g_update_bug_status_threshold = DEVELOPER;
 $g_reopen_bug_threshold = DEVELOPER;
 
 /**
- * access level needed to assign bugs to unreleased product versions
+ * access level needed to assign bugs to unreleased project versions
  * @global integer $g_report_issues_for_unreleased_versions_threshold
  */
 $g_report_issues_for_unreleased_versions_threshold = DEVELOPER;

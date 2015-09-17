@@ -114,9 +114,9 @@ $t_show_status = in_array( 'status', $t_fields );
 $t_show_resolution = in_array( 'resolution', $t_fields );
 $t_show_projection = in_array( 'projection', $t_fields );
 $t_show_eta = in_array( 'eta', $t_fields );
-$t_show_versions = version_should_show_product_version( $t_bug->project_id );
-$t_show_product_version = $t_show_versions && in_array( 'product_version', $t_fields );
-$t_show_product_build = $t_show_versions && in_array( 'product_build', $t_fields ) && config_get( 'enable_product_build' );
+$t_show_versions = version_should_show_project_version( $t_bug->project_id );
+$t_show_project_version = $t_show_versions && in_array( 'project_version', $t_fields );
+$t_show_project_build = $t_show_versions && in_array( 'project_build', $t_fields ) && config_get( 'enable_project_build' );
 $t_show_fixed_in_version = $t_show_versions && in_array( 'fixed_in_version', $t_fields );
 $t_show_target_version = $t_show_versions && in_array( 'target_version', $t_fields ) && access_has_bug_level( config_get( 'roadmap_view_threshold' ), $f_bug_id );
 $t_show_summary = in_array( 'summary', $t_fields );
@@ -142,7 +142,7 @@ $t_is = string_display_line( $t_bug->os );
 $t_status = string_display_line( get_enum_element( 'status', $t_bug->status ) );
 $t_priority = string_display_line( get_enum_element( 'priority', $t_bug->priority ) );
 $t_resolution = string_display_line( get_enum_element( 'resolution', $t_bug->resolution ) );
-$t_product_build = string_display_line( $t_bug->build );
+$t_project_build = string_display_line( $t_bug->build );
 $t_projection = string_display_line( get_enum_element( 'projection', $t_bug->projection ) );
 $t_eta = string_display_line( get_enum_element( 'eta', $t_bug->eta ) );
 $t_summary = string_display_line_links( bug_format_summary( $f_bug_id, SUMMARY_FIELD ) );
@@ -159,8 +159,8 @@ if( $t_show_due_date ) {
 	}
 }
 
-$t_product_version  =
-	$t_show_product_version ?
+$t_project_version  =
+	$t_show_project_version ?
 		string_display_line( prepare_version_string( $t_bug->project_id, version_get_id( $t_bug->version, $t_bug->project_id ) ) ) : '';
 
 $t_target_version =
@@ -391,24 +391,24 @@ if( $t_show_platform || $t_show_os || $t_show_os_version ) {
 }
 
 #
-# Product Version, Product Build
+# project Version, project Build
 #
 
-if( $t_show_product_version || $t_show_product_build ) {
+if( $t_show_project_version || $t_show_project_build ) {
 	echo '<tr>';
 
 	$t_spacer = 2;
 
-	if( $t_show_product_version ) {
-		echo '<th class="bold">', lang_get( 'product_version' ), '</th>';
-		echo '<td>', $t_product_version, '</td>';
+	if( $t_show_project_version ) {
+		echo '<th class="bold">', lang_get( 'project_version' ), '</th>';
+		echo '<td>', $t_project_version, '</td>';
 	} else {
 		$t_spacer += 2;
 	}
 
-	if( $t_show_product_build ) {
-		echo '<th class="bold">', lang_get( 'product_build' ), '</th>';
-		echo '<td>', $t_product_build, '</td>';
+	if( $t_show_project_build ) {
+		echo '<th class="bold">', lang_get( 'project_build' ), '</th>';
+		echo '<td>', $t_project_build, '</td>';
 	} else {
 		$t_spacer += 2;
 	}

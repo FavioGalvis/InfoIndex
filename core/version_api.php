@@ -656,14 +656,14 @@ function version_prepare_db( VersionData $p_version_info ) {
 }
 
 /**
- * Checks whether the product version should be shown
+ * Checks whether the project version should be shown
  * (i.e. report, update, view, print).
  * @param integer $p_project_id The project id.
  * @return boolean true: show, false: otherwise.
  */
-function version_should_show_product_version( $p_project_id ) {
-	return ( ON == config_get( 'show_product_version', null, null, $p_project_id ) )
-		|| ( ( AUTO == config_get( 'show_product_version', null, null, $p_project_id ) )
+function version_should_show_project_version( $p_project_id ) {
+	return ( ON == config_get( 'show_project_version', null, null, $p_project_id ) )
+		|| ( ( AUTO == config_get( 'show_project_version', null, null, $p_project_id ) )
 				&& ( count( version_get_all_rows( $p_project_id ) ) > 0 ) );
 }
 

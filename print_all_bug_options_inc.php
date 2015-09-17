@@ -66,7 +66,7 @@ function get_field_names() {
 				'platform',
 				'os',
 				'os_version',
-				'product_version',
+				'project_version',
 				'resolution',
 				'duplicate_id',
 				'summary',

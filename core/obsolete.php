@@ -62,7 +62,7 @@ config_obsolete( 'notify_admin_on_new', 'notify_flags' );
 config_obsolete( 'view_bug_inc', '' );
 config_obsolete( 'ldap_organisation', 'ldap_organization' );
 config_obsolete( 'ldapauth_type', '' );
-config_obsolete( 'summary_product_colon_category', 'summary_category_include_project' );
+config_obsolete( 'summary_project_colon_category', 'summary_category_include_project' );
 
 config_obsolete( 'allow_href_tags', 'html_make_links' );
 config_obsolete( 'allow_html_tags', 'html_valid_tags' );

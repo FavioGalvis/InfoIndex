@@ -108,7 +108,7 @@ if( $f_master_bug_id > 0 ) {
 	$f_platform				= $t_bug->platform;
 	$f_os					= $t_bug->os;
 	$f_os_build				= $t_bug->os_build;
-	$f_product_version		= $t_bug->version;
+	$f_project_version		= $t_bug->version;
 	$f_target_version		= $t_bug->target_version;
 	$f_profile_id			= 0;
 	$f_handler_id			= $t_bug->handler_id;
@@ -157,7 +157,7 @@ if( $f_master_bug_id > 0 ) {
 	$f_platform				= gpc_get_string( 'platform', '' );
 	$f_os					= gpc_get_string( 'os', '' );
 	$f_os_build				= gpc_get_string( 'os_build', '' );
-	$f_product_version		= gpc_get_string( 'product_version', '' );
+	$f_project_version		= gpc_get_string( 'project_version', '' );
 	$f_target_version		= gpc_get_string( 'target_version', '' );
 	$f_profile_id			= gpc_get_int( 'profile_id', 0 );
 	$f_handler_id			= gpc_get_int( 'handler_id', 0 );
@@ -202,9 +202,9 @@ $t_show_os_version = $t_show_profiles && in_array( 'os_version', $t_fields );
 $t_show_resolution = in_array( 'resolution', $t_fields );
 $t_show_status = in_array( 'status', $t_fields );
 
-$t_show_versions = version_should_show_product_version( $t_project_id );
-$t_show_product_version = $t_show_versions && in_array( 'product_version', $t_fields );
-$t_show_product_build = $t_show_versions && in_array( 'product_build', $t_fields ) && config_get( 'enable_product_build' ) == ON;
+$t_show_versions = version_should_show_project_version( $t_project_id );
+$t_show_project_version = $t_show_versions && in_array( 'project_version', $t_fields );
+$t_show_project_build = $t_show_versions && in_array( 'project_build', $t_fields ) && config_get( 'enable_project_build' ) == ON;
 $t_show_target_version = $t_show_versions && in_array( 'target_version', $t_fields ) && access_has_project_level( config_get( 'roadmap_update_threshold' ) );
 $t_show_additional_info = in_array( 'additional_info', $t_fields );
 $t_show_due_date = in_array( 'due_date', $t_fields ) && access_has_project_level( config_get( 'due_date_update_threshold' ), helper_get_current_project(), auth_get_current_user_id() );
@@ -448,30 +448,30 @@ if( $t_show_attachments ) {
 	</tr>
 <?php } ?>
 <?php
-	if( $t_show_product_version ) {
-		$t_product_version_released_mask = VERSION_RELEASED;
+	if( $t_show_project_version ) {
+		$t_project_version_released_mask = VERSION_RELEASED;
 
 		if( access_has_project_level( config_get( 'report_issues_for_unreleased_versions_threshold' ) ) ) {
-			$t_product_version_released_mask = VERSION_ALL;
+			$t_project_version_released_mask = VERSION_ALL;
 		}
 ?>
 	<tr>
 		<th class="category">
-			<label for="product_version"><?php echo lang_get( 'product_version' ) ?></label>
+			<label for="project_version"><?php echo lang_get( 'project_version' ) ?></label>
 		</th>
 		<td>
-			<select <?php echo helper_get_tab_index() ?> id="product_version" name="product_version" class="input-sm">
-				<?php print_version_option_list( $f_product_version, $t_project_id, $t_product_version_released_mask ) ?>
+			<select <?php echo helper_get_tab_index() ?> id="project_version" name="project_version" class="input-sm">
+				<?php print_version_option_list( $f_project_version, $t_project_id, $t_project_version_released_mask ) ?>
 			</select>
 		</td>
 	</tr>
 <?php
 	}
 ?>
-<?php if( $t_show_product_build ) { ?>
+<?php if( $t_show_project_build ) { ?>
 	<tr>
 		<th class="category">
-			<label for="build"><?php echo lang_get( 'product_build' ) ?></label>
+			<label for="build"><?php echo lang_get( 'project_build' ) ?></label>
 		</th>
 		<td>
 			<input <?php echo helper_get_tab_index() ?> type="text" id="build" name="build" size="32" maxlength="32" value="<?php echo string_attribute( $f_build ) ?>" />

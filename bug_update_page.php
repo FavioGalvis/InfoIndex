@@ -121,10 +121,10 @@ $t_show_profiles = config_get( 'enable_profiles' ) == ON;
 $t_show_platform = $t_show_profiles && in_array( 'platform', $t_fields );
 $t_show_os = $t_show_profiles && in_array( 'os', $t_fields );
 $t_show_os_version = $t_show_profiles && in_array( 'os_version', $t_fields );
-$t_show_versions = version_should_show_product_version( $t_bug->project_id );
-$t_show_product_version = $t_show_versions && in_array( 'product_version', $t_fields );
-$t_show_product_build = $t_show_versions && in_array( 'product_build', $t_fields ) && ( config_get( 'enable_product_build' ) == ON );
-$t_product_build_attribute = $t_show_product_build ? string_attribute( $t_bug->build ) : '';
+$t_show_versions = version_should_show_project_version( $t_bug->project_id );
+$t_show_project_version = $t_show_versions && in_array( 'project_version', $t_fields );
+$t_show_project_build = $t_show_versions && in_array( 'project_build', $t_fields ) && ( config_get( 'enable_project_build' ) == ON );
+$t_project_build_attribute = $t_show_project_build ? string_attribute( $t_bug->build ) : '';
 $t_show_target_version = $t_show_versions && in_array( 'target_version', $t_fields ) && access_has_bug_level( config_get( 'roadmap_update_threshold' ), $t_bug_id );
 $t_show_fixed_in_version = $t_show_versions && in_array( 'fixed_in_version', $t_fields );
 $t_show_due_date = in_array( 'due_date', $t_fields ) && access_has_bug_level( config_get( 'due_date_view_threshold' ), $t_bug_id );
@@ -144,11 +144,11 @@ if( NO_USER == $t_bug->handler_id ) {
 
 $t_can_change_view_state = $t_show_view_state && access_has_project_level( config_get( 'change_view_status_threshold' ) );
 
-if( $t_show_product_version ) {
-	$t_product_version_released_mask = VERSION_RELEASED;
+if( $t_show_project_version ) {
+	$t_project_version_released_mask = VERSION_RELEASED;
 
 	if( access_has_project_level( config_get( 'report_issues_for_unreleased_versions_threshold' ) ) ) {
-		$t_product_version_released_mask = VERSION_ALL;
+		$t_project_version_released_mask = VERSION_ALL;
 	}
 }
 
@@ -571,28 +571,28 @@ if( $t_show_platform || $t_show_os || $t_show_os_version ) {
 }
 
 #
-# Product Version, Product Build
+# Project Version, Project Build
 #
 
-if( $t_show_product_version || $t_show_product_build ) {
+if( $t_show_project_version || $t_show_project_build ) {
 	echo '<tr>';
 
 	$t_spacer = 2;
 
-	# Product Version  or Product Build, if version is suppressed
-	if( $t_show_product_version ) {
-		echo '<th class="category"><label for="version">' . lang_get( 'product_version' ) . '</label></th>';
+	# Project Version  or Project Build, if version is suppressed
+	if( $t_show_project_version ) {
+		echo '<th class="category"><label for="version">' . lang_get( 'project_version' ) . '</label></th>';
 		echo '<td>', '<select ', helper_get_tab_index(), ' id="version" name="version" class="input-sm">';
-		print_version_option_list( $t_bug->version, $t_bug->project_id, $t_product_version_released_mask );
+		print_version_option_list( $t_bug->version, $t_bug->project_id, $t_project_version_released_mask );
 		echo '</select></td>';
 	} else {
 		$t_spacer += 2;
 	}
 
-	if( $t_show_product_build ) {
-		echo '<th class="category"><label for="build">' . lang_get( 'product_build' ) . '</label></th>';
+	if( $t_show_project_build ) {
+		echo '<th class="category"><label for="build">' . lang_get( 'project_build' ) . '</label></th>';
 		echo '<td>';
-		echo '<input type="text" id="build" name="build" class="input-sm" size="16" maxlength="32" ' . helper_get_tab_index() . ' value="' . $t_product_build_attribute . '" />';
+		echo '<input type="text" id="build" name="build" class="input-sm" size="16" maxlength="32" ' . helper_get_tab_index() . ' value="' . $t_project_build_attribute . '" />';
 		echo '</td>';
 	} else {
 		$t_spacer += 2;

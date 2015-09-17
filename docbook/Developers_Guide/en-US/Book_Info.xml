@@ -6,8 +6,8 @@
 <bookinfo id="book-Developers_Guide-Developers_Guide">
 	<title>Developers Guide</title>
 	<subtitle>Reference for developers and community members</subtitle>
-	<productname>MantisBT</productname>
-	<productnumber>1.3</productnumber>
+	<projectname>MantisBT</projectname>
+	<projectnumber>1.3</projectnumber>
 	<abstract>
 		<para>
 			This book is targeted at MantisBT developers, contributors and

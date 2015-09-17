@@ -111,7 +111,7 @@ $t_bug_data->build                  = gpc_get_string( 'build', '' );
 $t_bug_data->platform               = gpc_get_string( 'platform', '' );
 $t_bug_data->os                     = gpc_get_string( 'os', '' );
 $t_bug_data->os_build               = gpc_get_string( 'os_build', '' );
-$t_bug_data->version                = gpc_get_string( 'product_version', '' );
+$t_bug_data->version                = gpc_get_string( 'project_version', '' );
 $t_bug_data->profile_id             = gpc_get_int( 'profile_id', 0 );
 $t_bug_data->handler_id             = gpc_get_int( 'handler_id', 0 );
 $t_bug_data->view_state             = gpc_get_int( 'view_state', config_get( 'default_bug_view_status' ) );
@@ -329,7 +329,7 @@ if( $f_report_stay ) {
 		<input type="hidden" name="platform" value="<?php echo string_attribute( $t_bug_data->platform ) ?>" />
 		<input type="hidden" name="os" value="<?php echo string_attribute( $t_bug_data->os ) ?>" />
 		<input type="hidden" name="os_build" value="<?php echo string_attribute( $t_bug_data->os_build ) ?>" />
-		<input type="hidden" name="product_version" value="<?php echo string_attribute( $t_bug_data->version ) ?>" />
+		<input type="hidden" name="project_version" value="<?php echo string_attribute( $t_bug_data->version ) ?>" />
 		<input type="hidden" name="target_version" value="<?php echo string_attribute( $t_bug_data->target_version ) ?>" />
 		<input type="hidden" name="build" value="<?php echo string_attribute( $t_bug_data->build ) ?>" />
 		<input type="hidden" name="report_stay" value="1" />

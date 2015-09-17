@@ -17,7 +17,7 @@ NOTE: This driver requires the Advantage PHP client libraries, which
 
 DELPHI FOR PHP USERS:
       The following steps can be taken to utilize this driver from the
-      CodeGear Delphi for PHP product:
+      CodeGear Delphi for PHP project:
         1 - See note above, download and install the Advantage PHP client.
         2 - Copy the following files to the Delphi for PHP\X.X\php\ext directory:
               ace32.dll

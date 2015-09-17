@@ -482,7 +482,7 @@ function history_localize_item( $p_field_name, $p_type, $p_old_value, $p_new_val
 			}
 			break;
 		case 'version':
-			$t_field_localized = lang_get( 'product_version' );
+			$t_field_localized = lang_get( 'project_version' );
 			break;
 		case 'fixed_in_version':
 			$t_field_localized = lang_get( 'fixed_in_version' );

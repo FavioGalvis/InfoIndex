@@ -50,8 +50,8 @@ getoption = $(shell (grep -qe '^[ \t]*$(1):' $(CONFIG) && sed -ne 's/^[ \t]*$(1)
 EMPTY    :=
 SPACE    := $(EMPTY) $(EMPTY)
 XML_LANG := $(subst $(SPACE),_,$(call getoption,xml_lang,NULL))
-PRODNUM  := $(subst $(SPACE),_,$(call getoption,version,productnumber))
-PRODNAME := $(subst $(SPACE),_,$(call getoption,product,productname))
+PRODNUM  := $(subst $(SPACE),_,$(call getoption,version,projectnumber))
+PRODNAME := $(subst $(SPACE),_,$(call getoption,project,projectname))
 DOCNAME  := $(subst $(SPACE),_,$(call getoption,docname,title))
 PACKAGE  := $(RPMDIR)/$(PRODNAME)-$(DOCNAME)-$(PRODNUM)-web-$(LANGUAGE).spec
 

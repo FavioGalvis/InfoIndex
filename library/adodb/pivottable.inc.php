@@ -106,7 +106,7 @@ if (0) {
 
 # example1
 #
-# Query the main "product" table
+# Query the main "project" table
 # Set the rows to CompanyName and QuantityPerUnit
 # and the columns to the Categories
 # and define the joins to link to lookup tables
@@ -144,7 +144,7 @@ GROUP BY CompanyName,QuantityPerUnit
 
 # example2
 #
-# Query the main "product" table
+# Query the main "project" table
 # Set the rows to CompanyName and QuantityPerUnit
 # and the columns to the UnitsInStock for diiferent ranges
 # and define the joins to link to lookup tables

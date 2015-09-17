@@ -136,10 +136,10 @@ $t_lang_os_version = lang_get( 'os_version' );
 $t_lang_fixed_in_version = lang_get( 'fixed_in_version' );
 $t_lang_resolution = lang_get( 'resolution' );
 $t_lang_priority = lang_get( 'priority' );
-$t_lang_product_build = lang_get( 'product_build' );
+$t_lang_project_build = lang_get( 'project_build' );
 $t_lang_eta = lang_get( 'eta' );
 $t_lang_status = lang_get( 'status' );
-$t_lang_product_version = lang_get( 'product_version' );
+$t_lang_project_version = lang_get( 'project_version' );
 $t_lang_no_bugnotes_msg = lang_get( 'no_bugnotes_msg' );
 $t_lang_projection = lang_get( 'projection' );
 $t_lang_target_version = lang_get( 'target_version' );
@@ -309,7 +309,7 @@ for( $j=0; $j < $t_row_count; $j++ ) {
 		<?php echo get_enum_element( 'status', $t_bug->status, auth_get_current_user_id(), $t_bug->project_id ) ?>
 	</td>
 	<td class="bold">
-		<?php echo sprintf( lang_get( 'label' ), $t_lang_product_version ) ?>
+		<?php echo sprintf( lang_get( 'label' ), $t_lang_project_version ) ?>
 	</td>
 	<td>
 		<?php echo string_display_line( $t_bug->version ) ?>
@@ -318,7 +318,7 @@ for( $j=0; $j < $t_row_count; $j++ ) {
 </tr>
 <tr>
 	<td class="bold">
-		<?php echo sprintf( lang_get( 'label' ), $t_lang_product_build ) ?>
+		<?php echo sprintf( lang_get( 'label' ), $t_lang_project_build ) ?>
 	</td>
 	<td>
 		<?php echo string_display_line( $t_bug->build ) ?>

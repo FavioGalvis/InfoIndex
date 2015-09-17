@@ -192,10 +192,10 @@ switch( $f_action ) {
 		$t_button_title			= lang_get( 'view_status_group_bugs_button' );
 		$t_form					= 'view_status';
 		break;
-	case 'UP_PRODUCT_VERSION':
-		$t_question_title		= lang_get( 'product_version_bugs_conf_msg' );
-		$t_button_title			= lang_get( 'product_version_group_bugs_button' );
-		$t_form					= 'product_version';
+	case 'UP_PROJECT_VERSION':
+		$t_question_title		= lang_get( 'project_version_bugs_conf_msg' );
+		$t_button_title			= lang_get( 'project_version_group_bugs_button' );
+		$t_form					= 'project_version';
 		break;
 	case 'UP_FIXED_IN_VERSION':
 		$t_question_title		= lang_get( 'fixed_in_version_bugs_conf_msg' );
@@ -297,7 +297,7 @@ if( $t_multiple_projects ) {
 				case 'UP_TARGET_VERSION':
 					print_version_option_list( '', $t_project_id, VERSION_FUTURE, true, true );
 					break;
-				case 'UP_PRODUCT_VERSION':
+				case 'UP_PROJECT_VERSION':
 				case 'UP_FIXED_IN_VERSION':
 					print_version_option_list( '', $t_project_id, VERSION_ALL, true, true );
 					break;
@@ -312,10 +312,10 @@ if( $t_multiple_projects ) {
 		if( isset( $t_question_title2 ) ) {
 			switch( $f_action ) {
 				case 'RESOLVE':
-					$t_show_product_version = ( ON == config_get( 'show_product_version' ) )
-						|| ( ( AUTO == config_get( 'show_product_version' ) )
+					$t_show_project_version = ( ON == config_get( 'show_project_version' ) )
+						|| ( ( AUTO == config_get( 'show_project_version' ) )
 									&& ( count( version_get_all_rows( $t_project_id ) ) > 0 ) );
-					if( $t_show_product_version ) {
+					if( $t_show_project_version ) {
 ?>
 				<tr>
 					<th class="category">

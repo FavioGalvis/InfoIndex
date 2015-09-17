@@ -43,10 +43,10 @@ require_api( 'lang_api.php' );
  * Prints the title for the custom action page.
  * @return void
  */
-function action_update_product_build_print_title() {
+function action_update_project_build_print_title() {
 	echo '<tr>';
 	echo '<td class="bold" colspan="2">';
-	echo lang_get( 'product_build' );
+	echo lang_get( 'project_build' );
 	echo '</td></tr>';
 }
 
@@ -57,12 +57,12 @@ function action_update_product_build_print_title() {
  * A row has two columns.
  * @return void
  */
-function action_update_product_build_print_fields() {
+function action_update_project_build_print_fields() {
 ?>
 	<tbody>
 		<tr>
 			<th class="category">
-				<?php echo lang_get( 'product_build' ); ?>
+				<?php echo lang_get( 'project_build' ); ?>
 			</th>
 			<td>
 				<input type="text" name="build" class="input-sm" size="32" maxlength="32" />
@@ -72,7 +72,7 @@ function action_update_product_build_print_fields() {
 	<tfoot>
 		<tr>
 			<td colspan="2" class="center">
-				<input type="submit" class="button" value="<?php echo lang_get( 'actiongroup_menu_update_product_build' ); ?>" />
+				<input type="submit" class="button" value="<?php echo lang_get( 'actiongroup_menu_update_project_build' ); ?>" />
 			</td>
 		</tr>
 	</tfoot>
@@ -85,7 +85,7 @@ function action_update_product_build_print_fields() {
  * @param integer $p_bug_id A bug identifier.
  * @return string|null On failure: the reason why the action could not be validated. On success: null.
  */
-function action_update_product_build_validate( $p_bug_id ) {
+function action_update_project_build_validate( $p_bug_id ) {
 	$t_bug_id = (int)$p_bug_id;
 
 	if( bug_is_readonly( $t_bug_id ) ) {
@@ -105,7 +105,7 @@ function action_update_product_build_validate( $p_bug_id ) {
  * @param integer $p_bug_id The bug id to execute the custom action on.
  * @return null Previous validation ensures that this function doesn't fail. Therefore we can always return null to indicate no errors occurred.
  */
-function action_update_product_build_process( $p_bug_id ) {
+function action_update_project_build_process( $p_bug_id ) {
 	$t_build = gpc_get_string( 'build' );
 
 	bug_set_field( $p_bug_id, 'build', $t_build );

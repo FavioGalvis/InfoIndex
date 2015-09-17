@@ -151,8 +151,8 @@ if( 'advanced' == $f_view_type ) {
 	$g_select_modifier = ' multiple="multiple" size="10"';
 }
 
-$t_show_product_version = version_should_show_product_version( $t_project_id );
-$t_show_build = $t_show_product_version && ( config_get( 'enable_product_build' ) == ON );
+$t_show_project_version = version_should_show_project_version( $t_project_id );
+$t_show_build = $t_show_project_version && ( config_get( 'enable_project_build' ) == ON );
 
 $t_show_tags = access_has_global_level( config_get( 'tag_view_threshold' ) );
 ?>
@@ -252,13 +252,13 @@ $t_show_tags = access_has_global_level( config_get( 'tag_view_threshold' ) );
 		<?php echo ( 'simple' == $f_view_type ) ? lang_get( 'hide_status' ) : '&#160;'; ?>
 	</th>
 <?php if( $t_show_build ) { ?>
-	<th class="small-caption" colspan="<?php echo ( 1 * $t_custom_cols ); ?>"><?php echo lang_get( 'product_build' ) ?></th>
+	<th class="small-caption" colspan="<?php echo ( 1 * $t_custom_cols ); ?>"><?php echo lang_get( 'project_build' ) ?></th>
 <?php } else { ?>
 	<th class="small-caption" colspan="<?php echo ( 1 * $t_custom_cols ); ?>">&#160;</th>
 <?php } ?>
 
-<?php if( $t_show_product_version ) { ?>
-	<th class="small-caption" colspan="<?php echo ( 1 * $t_custom_cols ); ?>"><?php echo lang_get( 'product_version' ) ?></th>
+<?php if( $t_show_project_version ) { ?>
+	<th class="small-caption" colspan="<?php echo ( 1 * $t_custom_cols ); ?>"><?php echo lang_get( 'project_version' ) ?></th>
 	<th class="small-caption" colspan="<?php echo ( 1 * $t_custom_cols ); ?>"><?php echo lang_get( 'fixed_in_version' ) ?></th>
 <?php } else { ?>
 	<th class="small-caption" colspan="<?php echo ( 1 * $t_custom_cols ); ?>">&#160;</th>
@@ -267,7 +267,7 @@ $t_show_tags = access_has_global_level( config_get( 'tag_view_threshold' ) );
 
 	<th class="small-caption" colspan="<?php echo ( 1 * $t_custom_cols ); ?>"><?php echo lang_get( 'priority' ) ?></th>
 
-<?php if( $t_show_product_version ) { ?>
+<?php if( $t_show_project_version ) { ?>
 	<th class="small-caption" colspan="<?php echo ( 1 * $t_custom_cols ); ?>"><?php echo lang_get( 'target_version' ) ?></th>
 <?php } else { ?>
 	<th class="small-caption" colspan="<?php echo ( ( $t_filter_cols - 8 ) * $t_custom_cols ); ?>">&#160;</th>
@@ -296,7 +296,7 @@ $t_show_tags = access_has_global_level( config_get( 'tag_view_threshold' ) );
 	</td>
 	<!-- Version -->
 	<td colspan="<?php echo ( 1 * $t_custom_cols ); ?>">
-		<?php if( $t_show_product_version ) {
+		<?php if( $t_show_project_version ) {
 			print_filter_show_version();
 		} else {
 			echo '&#160;';
@@ -304,7 +304,7 @@ $t_show_tags = access_has_global_level( config_get( 'tag_view_threshold' ) );
 	</td>
 	<!-- Fixed in Version -->
 	<td colspan="<?php echo ( 1 * $t_custom_cols ); ?>">
-		<?php if( $t_show_product_version ) {
+		<?php if( $t_show_project_version ) {
 			print_filter_show_fixed_in_version();
 		} else {
 			echo '&#160;';
@@ -316,7 +316,7 @@ $t_show_tags = access_has_global_level( config_get( 'tag_view_threshold' ) );
 	</td>
 	<!-- Target Version -->
 	<td colspan="<?php echo ( ( $t_filter_cols - 8 ) * $t_custom_cols ); ?>">
-		<?php if( $t_show_product_version ) {
+		<?php if( $t_show_project_version ) {
 			print_filter_show_target_version();
 		} else {
 			echo '&#160;';

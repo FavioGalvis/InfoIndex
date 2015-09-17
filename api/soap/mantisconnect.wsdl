@@ -278,7 +278,7 @@
    <xsd:element name="handler_id" type="tns:IntegerArray" minOccurs="0"/>
    <xsd:element name="note_user_id" type="tns:IntegerArray" minOccurs="0"/>
    <xsd:element name="resolution_id" type="tns:IntegerArray" minOccurs="0"/>
-   <xsd:element name="product_version" type="tns:StringArray" minOccurs="0"/>
+   <xsd:element name="project_version" type="tns:StringArray" minOccurs="0"/>
    <xsd:element name="user_monitor_id" type="tns:IntegerArray" minOccurs="0"/>
    <xsd:element name="hide_status_id" type="tns:IntegerArray" minOccurs="0"/>
    <xsd:element name="sort" type="xsd:string" minOccurs="0"/>

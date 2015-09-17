@@ -97,7 +97,7 @@
 			<term>$g_view_issues_page_columns</term>
 			<listitem>
 				<para>This configuration option is used to select the columns to be included in the View Issues page and in which order.  If one of the column is not accessible to the logged in user, or corresponds to a disabled feature, then it will be automatically removed from the list at runtime.  Hence, the same column list may show a different set of columns based on the logged in user, the currently selected project and enabled features (e.g. sponsorship_total is only shown if the sponsorship feature is enabled).</para>
-				<para>The supported columns are: selection, edit, id, project_id, reporter_id, handler_id, priority, reproducibility, projection, eta, resolution, fixed_in_version, view_state, os, os_build, build (for product build), platform, version, date_submitted, attachment_count, category, sponsorship_total, severity, status, last_updated, summary, bugnotes_count, description, steps_to_reproduce, additional_info.  As for custom fields they can be referenced by adding a 'custom_' to their name (e.g. xyz would be custom_xyz).</para>
+				<para>The supported columns are: selection, edit, id, project_id, reporter_id, handler_id, priority, reproducibility, projection, eta, resolution, fixed_in_version, view_state, os, os_build, build (for project build), platform, version, date_submitted, attachment_count, category, sponsorship_total, severity, status, last_updated, summary, bugnotes_count, description, steps_to_reproduce, additional_info.  As for custom fields they can be referenced by adding a 'custom_' to their name (e.g. xyz would be custom_xyz).</para>
 				<para>By default the following columns are selected: selection, edit, priority, id, sponsorship_total, bugnotes_count, attachment_count, category_id, severity, status, last_updated, summary.</para>
 			</listitem>
 		</varlistentry>
@@ -131,11 +131,11 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term>$g_show_product_version</term>
+			<term>$g_show_project_version</term>
 			<listitem>
-				<para>This controls display of the product version in the
+				<para>This controls display of the project version in the
 					report, view, update and print issue pages. This flag also applies
-					to other product version related fields like product build, fixed in version,
+					to other project version related fields like project build, fixed in version,
 					and target version.  Valid values are ON, OFF, and AUTO.
 					ON for always displayed, AUTO for displayed when project has versions defined, and OFF for
 					always OFF.  The default value is AUTO.
@@ -146,8 +146,8 @@
 			<term>$g_show_version_dates_threshold</term>
 			<listitem>
 				<para>The access level threshold at which users will see
-					the date of release for product versions. Dates will
-					be shown next to the product version, target version
+					the date of release for project versions. Dates will
+					be shown next to the project version, target version
 					and fixed in version fields. Set this threshold to
 					NOBODY to disable the feature. Default value is NOBODY.
 				</para>

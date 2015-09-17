@@ -16,7 +16,7 @@
 				<para>
 					This event allows a plugin to either process information or display some
 					data in the bug view page.  It is triggered after the row containing the
-					target version and product build fields, and before the bug summary is
+					target version and project build fields, and before the bug summary is
 					displayed.
 				</para>
 

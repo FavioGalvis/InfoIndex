@@ -292,7 +292,7 @@ if( $t_multiple_projects ) {
 					print_category_option_list();
 					break;
 				case 'VIEW_STATUS':
-					print_enum_string_option_list( 'view_state', config_get( 'default_bug_view_status' ) );
+					print_enum_string_option_list( 'view_state', config_get( 'default_document_view_status' ) );
 					break;
 				case 'UP_TARGET_VERSION':
 					print_version_option_list( '', $t_project_id, VERSION_FUTURE, true, true );
@@ -361,14 +361,14 @@ if( $t_multiple_projects ) {
 					</th>
 					<td>
 <?php
-			$t_default_bugnote_view_status = config_get( 'default_bugnote_view_status' );
+			$t_default_docnote_view_status = config_get( 'default_docnote_view_status' );
 			if( access_has_project_level( config_get( 'set_view_status_threshold' ), $t_project_id ) ) {
 ?>
-						<input type="checkbox" class="ace" name="private" <?php check_checked( $t_default_bugnote_view_status, VS_PRIVATE ); ?> />
+						<input type="checkbox" class="ace" name="private" <?php check_checked( $t_default_docnote_view_status, VS_PRIVATE ); ?> />
 						<label class="lbl"> <?php echo lang_get( 'private' ); ?> </label>
 <?php
 			} else {
-				echo get_enum_element( 'project_view_state', $t_default_bugnote_view_status );
+				echo get_enum_element( 'project_view_state', $t_default_docnote_view_status );
 			}
 ?>
 					</td>

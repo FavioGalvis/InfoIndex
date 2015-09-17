@@ -1015,13 +1015,13 @@ $g_show_project_version = AUTO;
  * to disable the feature.
  * @global integer $g_show_version_dates_threshold
  */
-$g_show_version_dates_threshold = NOBODY;
+$g_show_version_dates_threshold = VIEWER;
 
 /**
  * show users with their real name or not
  * @global integer $g_show_realname
  */
-$g_show_realname = OFF;
+$g_show_realname = ON;
 
 /**
  * leave off for now
@@ -1041,7 +1041,7 @@ $g_sort_by_last_name = OFF;
  *
  * The current implementation is based on http://www.gravatar.com
  * Users will need to register there the same email address used in this
- * MantisBT installation to have their avatar shown.
+ * InfoIndex installation to have their avatar shown.
  * Please note: upon registration or avatar change, it takes some time for
  * the updated gravatar images to show on sites
  *
@@ -1064,7 +1064,7 @@ $g_show_avatar = OFF;
  * Only users above this threshold will have their avatar shown
  * @global integer $g_show_avatar_threshold
  */
-$g_show_avatar_threshold = DEVELOPER;
+$g_show_avatar_threshold = VIEWER;
 
 /**
  * Show release dates on changelog
@@ -1079,7 +1079,7 @@ $g_show_changelog_dates = ON;
 $g_show_roadmap_dates = ON;
 
 ##########################
-# MantisBT Time Settings #
+# InfoIndex Time Settings #
 ##########################
 
 /**
@@ -1107,7 +1107,7 @@ $g_allow_permanent_cookie = ON;
 $g_long_process_timeout = 0;
 
 ##########################
-# MantisBT Date Settings #
+# InfoIndex Date Settings #
 ##########################
 
 /**
@@ -1151,13 +1151,13 @@ $g_calendar_js_date_format = '\%Y-\%m-\%d \%H:\%M';
 $g_calendar_date_format = 'Y-m-d H:i';
 
 ##############################
-# MantisBT TimeZone Settings #
+# InfoIndex TimeZone Settings #
 ##############################
 
 /**
- * Default timezone to use in MantisBT
+ * Default timezone to use in InfoIndex
  *
- * This configuration is normally initialized when installing Mantis.
+ * This configuration is normally initialized when installing InfoIndex.
  * It should be set to one of the values specified in the
  * {@link http://php.net/timezones List of Supported Timezones}.
  * If this config is left blank, the timezone will be initialized by calling
@@ -1173,7 +1173,7 @@ $g_calendar_date_format = 'Y-m-d H:i';
 $g_default_timezone = '';
 
 ##########################
-# MantisBT News Settings #
+# InfoIndex News Settings #
 ##########################
 
 /**
@@ -1181,7 +1181,7 @@ $g_default_timezone = '';
  * This feature is deprecated and is expected to be moved to a plugin
  * in the future.
  */
-$g_news_enabled = OFF;
+$g_news_enabled = ON;
 
 /**
  * Limit News Items
@@ -1208,10 +1208,10 @@ $g_news_view_limit_days = 30;
  * threshold for viewing private news
  * @global integer $g_private_news_threshold
  */
-$g_private_news_threshold = DEVELOPER;
+$g_private_news_threshold = VIEWER;
 
 ################################
-# MantisBT Default Preferences #
+# InfoIndex Default Preferences #
 ################################
 
 /**
@@ -1228,28 +1228,28 @@ $g_default_new_account_access_level = VIEWER;
 $g_default_project_view_status = VS_PUBLIC;
 
 /**
- * Default Bug View Status (VS_PUBLIC or VS_PRIVATE)
- * @global integer $g_default_bug_view_status
+ * Default Document View Status (VS_PUBLIC or VS_PRIVATE)
+ * @global integer $g_default_document_view_status
  */
-$g_default_bug_view_status = VS_PUBLIC;
+$g_default_document_view_status = VS_PUBLIC;
 
 /**
  * Default value for steps to reproduce field.
- * @global string $g_default_bug_steps_to_reproduce
+ * @global string $g_default_document_steps_to_reproduce
  */
-$g_default_bug_steps_to_reproduce = '';
+$g_default_document_steps_to_reproduce = '';
 
 /**
  * Default value for addition information field.
- * @global string $g_default_bug_additional_info
+ * @global string $g_default_document_additional_info
  */
-$g_default_bug_additional_info = '';
+$g_default_document_additional_info = '';
 
 /**
  * Default Bugnote View Status (VS_PUBLIC or VS_PRIVATE)
- * @global integer $g_default_bugnote_view_status
+ * @global integer $g_default_docnote_view_status
  */
-$g_default_bugnote_view_status = VS_PUBLIC;
+$g_default_docnote_view_status = VS_PUBLIC;
 
 /**
  * Default bug resolution when reporting a new bug

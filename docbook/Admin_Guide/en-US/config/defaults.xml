@@ -24,7 +24,7 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term>$g_default_bug_view_status</term>
+			<term>$g_default_document_view_status</term>
 			<listitem>
 				<para>The default viewing status for the new bug (VS_PUBLIC or
 					VS_PRIVATE). The default is VS_PUBLIC.
@@ -32,7 +32,7 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term>$g_default_bugnote_view_status</term>
+			<term>$g_default_docnote_view_status</term>
 			<listitem>
 				<para>The default viewing status for the new bugnote (VS_PUBLIC or
 					VS_PRIVATE). The default is VS_PUBLIC.

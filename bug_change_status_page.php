@@ -361,14 +361,14 @@ if( ( $f_new_status >= $t_resolved ) ) {
 				</th>
 				<td>
 <?php
-		$t_default_bugnote_view_status = config_get( 'default_bugnote_view_status' );
+		$t_default_docnote_view_status = config_get( 'default_docnote_view_status' );
 		if( access_has_bug_level( config_get( 'set_view_status_threshold' ), $f_bug_id ) ) {
 ?>
-			<input type="checkbox" class="ace" name="private" <?php check_checked( $t_default_bugnote_view_status, VS_PRIVATE ); ?> />
+			<input type="checkbox" class="ace" name="private" <?php check_checked( $t_default_docnote_view_status, VS_PRIVATE ); ?> />
 			<label class="lbl"> <?php echo lang_get( 'private' ) ?> </label>
 <?php
 		} else {
-			echo get_enum_element( 'project_view_state', $t_default_bugnote_view_status );
+			echo get_enum_element( 'project_view_state', $t_default_docnote_view_status );
 		}
 ?>
 				</td>

@@ -669,7 +669,7 @@ function mc_issue_add( $p_username, $p_password, stdClass $p_issue ) {
 	$t_resolution_id =  isset( $p_issue['resolution'] ) ? mci_get_resolution_id( $p_issue['resolution'] ) : config_get( 'default_bug_resolution' );
 	$t_projection_id = isset( $p_issue['projection'] ) ? mci_get_projection_id( $p_issue['projection'] ) : config_get( 'default_bug_resolution' );
 	$t_eta_id = isset( $p_issue['eta'] ) ? mci_get_eta_id( $p_issue['eta'] ) : config_get( 'default_bug_eta' );
-	$t_view_state_id = isset( $p_issue['view_state'] ) ?  mci_get_view_state_id( $p_issue['view_state'] ) : config_get( 'default_bug_view_status' );
+	$t_view_state_id = isset( $p_issue['view_state'] ) ?  mci_get_view_state_id( $p_issue['view_state'] ) : config_get( 'default_document_view_status' );
 	$t_summary = $p_issue['summary'];
 	$t_description = $p_issue['description'];
 	$t_notes = isset( $p_issue['notes'] ) ? $p_issue['notes'] : array();
@@ -806,7 +806,7 @@ function mc_issue_add( $p_username, $p_password, stdClass $p_issue ) {
 			if( isset( $t_note['view_state'] ) ) {
 				$t_view_state = $t_note['view_state'];
 			} else {
-				$t_view_state = config_get( 'default_bugnote_view_status' );
+				$t_view_state = config_get( 'default_docnote_view_status' );
 			}
 
 			$t_note_type = isset( $t_note['note_type'] ) ? (int)$t_note['note_type'] : BUGNOTE;
@@ -1038,7 +1038,7 @@ function mc_issue_update( $p_username, $p_password, $p_issue_id, stdClass $p_iss
 			if( isset( $t_note['view_state'] ) ) {
 				$t_view_state = $t_note['view_state'];
 			} else {
-				$t_view_state = config_get( 'default_bugnote_view_status' );
+				$t_view_state = config_get( 'default_docnote_view_status' );
 			}
 
 			if( isset( $t_note['id'] ) && ( (int)$t_note['id'] > 0 ) ) {
@@ -1215,7 +1215,7 @@ function mc_issue_note_add( $p_username, $p_password, $p_issue_id, stdClass $p_n
 		$t_view_state = $p_note['view_state'];
 	} else {
 		$t_view_state = array(
-			'id' => config_get( 'default_bug_view_status' ),
+			'id' => config_get( 'default_document_view_status' ),
 		);
 	}
 

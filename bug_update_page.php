@@ -727,14 +727,14 @@ if( access_has_bug_level( config_get( 'private_bugnote_threshold' ), $t_bug_id )
 	echo '<th class="category">' . lang_get( 'private' ) . '</th>';
 	echo '<td colspan="5">';
 
-	$t_default_bugnote_view_status = config_get( 'default_bugnote_view_status' );
+	$t_default_docnote_view_status = config_get( 'default_docnote_view_status' );
 	if( access_has_bug_level( config_get( 'set_view_status_threshold' ), $t_bug_id ) ) {
 		echo '<label>';
-		echo '<input ', helper_get_tab_index(), ' type="checkbox" class="ace" id="private" name="private" ', check_checked( config_get( 'default_bugnote_view_status' ), VS_PRIVATE ), ' />';
+		echo '<input ', helper_get_tab_index(), ' type="checkbox" class="ace" id="private" name="private" ', check_checked( config_get( 'default_docnote_view_status' ), VS_PRIVATE ), ' />';
 		echo '<span class="lbl"></span>';
 		echo '</label>';
 	} else {
-		echo get_enum_element( 'view_state', $t_default_bugnote_view_status );
+		echo get_enum_element( 'view_state', $t_default_docnote_view_status );
 	}
 
 	echo '</td></tr>';

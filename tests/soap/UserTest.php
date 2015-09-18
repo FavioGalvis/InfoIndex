@@ -39,9 +39,9 @@ class UserTest extends SoapBase {
 	 */
 	public function testGetPreference() {
 		$t_default_order = $this->client->mc_config_get_string( $this->userName, $this->password, 'default_docnote_order' );
-		$t_bugnote_order = $this->client->mc_user_pref_get_pref( $this->userName, $this->password, 0, 'bugnote_order' );
+		$t_docnote_order = $this->client->mc_user_pref_get_pref( $this->userName, $this->password, 0, 'docnote_order' );
 
-		$this->assertEquals( $t_default_order, $t_bugnote_order );
+		$this->assertEquals( $t_default_order, $t_docnote_order );
 
 	}
 }

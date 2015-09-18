@@ -28,7 +28,7 @@
  * @uses access_api.php
  * @uses authentication_api.php
  * @uses bug_api.php
- * @uses bugnote_api.php
+ * @uses docnote_api.php
  * @uses category_api.php
  * @uses config_api.php
  * @uses constant_inc.php
@@ -52,7 +52,7 @@ require_once( 'core.php' );
 require_api( 'access_api.php' );
 require_api( 'authentication_api.php' );
 require_api( 'bug_api.php' );
-require_api( 'bugnote_api.php' );
+require_api( 'docnote_api.php' );
 require_api( 'category_api.php' );
 require_api( 'config_api.php' );
 require_api( 'constant_inc.php' );
@@ -140,7 +140,7 @@ $t_lang_project_build = lang_get( 'project_build' );
 $t_lang_eta = lang_get( 'eta' );
 $t_lang_status = lang_get( 'status' );
 $t_lang_project_version = lang_get( 'project_version' );
-$t_lang_no_bugnotes_msg = lang_get( 'no_bugnotes_msg' );
+$t_lang_no_docnotes_msg = lang_get( 'no_docnotes_msg' );
 $t_lang_projection = lang_get( 'projection' );
 $t_lang_target_version = lang_get( 'target_version' );
 $t_lang_summary = lang_get( 'summary' );
@@ -152,7 +152,7 @@ $t_lang_system_profile = lang_get( 'system_profile' );
 $t_lang_attached_files = lang_get( 'attached_files' );
 
 $t_current_user_id = auth_get_current_user_id();
-$t_user_bugnote_order = user_pref_get_pref( $t_current_user_id, 'bugnote_order' );
+$t_user_docnote_order = user_pref_get_pref( $t_current_user_id, 'docnote_order' );
 
 for( $j=0; $j < $t_row_count; $j++ ) {
 	$t_bug = $t_result[$j];
@@ -162,7 +162,7 @@ for( $j=0; $j < $t_row_count; $j++ ) {
 		# to save ram as report will list data once, clear cache after 50 bugs
 		bug_text_clear_cache();
 		bug_clear_cache();
-		bugnote_clear_cache();
+		docnote_clear_cache();
 	}
 
 	# display the available and selected bugs
@@ -488,61 +488,61 @@ foreach( $t_related_custom_field_ids as $t_custom_field_id ) {
 </table>
 
 <?php
-$t_user_bugnote_limit = 0;
+$t_user_docnote_limit = 0;
 
-$t_bugnotes = bugnote_get_all_visible_bugnotes( $t_id, $t_user_bugnote_order, $t_user_bugnote_limit );
+$t_docnotes = docnote_get_all_visible_docnotes( $t_id, $t_user_docnote_order, $t_user_docnote_limit );
 ?>
 
 <table class="table table-striped table-bordered table-condensed no-margin small">
 <?php
-	# no bugnotes
-	if( 0 == count( $t_bugnotes ) ) {
+	# no docnotes
+	if( 0 == count( $t_docnotes ) ) {
 	?>
 <tr>
 	<td class="bold" colspan="2">
-		<?php echo $t_lang_no_bugnotes_msg ?>
+		<?php echo $t_lang_no_docnotes_msg ?>
 	</td>
 </tr>
 <?php
-	} else { # print bugnotes ?>
+	} else { # print docnotes ?>
 <tr>
 	<td class="bold" colspan="2">
 			<?php echo $t_lang_bug_notes_title ?>
 	</td>
 </tr>
 	<?php
-		foreach ( $t_bugnotes as $t_bugnote ) {
-			# prefix all bugnote data with v3_
-			$t_date_submitted = date( $t_date_format, $t_bugnote->date_submitted );
-			$t_last_modified = date( $t_date_format, $t_bugnote->last_modified );
+		foreach ( $t_docnotes as $t_docnote ) {
+			# prefix all docnote data with v3_
+			$t_date_submitted = date( $t_date_format, $t_docnote->date_submitted );
+			$t_last_modified = date( $t_date_format, $t_docnote->last_modified );
 
-			# grab the bugnote text and id and prefix with v3_
-			$t_note = string_display_links( $t_bugnote->note );
+			# grab the docnote text and id and prefix with v3_
+			$t_note = string_display_links( $t_docnote->note );
 	?>
 <tr>
 	<td width="12%">
-				(<?php echo bugnote_format_id( $t_bugnote->id ) ?>)
+				(<?php echo docnote_format_id( $t_docnote->id ) ?>)
 			<br />
-				<?php print_user( $t_bugnote->reporter_id ) ?>&#160;&#160;&#160;
+				<?php print_user( $t_docnote->reporter_id ) ?>&#160;&#160;&#160;
 			<br />
 				<?php echo $t_date_submitted ?>&#160;&#160;&#160;
-				<?php if( $t_bugnote->date_submitted != $t_bugnote->last_modified ) {
+				<?php if( $t_docnote->date_submitted != $t_docnote->last_modified ) {
 					echo '<br />(' . lang_get( 'last_edited') . lang_get( 'word_separator' ) . $t_last_modified . ')';
 				} ?>
 			</td>
 	<td>
 <?php
-					switch ( $t_bugnote->note_type ) {
+					switch ( $t_docnote->note_type ) {
 						case REMINDER:
 							echo lang_get( 'reminder_sent_to' ) . ': ';
-							$t_note_attr = utf8_substr( $t_bugnote->note_attr, 1, utf8_strlen( $t_bugnote->note_attr ) - 2 );
+							$t_note_attr = utf8_substr( $t_docnote->note_attr, 1, utf8_strlen( $t_docnote->note_attr ) - 2 );
 							$t_to = array();
 							foreach ( explode( '|', $t_note_attr ) as $t_recipient ) {
 								$t_to[] = prepare_user_name( $t_recipient );
 							}
 							echo implode( ', ', $t_to ) . '<br />';
 						default:
-							echo string_display_links( $t_bugnote->note );
+							echo string_display_links( $t_docnote->note );
 					}
 				?>
 			</td>
@@ -554,7 +554,7 @@ $t_bugnotes = bugnote_get_all_visible_bugnotes( $t_id, $t_user_bugnote_order, $t
 ?>
 </table>
 
-<?php # Bugnotes END ?>
+<?php # Docnotes END ?>
 
 
                 <?php } else { ?>
@@ -709,61 +709,61 @@ foreach( $t_related_custom_field_ids as $t_custom_field_id ) {
 </table>
 
 <?php
-$t_user_bugnote_limit = 0;
+$t_user_docnote_limit = 0;
 
-$t_bugnotes = bugnote_get_all_visible_bugnotes( $t_id, $t_user_bugnote_order, $t_user_bugnote_limit );
+$t_docnotes = docnote_get_all_visible_docnotes( $t_id, $t_user_docnote_order, $t_user_docnote_limit );
 ?>
 
 <table class="table table-striped table-bordered table-condensed no-margin small">
 <?php
-	# no bugnotes
-	if( 0 == count( $t_bugnotes ) ) {
+	# no docnotes
+	if( 0 == count( $t_docnotes ) ) {
 	?>
 <tr>
 	<td class="bold" colspan="2">
-		<?php echo $t_lang_no_bugnotes_msg ?>
+		<?php echo $t_lang_no_docnotes_msg ?>
 	</td>
 </tr>
 <?php
-	} else { # print bugnotes ?>
+	} else { # print docnotes ?>
 <tr>
 	<td class="bold" colspan="2">
 			<?php echo $t_lang_bug_notes_title ?>
 	</td>
 </tr>
 	<?php
-		foreach ( $t_bugnotes as $t_bugnote ) {
-			# prefix all bugnote data with v3_
-			$t_date_submitted = date( $t_date_format, $t_bugnote->date_submitted );
-			$t_last_modified = date( $t_date_format, $t_bugnote->last_modified );
+		foreach ( $t_docnotes as $t_docnote ) {
+			# prefix all docnote data with v3_
+			$t_date_submitted = date( $t_date_format, $t_docnote->date_submitted );
+			$t_last_modified = date( $t_date_format, $t_docnote->last_modified );
 
-			# grab the bugnote text and id and prefix with v3_
-			$t_note = string_display_links( $t_bugnote->note );
+			# grab the docnote text and id and prefix with v3_
+			$t_note = string_display_links( $t_docnote->note );
 	?>
 <tr>
 	<td width="12%">
-				(<?php echo bugnote_format_id( $t_bugnote->id ) ?>)
+				(<?php echo docnote_format_id( $t_docnote->id ) ?>)
 			<br />
-				<?php print_user( $t_bugnote->reporter_id ) ?>&#160;&#160;&#160;
+				<?php print_user( $t_docnote->reporter_id ) ?>&#160;&#160;&#160;
 			<br />
 				<?php echo $t_date_submitted ?>&#160;&#160;&#160;
-				<?php if( $t_bugnote->date_submitted != $t_bugnote->last_modified ) {
+				<?php if( $t_docnote->date_submitted != $t_docnote->last_modified ) {
 					echo '<br />(' . lang_get( 'last_edited') . lang_get( 'word_separator' ) . $t_last_modified . ')';
 				} ?>
 			</td>
 	<td>
 <?php
-					switch ( $t_bugnote->note_type ) {
+					switch ( $t_docnote->note_type ) {
 						case REMINDER:
 							echo lang_get( 'reminder_sent_to' ) . ': ';
-							$t_note_attr = utf8_substr( $t_bugnote->note_attr, 1, utf8_strlen( $t_bugnote->note_attr ) - 2 );
+							$t_note_attr = utf8_substr( $t_docnote->note_attr, 1, utf8_strlen( $t_docnote->note_attr ) - 2 );
 							$t_to = array();
 							foreach ( explode( '|', $t_note_attr ) as $t_recipient ) {
 								$t_to[] = prepare_user_name( $t_recipient );
 							}
 							echo implode( ', ', $t_to ) . '<br />';
 						default:
-							echo string_display_links( $t_bugnote->note );
+							echo string_display_links( $t_docnote->note );
 					}
 				?>
 			</td>

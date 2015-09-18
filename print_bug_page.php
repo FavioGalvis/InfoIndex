@@ -576,8 +576,8 @@ if( $t_show_history ) {
 	echo '</table>';
 }
 
-define( 'PRINT_BUGNOTE_INC_ALLOW', true );
-include( dirname( __FILE__ ) . '/print_bugnote_inc.php' ) ;
+define( 'PRINT_DOCNOTE_INC_ALLOW', true );
+include( dirname( __FILE__ ) . '/print_docnote_inc.php' ) ;
 
 last_visited_issue( $f_bug_id );
 ?>

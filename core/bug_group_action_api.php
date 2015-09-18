@@ -258,7 +258,7 @@ function bug_group_action_get_commands( array $p_project_ids = null ) {
 		}
 
 		if( !isset( $t_commands['EXT_ADD_NOTE'] ) &&
-			access_has_project_level( config_get( 'add_bugnote_threshold', null, null, $t_project_id ), $t_project_id ) ) {
+			access_has_project_level( config_get( 'add_docnote_threshold', null, null, $t_project_id ), $t_project_id ) ) {
 			$t_commands['EXT_ADD_NOTE'] = lang_get( 'actiongroup_menu_add_note' );
 		}
 

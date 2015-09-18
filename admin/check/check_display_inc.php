@@ -43,9 +43,9 @@ check_print_test_row(
 );
 
 check_print_test_row(
-	'bugnote_link_tag is not blank/null',
-	config_get_global( 'bugnote_link_tag' ),
-	array( false => 'The value of the bugnote_link_tag option cannot be blank/null.' )
+	'docnote_link_tag is not blank/null',
+	config_get_global( 'docnote_link_tag' ),
+	array( false => 'The value of the docnote_link_tag option cannot be blank/null.' )
 );
 
 if( plugin_is_installed( 'MantisGraph' ) ) {

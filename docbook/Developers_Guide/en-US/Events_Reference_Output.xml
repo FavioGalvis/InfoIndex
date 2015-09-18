@@ -12,7 +12,7 @@
 		<para>
 			These events make it possible to dynamically modify output strings to interpret or add
 			semantic meaning or markup.  Examples include the creation of links to other bugs or
-			bugnotes, as well as handling urls to other sites in general.
+			docnotes, as well as handling urls to other sites in general.
 		</para>
 
 		<blockquote id="dev.eventref.output.display.bugid">

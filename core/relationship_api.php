@@ -54,7 +54,7 @@
  * This function gives the opportunity to generate a child bug. In details the function:
  * - create a new bug with the same basic information of the parent bug (plus the custom fields)
  * - copy all the attachment of the parent bug to the child
- * - not copy history, bugnotes, monitoring users
+ * - not copy history, docnotes, monitoring users
  * - set a relationship between parent and child
  *
  * @package CoreAPI

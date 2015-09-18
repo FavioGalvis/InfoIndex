@@ -562,7 +562,7 @@ function print_assign_to_option_list( $p_user_id = '', $p_project_id = null, $p_
 }
 
 /**
- * Print User option list for bugnote filter field
+ * Print User option list for docnote filter field
  * @param integer|string $p_user_id    A user identifier.
  * @param integer        $p_project_id A project identifier.
  * @param integer        $p_threshold  An access level.
@@ -570,7 +570,7 @@ function print_assign_to_option_list( $p_user_id = '', $p_project_id = null, $p_
  */
 function print_note_option_list( $p_user_id = '', $p_project_id = null, $p_threshold = null ) {
 	if( null === $p_threshold ) {
-		$p_threshold = config_get( 'add_bugnote_threshold' );
+		$p_threshold = config_get( 'add_docnote_threshold' );
 	}
 
 	print_user_option_list( $p_user_id, $p_project_id, $p_threshold );

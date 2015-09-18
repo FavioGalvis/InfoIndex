@@ -70,7 +70,7 @@ $t_can_change_flags = $t_access >= config_get_access( 'notify_flags' );
 $t_can_change_defaults = $t_access >= config_get_access( 'default_notify_flags' );
 
 # build a list of the possible actions and flags
-$t_valid_actions = array( 'owner', 'reopened', 'deleted', 'bugnote' );
+$t_valid_actions = array( 'owner', 'reopened', 'deleted', 'docnote' );
 if( config_get( 'enable_sponsorship' ) == ON ) {
 	$t_valid_actions[] = 'sponsor';
 }
@@ -84,7 +84,7 @@ reset( $t_statuses );
 foreach( $t_statuses as $t_status => $t_label ) {
 	$t_valid_actions[] = $t_label;
 }
-$t_valid_flags = array( 'reporter', 'handler', 'monitor' , 'bugnotes' );
+$t_valid_flags = array( 'reporter', 'handler', 'monitor' , 'docnotes' );
 
 # initialize the thresholds
 foreach( $t_valid_actions as $t_action ) {

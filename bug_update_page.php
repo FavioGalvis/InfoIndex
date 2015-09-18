@@ -716,13 +716,13 @@ if( $t_custom_fields_found ) {
 	echo '<tr class="hidden"></tr>';
 }
 
-# Bugnote Text Box
+# Docnote Text Box
 echo '<tr>';
-echo '<th class="category"><label for="bugnote_text">' . lang_get( 'add_bugnote_title' ) . '</label></th>';
-echo '<td colspan="5"><textarea class="form-control" ', helper_get_tab_index(), ' id="bugnote_text" name="bugnote_text" cols="80" rows="10"></textarea></td></tr>';
+echo '<th class="category"><label for="docnote_text">' . lang_get( 'add_docnote_title' ) . '</label></th>';
+echo '<td colspan="5"><textarea class="form-control" ', helper_get_tab_index(), ' id="docnote_text" name="docnote_text" cols="80" rows="10"></textarea></td></tr>';
 
-# Bugnote Private Checkbox (if permitted)
-if( access_has_bug_level( config_get( 'private_bugnote_threshold' ), $t_bug_id ) ) {
+# Docnote Private Checkbox (if permitted)
+if( access_has_bug_level( config_get( 'private_docnote_threshold' ), $t_bug_id ) ) {
 	echo '<tr>';
 	echo '<th class="category">' . lang_get( 'private' ) . '</th>';
 	echo '<td colspan="5">';
@@ -749,7 +749,7 @@ if( config_get( 'time_tracking_enabled' ) ) {
 	}
 }
 
-event_signal( 'EVENT_BUGNOTE_ADD_FORM', array( $t_bug_id ) );
+event_signal( 'EVENT_DOCNOTE_ADD_FORM', array( $t_bug_id ) );
 
 echo '</table>';
 echo '</div>';
@@ -774,8 +774,8 @@ if( $t_bottom_buttons_enabled ) {
 </div>
 
 <?php
-define( 'BUGNOTE_VIEW_INC_ALLOW', true );
-include( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'bugnote_view_inc.php' );
+define( 'DOCNOTE_VIEW_INC_ALLOW', true );
+include( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'docnote_view_inc.php' );
 layout_page_end();
 
 last_visited_issue( $t_bug_id );

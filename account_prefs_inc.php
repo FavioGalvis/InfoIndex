@@ -153,16 +153,16 @@ function edit_account_prefs( $p_user_id = null, $p_error_if_protected = true, $p
 	</tr>
 	<tr>
 		<td class="category">
-			<?php echo lang_get( 'bugnote_order' ) ?>
+			<?php echo lang_get( 'docnote_order' ) ?>
 		</td>
 		<td>
-			<label for="bugnote-order-desc" class="inline padding-right-8">
-				<input type="radio" class="ace" id="bugnote-order-desc" name="bugnote_order" class="input-sm" value="DESC" <?php check_checked( $t_pref->bugnote_order, 'DESC' ); ?> />
-				<span class="lbl"> <?php echo lang_get( 'bugnote_order_desc' ) ?> </span>
+			<label for="docnote-order-desc" class="inline padding-right-8">
+				<input type="radio" class="ace" id="docnote-order-desc" name="docnote_order" class="input-sm" value="DESC" <?php check_checked( $t_pref->docnote_order, 'DESC' ); ?> />
+				<span class="lbl"> <?php echo lang_get( 'docnote_order_desc' ) ?> </span>
 			</label>
-			<label for="bugnote-order-asc" class="inline padding-right-8">
-				<input type="radio" class="ace" id="bugnote-order-asc" name="bugnote_order" class="input-sm" value="ASC" <?php check_checked( $t_pref->bugnote_order, 'ASC' ); ?> />
-				<span class="lbl"> <?php echo lang_get( 'bugnote_order_asc' ) ?> </span>
+			<label for="docnote-order-asc" class="inline padding-right-8">
+				<input type="radio" class="ace" id="docnote-order-asc" name="docnote_order" class="input-sm" value="ASC" <?php check_checked( $t_pref->docnote_order, 'ASC' ); ?> />
+				<span class="lbl"> <?php echo lang_get( 'docnote_order_asc' ) ?> </span>
 			</label>
 		</td>
 	</tr>
@@ -271,18 +271,18 @@ function edit_account_prefs( $p_user_id = null, $p_error_if_protected = true, $p
 		</tr>
 		<tr>
 			<td class="category">
-				<?php echo lang_get( 'email_on_bugnote_added' ) ?>
+				<?php echo lang_get( 'email_on_docnote_added' ) ?>
 			</td>
 			<td>
 				<label class="inline">
-					<input type="checkbox" class="ace" id="email-on-bugnote-added" name="email_on_bugnote" class="input-sm" <?php check_checked( (int)$t_pref->email_on_bugnote, ON ); ?> />
+					<input type="checkbox" class="ace" id="email-on-docnote-added" name="email_on_docnote" class="input-sm" <?php check_checked( (int)$t_pref->email_on_docnote, ON ); ?> />
 					<span class="lbl"></span>
 				</label>
-				<label for="email-on-bugnote-min-severity" class="email-on-severity-label"><span><?php echo lang_get( 'with_minimum_severity' ) ?></span></label>
-				<select id="email-on-bugnote-min-severity" name="email_on_bugnote_min_severity" class="input-sm">
+				<label for="email-on-docnote-min-severity" class="email-on-severity-label"><span><?php echo lang_get( 'with_minimum_severity' ) ?></span></label>
+				<select id="email-on-docnote-min-severity" name="email_on_docnote_min_severity" class="input-sm">
 						<option value="<?php echo OFF ?>"><?php echo lang_get( 'any' ) ?></option>
 						<option disabled="disabled">-----</option>
-						<?php print_enum_string_option_list( 'severity', (int)$t_pref->email_on_bugnote_min_severity ) ?>
+						<?php print_enum_string_option_list( 'severity', (int)$t_pref->email_on_docnote_min_severity ) ?>
 					</select>
 			</td>
 		</tr>
@@ -322,10 +322,10 @@ function edit_account_prefs( $p_user_id = null, $p_error_if_protected = true, $p
 		</tr>
 		<tr>
 			<td class="category">
-				<?php echo lang_get( 'email_bugnote_limit' ) ?>
+				<?php echo lang_get( 'email_docnote_limit' ) ?>
 			</td>
 			<td>
-				<input id="email-bugnote-limit" type="text" name="email_bugnote_limit" class="input-sm" maxlength="2" size="2" value="<?php echo $t_pref->email_bugnote_limit ?>" />
+				<input id="email-docnote-limit" type="text" name="email_docnote_limit" class="input-sm" maxlength="2" size="2" value="<?php echo $t_pref->email_docnote_limit ?>" />
 			</td>
 		</tr>
 <?php } else { ?>
@@ -335,7 +335,7 @@ function edit_account_prefs( $p_user_id = null, $p_error_if_protected = true, $p
 			<input type="hidden" name="email_on_resolved" value="<?php echo $t_pref->email_on_resolved ?>" />
 			<input type="hidden" name="email_on_closed"   value="<?php echo $t_pref->email_on_closed ?>" />
 			<input type="hidden" name="email_on_reopened" value="<?php echo $t_pref->email_on_reopened ?>" />
-			<input type="hidden" name="email_on_bugnote"  value="<?php echo $t_pref->email_on_bugnote ?>" />
+			<input type="hidden" name="email_on_docnote"  value="<?php echo $t_pref->email_on_docnote ?>" />
 			<input type="hidden" name="email_on_status"   value="<?php echo $t_pref->email_on_status ?>" />
 			<input type="hidden" name="email_on_priority" value="<?php echo $t_pref->email_on_priority ?>" />
 			<input type="hidden" name="email_on_new_min_severity"      value="<?php echo $t_pref->email_on_new_min_severity ?>" />
@@ -344,10 +344,10 @@ function edit_account_prefs( $p_user_id = null, $p_error_if_protected = true, $p
 			<input type="hidden" name="email_on_resolved_min_severity" value="<?php echo $t_pref->email_on_resolved_min_severity ?>" />
 			<input type="hidden" name="email_on_closed_min_severity"   value="<?php echo $t_pref->email_on_closed_min_severity ?>" />
 			<input type="hidden" name="email_on_reopened_min_severity" value="<?php echo $t_pref->email_on_reopened_min_severity ?>" />
-			<input type="hidden" name="email_on_bugnote_min_severity"  value="<?php echo $t_pref->email_on_bugnote_min_severity ?>" />
+			<input type="hidden" name="email_on_docnote_min_severity"  value="<?php echo $t_pref->email_on_docnote_min_severity ?>" />
 			<input type="hidden" name="email_on_status_min_severity"   value="<?php echo $t_pref->email_on_status_min_severity ?>" />
 			<input type="hidden" name="email_on_priority_min_severity" value="<?php echo $t_pref->email_on_priority_min_severity ?>" />
-			<input type="hidden" name="email_bugnote_limit" value="<?php echo $t_pref->email_bugnote_limit ?>" />
+			<input type="hidden" name="email_docnote_limit" value="<?php echo $t_pref->email_docnote_limit ?>" />
 <?php } ?>
 	<tr>
 		<td class="category">

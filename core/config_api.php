@@ -523,7 +523,7 @@ function config_delete_for_user( $p_option, $p_user_id ) {
 		return;
 	}
 
-	# Delete the corresponding bugnote texts
+	# Delete the corresponding docnote texts
 	$t_query = 'DELETE FROM {config} WHERE config_id=' . db_param() . ' AND user_id=' . db_param();
 	db_query( $t_query, array( $p_option, $p_user_id ) );
 }

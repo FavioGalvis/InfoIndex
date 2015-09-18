@@ -4,7 +4,7 @@
 %BOOK_ENTITIES;
 ]>
 <section id="dev.eventref.bug">
-	<title>Bug and Bugnote Events</title>
+	<title>Bug and Docnote Events</title>
 
 	<section id="dev.eventref.bug.view">
 		<title>Bug View</title>
@@ -185,7 +185,7 @@
 			<blockquote>
 				<para>
 					This event allows plugins to do processing or display form elements in
-					the bug change status form.  It is triggered immediately before the add bugnote
+					the bug change status form.  It is triggered immediately before the add docnote
 					fields.
 				</para>
 
@@ -279,10 +279,10 @@
 	</section>
 
 	<section id="dev.eventref.bug.noteview">
-		<title>Bugnote View</title>
+		<title>Docnote View</title>
 
 		<blockquote id="dev.eventref.bug.noteview.start">
-			<title>EVENT_VIEW_BUGNOTES_START (Execute)</title>
+			<title>EVENT_VIEW_DOCNOTES_START (Execute)</title>
 
 			<blockquote>
 				<para>
@@ -299,13 +299,13 @@
 				<itemizedlist>
 					<title>Parameters</title>
 					<listitem><para>&lt;Integer&gt;: Bug ID</para></listitem>
-					<listitem><para>&lt;Complex&gt;: A list of all bugnotes to be displayed to the user</para></listitem>
+					<listitem><para>&lt;Complex&gt;: A list of all docnotes to be displayed to the user</para></listitem>
 				</itemizedlist>
 			</blockquote>
 		</blockquote>
 
 		<blockquote id="dev.eventref.bug.noteview.note">
-			<title>EVENT_VIEW_BUGNOTE (Execute)</title>
+			<title>EVENT_VIEW_DOCNOTE (Execute)</title>
 
 			<blockquote>
 				<para>
@@ -322,19 +322,19 @@
 				<itemizedlist>
 					<title>Parameters</title>
 					<listitem><para>&lt;Integer&gt;: Bug ID</para></listitem>
-					<listitem><para>&lt;Integer&gt;: Bugnote ID</para></listitem>
-					<listitem><para>&lt;Boolean&gt;: Private bugnote (false if public)</para></listitem>
+					<listitem><para>&lt;Integer&gt;: Docnote ID</para></listitem>
+					<listitem><para>&lt;Boolean&gt;: Private docnote (false if public)</para></listitem>
 				</itemizedlist>
 			</blockquote>
 		</blockquote>
 
 		<blockquote id="dev.eventref.bug.noteview.end">
-			<title>EVENT_VIEW_BUGNOTES_END (Execute)</title>
+			<title>EVENT_VIEW_DOCNOTES_END (Execute)</title>
 
 			<blockquote>
 				<para>
 					This event allows a plugin to either process information or display some
-					data in the bug notes section, after all bugnotes have been displayed.
+					data in the bug notes section, after all docnotes have been displayed.
 				</para>
 
 				<para>
@@ -352,15 +352,15 @@
 	</section>
 
 	<section id="dev.eventref.bug.noteaction">
-		<title>Bugnote Actions</title>
+		<title>Docnote Actions</title>
 
 		<blockquote id="dev.eventref.bug.noteaction.addform">
-			<title>EVENT_BUGNOTE_ADD_FORM (Execute)</title>
+			<title>EVENT_DOCNOTE_ADD_FORM (Execute)</title>
 
 			<blockquote>
 				<para>
 					This event allows plugins to do processing or display form elements in
-					the bugnote adding form.  It is triggered immediately after the bugnote
+					the docnote adding form.  It is triggered immediately after the docnote
 					text field.
 				</para>
 
@@ -377,29 +377,29 @@
 		</blockquote>
 
 		<blockquote id="dev.eventref.bug.noteaction.add">
-			<title>EVENT_BUGNOTE_ADD (Execute)</title>
+			<title>EVENT_DOCNOTE_ADD (Execute)</title>
 
 			<blockquote>
 				<para>
-					This event allows plugins to do post-processing of bugnotes added to an
+					This event allows plugins to do post-processing of docnotes added to an
 					issue.
 				</para>
 
 				<itemizedlist>
 					<title>Parameters</title>
 					<listitem><para>&lt;Integer&gt;: Bug ID</para></listitem>
-					<listitem><para>&lt;Integer&gt;: Bugnote ID</para></listitem>
+					<listitem><para>&lt;Integer&gt;: Docnote ID</para></listitem>
 				</itemizedlist>
 			</blockquote>
 		</blockquote>
 
 		<blockquote id="dev.eventref.bug.noteaction.editform">
-			<title>EVENT_BUGNOTE_EDIT_FORM (Execute)</title>
+			<title>EVENT_DOCNOTE_EDIT_FORM (Execute)</title>
 
 			<blockquote>
 				<para>
 					This event allows plugins to do processing or display form elements in
-					the bugnote editing form.  It is triggered immediately after the bugnote
+					the docnote editing form.  It is triggered immediately after the docnote
 					text field.
 				</para>
 
@@ -411,39 +411,39 @@
 				<itemizedlist>
 					<title>Parameters</title>
 					<listitem><para>&lt;Integer&gt;: Bug ID</para></listitem>
-					<listitem><para>&lt;Integer&gt;: Bugnote ID</para></listitem>
+					<listitem><para>&lt;Integer&gt;: Docnote ID</para></listitem>
 				</itemizedlist>
 			</blockquote>
 		</blockquote>
 
 		<blockquote id="dev.eventref.bug.noteaction.edit">
-			<title>EVENT_BUGNOTE_EDIT (Execute)</title>
+			<title>EVENT_DOCNOTE_EDIT (Execute)</title>
 
 			<blockquote>
 				<para>
-					This event allows plugins to do post-processing of bugnote edits.
+					This event allows plugins to do post-processing of docnote edits.
 				</para>
 
 				<itemizedlist>
 					<title>Parameters</title>
 					<listitem><para>&lt;Integer&gt;: Bug ID</para></listitem>
-					<listitem><para>&lt;Integer&gt;: Bugnote ID</para></listitem>
+					<listitem><para>&lt;Integer&gt;: Docnote ID</para></listitem>
 				</itemizedlist>
 			</blockquote>
 		</blockquote>
 
 		<blockquote id="dev.eventref.bug.noteaction.deleted">
-			<title>EVENT_BUGNOTE_DELETED (Execute)</title>
+			<title>EVENT_DOCNOTE_DELETED (Execute)</title>
 
 			<blockquote>
 				<para>
-					This event allows plugins to do post-processing of bugnote deletions.
+					This event allows plugins to do post-processing of docnote deletions.
 				</para>
 
 				<itemizedlist>
 					<title>Parameters</title>
 					<listitem><para>&lt;Integer&gt;: Bug ID</para></listitem>
-					<listitem><para>&lt;Integer&gt;: Bugnote ID</para></listitem>
+					<listitem><para>&lt;Integer&gt;: Docnote ID</para></listitem>
 				</itemizedlist>
 			</blockquote>
 		</blockquote>

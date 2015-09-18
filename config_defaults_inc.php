@@ -930,14 +930,14 @@ $g_severity_significant_threshold = MAJOR;
  * reproducibility, status, resolution, category_id, date_submitted, last_updated,
  * os, os_build, platform, version, fixed_in_version, target_version, view_state,
  * summary, sponsorship_total, due_date, description, steps_to_reproduce,
- * additional_info, attachment_count, bugnotes_count, selection, edit,
+ * additional_info, attachment_count, docnotes_count, selection, edit,
  * overdue
  *
  * @global array $g_view_issues_page_columns
  */
 $g_view_issues_page_columns = array (
 	'selection', 'edit', 'priority', 'id', 'sponsorship_total',
-	'bugnotes_count', 'attachment_count', 'category_id', 'severity', 'status',
+	'docnotes_count', 'attachment_count', 'category_id', 'severity', 'status',
 	'last_updated', 'summary'
 );
 
@@ -948,7 +948,7 @@ $g_view_issues_page_columns = array (
  * @global array $g_print_issues_page_columns
  */
 $g_print_issues_page_columns = array (
-	'selection', 'priority', 'id', 'sponsorship_total', 'bugnotes_count',
+	'selection', 'priority', 'id', 'sponsorship_total', 'docnotes_count',
 	'attachment_count', 'category_id', 'severity', 'status', 'last_updated',
 	'summary'
 );
@@ -1393,9 +1393,9 @@ $g_default_email_on_reopened = ON;
 
 /**
  *
- * @global integer $g_default_email_on_bugnote
+ * @global integer $g_default_email_on_docnote
  */
-$g_default_email_on_bugnote = ON;
+$g_default_email_on_docnote = ON;
 
 /**
  * @todo Unused
@@ -1447,9 +1447,9 @@ $g_default_email_on_reopened_minimum_severity = OFF;
 
 /**
  * 'any'
- * @global integer $g_default_email_on_bugnote_minimum_severity
+ * @global integer $g_default_email_on_docnote_minimum_severity
  */
-$g_default_email_on_bugnote_minimum_severity = OFF;
+$g_default_email_on_docnote_minimum_severity = OFF;
 
 /**
  * 'any'
@@ -1465,9 +1465,9 @@ $g_default_email_on_priority_minimum_severity = OFF;
 
 /**
  *
- * @global integer $g_default_email_bugnote_limit
+ * @global integer $g_default_email_docnote_limit
  */
-$g_default_email_bugnote_limit = 0;
+$g_default_email_docnote_limit = 0;
 
 #############################
 # InfoIndex Summary Settings #
@@ -1543,7 +1543,7 @@ $g_resolution_multipliers = array(
  * change to ASC or DESC
  * @global string $g_docnote_order
  */
-$g_bugnote_order = 'DESC';
+$g_docnote_order = 'DESC';
 
 #################################
 # MantisBT Bug History Settings #
@@ -1568,7 +1568,7 @@ $g_history_order = 'ASC';
 ##############################
 
 /**
- * are reminders stored as bugnotes
+ * are reminders stored as docnotes
  * @global integer $g_store_reminders
  */
 $g_store_reminders = ON;
@@ -2619,11 +2619,11 @@ $g_handle_bug_threshold = DEVELOPER;
 $g_update_bug_assign_threshold = '%handle_bug_threshold%';
 
 /**
- * access level needed to view private bugnotes
+ * access level needed to view private docnotes
  * Look in the constant_inc.php file if you want to set a different value
- * @global integer $g_private_bugnote_threshold
+ * @global integer $g_private_docnote_threshold
  */
-$g_private_bugnote_threshold = DEVELOPER;
+$g_private_docnote_threshold = DEVELOPER;
 
 /**
  * access level needed to view handler in bug reports and notification email
@@ -2675,16 +2675,16 @@ $g_upload_project_file_threshold = MANAGER;
 $g_upload_bug_file_threshold = REPORTER;
 
 /**
- * Add bugnote threshold
- * @global integer $g_add_bugnote_threshold
+ * Add docnote threshold
+ * @global integer $g_add_docnote_threshold
  */
-$g_add_bugnote_threshold = REPORTER;
+$g_add_docnote_threshold = REPORTER;
 
 /**
- * Threshold at which a user can edit the bugnotes of other users
- * @global integer $g_update_bugnote_threshold
+ * Threshold at which a user can edit the docnotes of other users
+ * @global integer $g_update_docnote_threshold
  */
-$g_update_bugnote_threshold = DEVELOPER;
+$g_update_docnote_threshold = DEVELOPER;
 
 /**
  * Threshold needed to view project documentation
@@ -2763,12 +2763,12 @@ $g_manage_user_threshold = ADMINISTRATOR;
 $g_delete_bug_threshold = DEVELOPER;
 
 /**
- * Threshold at which a user can delete the bugnotes of other users.
+ * Threshold at which a user can delete the docnotes of other users.
  * The default value is equal to the configuration setting
  * $g_delete_bug_threshold.
- * @global string $g_delete_bugnote_threshold
+ * @global string $g_delete_docnote_threshold
  */
-$g_delete_bugnote_threshold = '%delete_bug_threshold%';
+$g_delete_docnote_threshold = '%delete_bug_threshold%';
 
 /**
  * Move bug threshold
@@ -2883,28 +2883,28 @@ $g_development_team_threshold = DEVELOPER;
 $g_set_status_threshold = array( NEW_ => REPORTER );
 
 /**
- * Threshold at which a user can edit his/her own bugnotes.
+ * Threshold at which a user can edit his/her own docnotes.
  * The default value is equal to the configuration setting
- * $g_update_bugnote_threshold.
- * @global integer $g_bugnote_user_edit_threshold
+ * $g_update_docnote_threshold.
+ * @global integer $g_docnote_user_edit_threshold
  */
-$g_bugnote_user_edit_threshold = '%update_bugnote_threshold%';
+$g_docnote_user_edit_threshold = '%update_docnote_threshold%';
 
 /**
- * Threshold at which a user can delete his/her own bugnotes.
+ * Threshold at which a user can delete his/her own docnotes.
  * The default value is equal to the configuration setting
- * $g_delete_bugnote_threshold.
- * @global integer $g_bugnote_user_delete_threshold
+ * $g_delete_docnote_threshold.
+ * @global integer $g_docnote_user_delete_threshold
  */
-$g_bugnote_user_delete_threshold = '%delete_bugnote_threshold%';
+$g_docnote_user_delete_threshold = '%delete_docnote_threshold%';
 
 /**
- * Threshold at which a user can change the view state of his/her own bugnotes.
+ * Threshold at which a user can change the view state of his/her own docnotes.
  * The default value is equal to the configuration setting
  * $g_change_view_status_threshold.
- * @global integer $g_bugnote_user_change_view_state_threshold
+ * @global integer $g_docnote_user_change_view_state_threshold
  */
-$g_bugnote_user_change_view_state_threshold = '%change_view_status_threshold%';
+$g_docnote_user_change_view_state_threshold = '%change_view_status_threshold%';
 
 /**
  * Allow a bug to have no category
@@ -2978,13 +2978,13 @@ $g_anonymous_account = '';
 $g_bug_link_tag = '#';
 
 /**
- * Bugnote Linking
- * if a number follows this tag it will create a link to a bugnote.
+ * Docnote Linking
+ * if a number follows this tag it will create a link to a docnote.
  * eg. for ~ a link would be ~45
- * eg. for bugnote: a link would be bugnote:98
- * @global string $g_bugnote_link_tag
+ * eg. for docnote: a link would be docnote:98
+ * @global string $g_docnote_link_tag
  */
-$g_bugnote_link_tag = '~';
+$g_docnote_link_tag = '~';
 
 /**
  * Bug Count Linking
@@ -3099,11 +3099,11 @@ $g_display_project_padding = 3;
 $g_display_bug_padding = 7;
 
 /**
- * The padding level when displaying bugnote ids
- *  The bugnote id will be padded with 0's up to the size given
- * @global integer $g_display_bugnote_padding
+ * The padding level when displaying docnote ids
+ *  The docnote id will be padded with 0's up to the size given
+ * @global integer $g_display_docnote_padding
  */
-$g_display_bugnote_padding = 7;
+$g_display_docnote_padding = 7;
 
 #############################
 # MantisBT Cookie Variables #
@@ -3950,7 +3950,7 @@ $g_time_tracking_edit_threshold = DEVELOPER;
 $g_time_tracking_reporting_threshold = MANAGER;
 
 /**
- * allow time tracking to be recorded without a bugnote
+ * allow time tracking to be recorded without a docnote
  * @global integer $g_time_tracking_without_note
  */
 $g_time_tracking_without_note = ON;

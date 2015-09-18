@@ -26,7 +26,7 @@
  * @uses access_api.php
  * @uses antispam_api.php
  * @uses authentication_api.php
- * @uses bugnote_api.php
+ * @uses docnote_api.php
  * @uses bug_revision_api.php
  * @uses category_api.php
  * @uses config_api.php
@@ -51,7 +51,7 @@
 require_api( 'access_api.php' );
 require_api( 'antispam_api.php' );
 require_api( 'authentication_api.php' );
-require_api( 'bugnote_api.php' );
+require_api( 'docnote_api.php' );
 require_api( 'bug_revision_api.php' );
 require_api( 'category_api.php' );
 require_api( 'config_api.php' );
@@ -242,9 +242,9 @@ class BugData {
 	public $attachment_count = null;
 
 	/**
-	 * Bugnotes count
+	 * Docnotes count
 	 */
-	public $bugnotes_count = null;
+	public $docnotes_count = null;
 
 	/**
 	 * Indicates if bug is currently being loaded from database
@@ -265,15 +265,15 @@ class BugData {
 	}
 
 	/**
-	 * return number of bugnotes's linked to current bug
+	 * return number of docnotes's linked to current bug
 	 * @return integer
 	 */
-	public function get_bugnotes_count() {
-		if( $this->bugnotes_count === null ) {
-			$this->bugnotes_count = self::bug_get_bugnote_count();
-			return $this->bugnotes_count;
+	public function get_docnotes_count() {
+		if( $this->docnotes_count === null ) {
+			$this->docnotes_count = self::bug_get_docnote_count();
+			return $this->docnotes_count;
 		} else {
-			return $this->bugnotes_count;
+			return $this->docnotes_count;
 		}
 	}
 
@@ -396,19 +396,19 @@ class BugData {
 	}
 
 	/**
-	 * Returns the number of bugnotes for the given bug_id
-	 * @return integer number of bugnotes
+	 * Returns the number of docnotes for the given bug_id
+	 * @return integer number of docnotes
 	 * @access private
 	 * @uses database_api.php
 	 */
-	private function bug_get_bugnote_count() {
-		if( !access_has_project_level( config_get( 'private_bugnote_threshold' ), $this->project_id ) ) {
+	private function bug_get_docnote_count() {
+		if( !access_has_project_level( config_get( 'private_docnote_threshold' ), $this->project_id ) ) {
 			$t_restriction = 'AND view_state=' . VS_PUBLIC;
 		} else {
 			$t_restriction = '';
 		}
 
-		$t_query = 'SELECT COUNT(*) FROM {bugnote}
+		$t_query = 'SELECT COUNT(*) FROM {docnote}
 					  WHERE bug_id =' . db_param() . ' ' . $t_restriction;
 		$t_result = db_query( $t_query, array( $this->id ) );
 
@@ -722,7 +722,7 @@ $g_cache_bug_text = array();
 /**
  * Cache a database result-set containing full contents of bug_table row.
  * @param array $p_bug_database_result Database row containing all columns from mantis_bug_table.
- * @param array $p_stats               An optional array representing bugnote statistics.
+ * @param array $p_stats               An optional array representing docnote statistics.
  * @return array returns an array representing the bug row if bug exists
  * @access public
  */
@@ -805,7 +805,7 @@ function bug_cache_array_rows( array $p_bug_id_array ) {
 /**
  * Inject a bug into the bug cache
  * @param array $p_bug_row A bug row to cache.
- * @param array $p_stats   Bugnote stats to cache.
+ * @param array $p_stats   Docnote stats to cache.
  * @return array
  * @access private
  */
@@ -1062,12 +1062,12 @@ function bug_check_workflow( $p_bug_status, $p_wanted_status ) {
  * @param boolean $p_copy_relationships    Whether to copy relationships.
  * @param boolean $p_copy_history          Whether to copy history.
  * @param boolean $p_copy_attachments      Whether to copy attachments.
- * @param boolean $p_copy_bugnotes         Whether to copy bugnotes.
+ * @param boolean $p_copy_docnotes         Whether to copy docnotes.
  * @param boolean $p_copy_monitoring_users Whether to copy monitoring users.
  * @return integer representing the new bug identifier
  * @access public
  */
-function bug_copy( $p_bug_id, $p_target_project_id = null, $p_copy_custom_fields = false, $p_copy_relationships = false, $p_copy_history = false, $p_copy_attachments = false, $p_copy_bugnotes = false, $p_copy_monitoring_users = false ) {
+function bug_copy( $p_bug_id, $p_target_project_id = null, $p_copy_custom_fields = false, $p_copy_relationships = false, $p_copy_history = false, $p_copy_attachments = false, $p_copy_docnotes = false, $p_copy_monitoring_users = false ) {
 	global $g_db;
 
 	$t_bug_id = (int)$p_bug_id;
@@ -1126,35 +1126,35 @@ function bug_copy( $p_bug_id, $p_target_project_id = null, $p_copy_custom_fields
 		relationship_copy_all( $t_bug_id, $t_new_bug_id );
 	}
 
-	# Copy bugnotes
-	if( $p_copy_bugnotes ) {
-		$t_query = 'SELECT * FROM {bugnote} WHERE bug_id=' . db_param();
+	# Copy docnotes
+	if( $p_copy_docnotes ) {
+		$t_query = 'SELECT * FROM {docnote} WHERE bug_id=' . db_param();
 		$t_result = db_query( $t_query, array( $t_bug_id ) );
 
 		while( $t_bug_note = db_fetch_array( $t_result ) ) {
-			$t_bugnote_text_id = $t_bug_note['bugnote_text_id'];
+			$t_docnote_text_id = $t_bug_note['docnote_text_id'];
 
-			$t_query2 = 'SELECT * FROM {bugnote_text} WHERE id=' . db_param();
-			$t_result2 = db_query( $t_query2, array( $t_bugnote_text_id ) );
+			$t_query2 = 'SELECT * FROM {docnote_text} WHERE id=' . db_param();
+			$t_result2 = db_query( $t_query2, array( $t_docnote_text_id ) );
 
-			$t_bugnote_text_insert_id = -1;
-			if( $t_bugnote_text = db_fetch_array( $t_result2 ) ) {
-				$t_query2 = 'INSERT INTO {bugnote_text}
+			$t_docnote_text_insert_id = -1;
+			if( $t_docnote_text = db_fetch_array( $t_result2 ) ) {
+				$t_query2 = 'INSERT INTO {docnote_text}
 							   ( note )
 							   VALUES ( ' . db_param() . ' )';
-				db_query( $t_query2, array( $t_bugnote_text['note'] ) );
-				$t_bugnote_text_insert_id = db_insert_id( db_get_table( 'bugnote_text' ) );
+				db_query( $t_query2, array( $t_docnote_text['note'] ) );
+				$t_docnote_text_insert_id = db_insert_id( db_get_table( 'docnote_text' ) );
 			}
 
-			$t_query2 = 'INSERT INTO {bugnote}
-						   ( bug_id, reporter_id, bugnote_text_id, view_state, date_submitted, last_modified )
+			$t_query2 = 'INSERT INTO {docnote}
+						   ( bug_id, reporter_id, docnote_text_id, view_state, date_submitted, last_modified )
 						   VALUES ( ' . db_param() . ',
 						   			' . db_param() . ',
 						   			' . db_param() . ',
 						   			' . db_param() . ',
 						   			' . db_param() . ',
 						   			' . db_param() . ')';
-			db_query( $t_query2, array( $t_new_bug_id, $t_bug_note['reporter_id'], $t_bugnote_text_insert_id, $t_bug_note['view_state'], $t_bug_note['date_submitted'], $t_bug_note['last_modified'] ) );
+			db_query( $t_query2, array( $t_new_bug_id, $t_bug_note['reporter_id'], $t_docnote_text_insert_id, $t_bug_note['view_state'], $t_bug_note['date_submitted'], $t_bug_note['last_modified'] ) );
 		}
 	}
 
@@ -1242,7 +1242,7 @@ function bug_move( $p_bug_id, $p_target_project_id ) {
 
 /**
  * allows bug deletion :
- * delete the bug, bugtext, bugnote, and bugtexts selected
+ * delete the bug, bugtext, docnote, and bugtexts selected
  * @param integer $p_bug_id Integer representing bug identifier.
  * @return void
  * @access public
@@ -1269,8 +1269,8 @@ function bug_delete( $p_bug_id ) {
 	# Delete custom fields
 	custom_field_delete_all_values( $p_bug_id );
 
-	# Delete bugnotes
-	bugnote_delete_all( $p_bug_id );
+	# Delete docnotes
+	docnote_delete_all( $p_bug_id );
 
 	# Delete all sponsorships
 	sponsorship_delete_all( $p_bug_id );
@@ -1292,7 +1292,7 @@ function bug_delete( $p_bug_id ) {
 	# Delete bug info revisions
 	bug_revision_delete( $p_bug_id );
 
-	# Delete the bugnote text
+	# Delete the docnote text
 	$t_bug_text_id = bug_get_field( $p_bug_id, 'bug_text_id' );
 
 	$t_query = 'DELETE FROM {bug_text} WHERE id=' . db_param();
@@ -1440,17 +1440,17 @@ function bug_format_summary( $p_bug_id, $p_context ) {
 }
 
 /**
- * return the timestamp for the most recent time at which a bugnote
+ * return the timestamp for the most recent time at which a docnote
  *  associated with the bug was modified
  * @param integer $p_bug_id Integer representing bug identifier.
- * @return boolean|integer false or timestamp in integer format representing newest bugnote timestamp
+ * @return boolean|integer false or timestamp in integer format representing newest docnote timestamp
  * @access public
  * @uses database_api.php
  */
-function bug_get_newest_bugnote_timestamp( $p_bug_id ) {
+function bug_get_newest_docnote_timestamp( $p_bug_id ) {
 	$c_bug_id = (int)$p_bug_id;
 
-	$t_query = 'SELECT last_modified FROM {bugnote} WHERE bug_id=' . db_param() . ' ORDER BY last_modified DESC';
+	$t_query = 'SELECT last_modified FROM {docnote} WHERE bug_id=' . db_param() . ' ORDER BY last_modified DESC';
 	$t_result = db_query( $t_query, array( $c_bug_id ), 1 );
 	$t_row = db_result( $t_result );
 
@@ -1462,15 +1462,15 @@ function bug_get_newest_bugnote_timestamp( $p_bug_id ) {
 }
 
 /**
- * return the timestamp for the most recent time at which a bugnote
- * associated with the bug was modified and the total bugnote
+ * return the timestamp for the most recent time at which a docnote
+ * associated with the bug was modified and the total docnote
  * count in one db query
  * @param integer $p_bug_id Integer representing bug identifier.
- * @return object consisting of bugnote stats
+ * @return object consisting of docnote stats
  * @access public
  * @uses database_api.php
  */
-function bug_get_bugnote_stats( $p_bug_id ) {
+function bug_get_docnote_stats( $p_bug_id ) {
 	global $g_cache_bug;
 	$c_bug_id = (int)$p_bug_id;
 
@@ -1479,20 +1479,20 @@ function bug_get_bugnote_stats( $p_bug_id ) {
 	}
 
 	# @todo - optimise - max(), count()
-	$t_query = 'SELECT last_modified FROM {bugnote} WHERE bug_id=' . db_param() . ' ORDER BY last_modified ASC';
+	$t_query = 'SELECT last_modified FROM {docnote} WHERE bug_id=' . db_param() . ' ORDER BY last_modified ASC';
 	$t_result = db_query( $t_query, array( $c_bug_id ) );
 
-	$t_bugnote_count = 0;
+	$t_docnote_count = 0;
 	while( $t_row = db_fetch_array( $t_result ) ) {
-		$t_bugnote_count++;
+		$t_docnote_count++;
 	}
 
-	if( $t_bugnote_count === 0 ) {
+	if( $t_docnote_count === 0 ) {
 		return false;
 	}
 
 	$t_stats['last_modified'] = $t_row['last_modified'];
-	$t_stats['count'] = $t_bugnote_count;
+	$t_stats['count'] = $t_docnote_count;
 
 	return $t_stats;
 }
@@ -1628,13 +1628,13 @@ function bug_set_field( $p_bug_id, $p_field_name, $p_value ) {
  * assign the bug to the given user
  * @param integer $p_bug_id          A bug identifier.
  * @param integer $p_user_id         A user identifier.
- * @param string  $p_bugnote_text    The bugnote text.
- * @param boolean $p_bugnote_private Indicate whether bugnote is private.
+ * @param string  $p_docnote_text    The docnote text.
+ * @param boolean $p_docnote_private Indicate whether docnote is private.
  * @return boolean
  * @access public
  * @uses database_api.php
  */
-function bug_assign( $p_bug_id, $p_user_id, $p_bugnote_text = '', $p_bugnote_private = false ) {
+function bug_assign( $p_bug_id, $p_user_id, $p_docnote_text = '', $p_docnote_private = false ) {
 	if( ( $p_user_id != NO_USER ) && !access_has_bug_level( config_get( 'handle_bug_threshold' ), $p_bug_id, $p_user_id ) ) {
 		trigger_error( ERROR_USER_DOES_NOT_HAVE_REQ_ACCESS );
 	}
@@ -1661,8 +1661,8 @@ function bug_assign( $p_bug_id, $p_user_id, $p_bugnote_text = '', $p_bugnote_pri
 		history_log_event_direct( $p_bug_id, 'status', $h_status, $t_ass_val );
 		history_log_event_direct( $p_bug_id, 'handler_id', $h_handler_id, $p_user_id );
 
-		# Add bugnote if supplied ignore false return
-		bugnote_add( $p_bug_id, $p_bugnote_text, 0, $p_bugnote_private, 0, '', null, false );
+		# Add docnote if supplied ignore false return
+		docnote_add( $p_bug_id, $p_docnote_text, 0, $p_docnote_private, 0, '', null, false );
 
 		# updated the last_updated date
 		bug_update_date( $p_bug_id );
@@ -1679,19 +1679,19 @@ function bug_assign( $p_bug_id, $p_user_id, $p_bugnote_text = '', $p_bugnote_pri
 /**
  * close the given bug
  * @param integer $p_bug_id          A bug identifier.
- * @param string  $p_bugnote_text    The bugnote text.
- * @param boolean $p_bugnote_private Whether the bugnote is private.
+ * @param string  $p_docnote_text    The docnote text.
+ * @param boolean $p_docnote_private Whether the docnote is private.
  * @param string  $p_time_tracking   Time tracking value.
  * @return boolean (always true)
  * @access public
  */
-function bug_close( $p_bug_id, $p_bugnote_text = '', $p_bugnote_private = false, $p_time_tracking = '0:00' ) {
-	$p_bugnote_text = trim( $p_bugnote_text );
+function bug_close( $p_bug_id, $p_docnote_text = '', $p_docnote_private = false, $p_time_tracking = '0:00' ) {
+	$p_docnote_text = trim( $p_docnote_text );
 
-	# Add bugnote if supplied ignore a false return
-	# Moved bugnote_add before bug_set_field calls in case time_tracking_no_note is off.
+	# Add docnote if supplied ignore a false return
+	# Moved docnote_add before bug_set_field calls in case time_tracking_no_note is off.
 	# Error condition stopped execution but status had already been changed
-	bugnote_add( $p_bug_id, $p_bugnote_text, $p_time_tracking, $p_bugnote_private, 0, '', null, false );
+	docnote_add( $p_bug_id, $p_docnote_text, $p_time_tracking, $p_docnote_private, 0, '', null, false );
 
 	bug_set_field( $p_bug_id, 'status', config_get( 'bug_closed_status_threshold' ) );
 
@@ -1706,22 +1706,22 @@ function bug_close( $p_bug_id, $p_bugnote_text = '', $p_bugnote_private = false,
  * @param integer $p_bug_id           A bug identifier.
  * @param integer $p_resolution       Resolution status.
  * @param string  $p_fixed_in_version Fixed in version.
- * @param string  $p_bugnote_text     The bugnote text.
+ * @param string  $p_docnote_text     The docnote text.
  * @param integer $p_duplicate_id     A duplicate identifier.
  * @param integer $p_handler_id       A handler identifier.
- * @param boolean $p_bugnote_private  Whether this is a private bugnote.
+ * @param boolean $p_docnote_private  Whether this is a private docnote.
  * @param string  $p_time_tracking    Time tracking value.
  * @access public
  * @return boolean
  */
-function bug_resolve( $p_bug_id, $p_resolution, $p_fixed_in_version = '', $p_bugnote_text = '', $p_duplicate_id = null, $p_handler_id = null, $p_bugnote_private = false, $p_time_tracking = '0:00' ) {
+function bug_resolve( $p_bug_id, $p_resolution, $p_fixed_in_version = '', $p_docnote_text = '', $p_duplicate_id = null, $p_handler_id = null, $p_docnote_private = false, $p_time_tracking = '0:00' ) {
 	$c_resolution = (int)$p_resolution;
-	$p_bugnote_text = trim( $p_bugnote_text );
+	$p_docnote_text = trim( $p_docnote_text );
 
-	# Add bugnote if supplied
-	# Moved bugnote_add before bug_set_field calls in case time_tracking_no_note is off.
+	# Add docnote if supplied
+	# Moved docnote_add before bug_set_field calls in case time_tracking_no_note is off.
 	# Error condition stopped execution but status had already been changed
-	bugnote_add( $p_bug_id, $p_bugnote_text, $p_time_tracking, $p_bugnote_private, 0, '', null, false );
+	docnote_add( $p_bug_id, $p_docnote_text, $p_time_tracking, $p_docnote_private, 0, '', null, false );
 
 	$t_duplicate = !is_blank( $p_duplicate_id ) && ( $p_duplicate_id != 0 );
 	if( $t_duplicate ) {
@@ -1790,23 +1790,23 @@ function bug_resolve( $p_bug_id, $p_resolution, $p_fixed_in_version = '', $p_bug
 /**
  * reopen the given bug
  * @param integer $p_bug_id          A bug identifier.
- * @param string  $p_bugnote_text    The bugnote text.
+ * @param string  $p_docnote_text    The docnote text.
  * @param string  $p_time_tracking   Time tracking value.
- * @param boolean $p_bugnote_private Whether this is a private bugnote.
+ * @param boolean $p_docnote_private Whether this is a private docnote.
  * @return boolean (always true)
  * @access public
  * @uses database_api.php
  * @uses email_api.php
- * @uses bugnote_api.php
+ * @uses docnote_api.php
  * @uses config_api.php
  */
-function bug_reopen( $p_bug_id, $p_bugnote_text = '', $p_time_tracking = '0:00', $p_bugnote_private = false ) {
-	$p_bugnote_text = trim( $p_bugnote_text );
+function bug_reopen( $p_bug_id, $p_docnote_text = '', $p_time_tracking = '0:00', $p_docnote_private = false ) {
+	$p_docnote_text = trim( $p_docnote_text );
 
-	# Add bugnote if supplied
-	# Moved bugnote_add before bug_set_field calls in case time_tracking_no_note is off.
+	# Add docnote if supplied
+	# Moved docnote_add before bug_set_field calls in case time_tracking_no_note is off.
 	# Error condition stopped execution but status had already been changed
-	bugnote_add( $p_bug_id, $p_bugnote_text, $p_time_tracking, $p_bugnote_private, 0, '', null, false );
+	docnote_add( $p_bug_id, $p_docnote_text, $p_time_tracking, $p_docnote_private, 0, '', null, false );
 
 	bug_set_field( $p_bug_id, 'status', config_get( 'bug_reopen_status' ) );
 	bug_set_field( $p_bug_id, 'resolution', config_get( 'bug_reopen_resolution' ) );
@@ -1882,7 +1882,7 @@ function bug_get_monitors( $p_bug_id ) {
 		return array();
 	}
 
-	# get the bugnote data
+	# get the docnote data
 	$t_query = 'SELECT user_id, enabled
 			FROM {bug_monitor} m, {user} u
 			WHERE m.bug_id=' . db_param() . ' AND m.user_id = u.id

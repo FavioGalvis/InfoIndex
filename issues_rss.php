@@ -221,7 +221,7 @@ for( $i = 0; $i < $t_issues_count; $i++ ) {
 	}
 
 	# $comments = 'http://www.example.com/sometext.php?somevariable=somevalue&comments=1';	# url to comment page rss 2.0 value
-	$t_comments = $t_path . 'view.php?id=' . $t_bug->id . '#bugnotes';
+	$t_comments = $t_path . 'view.php?id=' . $t_bug->id . '#docnotes';
 
 	# optional mod_im value for dispaying a different pic for every item
 	$t_image = '';

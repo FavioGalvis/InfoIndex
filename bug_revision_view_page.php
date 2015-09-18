@@ -25,7 +25,7 @@
  * @uses core.php
  * @uses access_api.php
  * @uses bug_api.php
- * @uses bugnote_api.php
+ * @uses docnote_api.php
  * @uses bug_revision_api.php
  * @uses config_api.php
  * @uses constant_inc.php
@@ -42,7 +42,7 @@
 require_once( 'core.php' );
 require_api( 'access_api.php' );
 require_api( 'bug_api.php' );
-require_api( 'bugnote_api.php' );
+require_api( 'docnote_api.php' );
 require_api( 'bug_revision_api.php' );
 require_api( 'config_api.php' );
 require_api( 'constant_inc.php' );
@@ -56,7 +56,7 @@ require_api( 'string_api.php' );
 require_api( 'user_api.php' );
 
 $f_bug_id = gpc_get_int( 'bug_id', 0 );
-$f_bugnote_id = gpc_get_int( 'bugnote_id', 0 );
+$f_docnote_id = gpc_get_int( 'docnote_id', 0 );
 $f_rev_id = gpc_get_int( 'rev_id', 0 );
 
 $t_title = '';
@@ -68,13 +68,13 @@ if( $f_bug_id ) {
 
 	$t_title = lang_get( 'issue_id' ) . $t_bug_id;
 
-} else if( $f_bugnote_id ) {
-	$t_bug_id = bugnote_get_field( $f_bugnote_id, 'bug_id' );
+} else if( $f_docnote_id ) {
+	$t_bug_id = docnote_get_field( $f_docnote_id, 'bug_id' );
 	$t_bug_data = bug_get( $t_bug_id, true );
 
-	$t_bug_revisions = bug_revision_list( $t_bug_id, REV_ANY, $f_bugnote_id );
+	$t_bug_revisions = bug_revision_list( $t_bug_id, REV_ANY, $f_docnote_id );
 
-	$t_title = lang_get( 'bugnote' ) . ' ' . $f_bugnote_id;
+	$t_title = lang_get( 'docnote' ) . ' ' . $f_docnote_id;
 
 } else if( $f_rev_id ) {
 	$t_bug_revisions = bug_revision_like( $f_rev_id );
@@ -117,16 +117,16 @@ function show_revision( array $p_revision ) {
 		case REV_ADDITIONAL_INFO:
 			$t_label = lang_get( 'additional_information' );
 			break;
-		case REV_BUGNOTE:
+		case REV_DOCNOTE:
 			if( is_null( $s_user_access ) ) {
-				$s_user_access = access_has_bug_level( config_get( 'private_bugnote_threshold' ), $p_revision['bug_id'] );
+				$s_user_access = access_has_bug_level( config_get( 'private_docnote_threshold' ), $p_revision['bug_id'] );
 			}
 
 			if( !$s_user_access ) {
 				return null;
 			}
 
-			$t_label = lang_get( 'bugnote' );
+			$t_label = lang_get( 'docnote' );
 			break;
 		default:
 			$t_label = '';
@@ -174,7 +174,7 @@ layout_page_begin();
 	<div class="btn-toolbar">
 		<div class="btn-group pull-right">
 <?php
-if( !$f_bug_id && !$f_bugnote_id ) {
+if( !$f_bug_id && !$f_docnote_id ) {
 	print_small_button( '?bug_id=' . $t_bug_id, lang_get( 'all_revisions' ) );
 }
 print_small_button( 'view.php?id=' . $t_bug_id, lang_get( 'back_to_issue' ) );

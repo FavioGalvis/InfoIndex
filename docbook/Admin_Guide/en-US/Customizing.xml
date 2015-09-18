@@ -733,7 +733,7 @@ $g_notify_flags['closed'] = array(
                     <para>Exclude those who contributed issue notes from getting
                         messages about other changes in the issue.
 <programlisting>
-$g_default_notify_flags['bugnotes'] = OFF;
+$g_default_notify_flags['docnotes'] = OFF;
 </programlisting>
                     </para>
                 </listitem>
@@ -748,7 +748,7 @@ $g_notify_flags['closed']['monitor'] = OFF;
                 <listitem>
                     <para>Only notify developers when issue notes are added.
 <programlisting>
-$g_notify_flags['bugnote'] = array(
+$g_notify_flags['docnote'] = array(
 	'threshold_min' => DEVELOPER,
 	'threshold_max' => DEVELOPER,
 );
@@ -788,7 +788,7 @@ $g_default_notify_flags = array(
 	'reporter'      => ON,
 	'handler'       => ON,
 	'monitor'       => ON,
-	'bugnotes'      => ON,
+	'docnotes'      => ON,
 	'threshold_min' => NOBODY,
 	'threshold_max' => NOBODY
 );
@@ -1077,7 +1077,7 @@ $g_status_enum_workflow[CLOSED]       ='20:feedback,50:assigned';
 							<entry>In case of invalid data, this function should call trigger_error()</entry>
 						</row>
 						<row>
-							<entry>custom_function_default_issue_update_validate( $p_issue_id, $p_new_issue_data, $p_bugnote_text )</entry>
+							<entry>custom_function_default_issue_update_validate( $p_issue_id, $p_new_issue_data, $p_docnote_text )</entry>
 							<entry>Validate field issue data before updating</entry>
 							<entry>In case of invalid data, this function should call trigger_error()</entry>
 						</row>
@@ -1126,7 +1126,7 @@ $g_status_enum_workflow[CLOSED]       ='20:feedback,50:assigned';
  * verify that the resolution is not set to OPEN
  * verify that the fixed in version is set (if versions of the project exist)
  */
-function custom_function_override_issue_update_validate( $p_issue_id, $p_bug_data, $p_bugnote_text ) {
+function custom_function_override_issue_update_validate( $p_issue_id, $p_bug_data, $p_docnote_text ) {
 	if( $p_bug_data->status == RESOLVED ) {
 		if( $p_bug_data->resolution == OPEN ) {
 			error_parameters( 'the resolution cannot be open to resolve the issue' );

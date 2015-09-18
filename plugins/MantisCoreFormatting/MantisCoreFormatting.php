@@ -119,7 +119,7 @@ class MantisCoreFormattingPlugin extends MantisFormattingPlugin {
 
 		if( ON == $s_buglinks ) {
 			$t_string = string_process_bug_link( $t_string );
-			$t_string = string_process_bugnote_link( $t_string );
+			$t_string = string_process_docnote_link( $t_string );
 		}
 
 		return $t_string;
@@ -155,7 +155,7 @@ class MantisCoreFormattingPlugin extends MantisFormattingPlugin {
 
 		if( ON == $s_buglinks ) {
 			$t_string = string_process_bug_link( $t_string, true, false, true );
-			$t_string = string_process_bugnote_link( $t_string, true, false, true );
+			$t_string = string_process_docnote_link( $t_string, true, false, true );
 		}
 
 		return $t_string;
@@ -183,7 +183,7 @@ class MantisCoreFormattingPlugin extends MantisFormattingPlugin {
 
 		if( ON == $s_buglinks ) {
 			$t_string = string_process_bug_link( $t_string, false );
-			$t_string = string_process_bugnote_link( $t_string, false );
+			$t_string = string_process_docnote_link( $t_string, false );
 		}
 
 		return $t_string;

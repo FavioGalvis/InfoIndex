@@ -27,7 +27,7 @@
  * @uses authentication_api.php
  * @uses bug_api.php
  * @uses bug_revision_api.php
- * @uses bugnote_api.php
+ * @uses docnote_api.php
  * @uses columns_api.php
  * @uses config_api.php
  * @uses constant_inc.php
@@ -47,7 +47,7 @@ require_api( 'access_api.php' );
 require_api( 'authentication_api.php' );
 require_api( 'bug_api.php' );
 require_api( 'bug_revision_api.php' );
-require_api( 'bugnote_api.php' );
+require_api( 'docnote_api.php' );
 require_api( 'columns_api.php' );
 require_api( 'config_api.php' );
 require_api( 'constant_inc.php' );
@@ -107,7 +107,7 @@ function history_log_event( $p_bug_id, $p_field_name, $p_old_value ) {
 /**
  * log the changes
  * events should be logged *after* the modification
- * These are special case logs (new bug, deleted bugnote, etc.)
+ * These are special case logs (new bug, deleted docnote, etc.)
  * @param integer $p_bug_id    The bug identifier of the bug being modified.
  * @param integer $p_type      The type of the modification.
  * @param string  $p_old_value The optional value to store in the old_value field.
@@ -267,17 +267,17 @@ function history_get_event_from_row( $p_result, $p_user_id = null, $p_check_acce
 			}
 		}
 
-		# bugnotes
+		# docnotes
 		if( $t_user_id != $v_user_id ) {
 			# bypass if user originated note
-			if( ( $v_type == BUGNOTE_ADDED ) || ( $v_type == BUGNOTE_UPDATED ) || ( $v_type == BUGNOTE_DELETED ) ) {
-				if( !access_has_bug_level( config_get( 'private_bugnote_threshold' ), $v_bug_id, $t_user_id ) && ( bugnote_get_field( $v_old_value, 'view_state' ) == VS_PRIVATE ) ) {
+			if( ( $v_type == DOCNOTE_ADDED ) || ( $v_type == DOCNOTE_UPDATED ) || ( $v_type == DOCNOTE_DELETED ) ) {
+				if( !access_has_bug_level( config_get( 'private_docnote_threshold' ), $v_bug_id, $t_user_id ) && ( docnote_get_field( $v_old_value, 'view_state' ) == VS_PRIVATE ) ) {
 					continue;
 				}
 			}
 
-			if( $v_type == BUGNOTE_STATE_CHANGED ) {
-				if( !access_has_bug_level( config_get( 'private_bugnote_threshold' ), $v_bug_id, $t_user_id ) && ( bugnote_get_field( $v_new_value, 'view_state' ) == VS_PRIVATE ) ) {
+			if( $v_type == DOCNOTE_STATE_CHANGED ) {
+				if( !access_has_bug_level( config_get( 'private_docnote_threshold' ), $v_bug_id, $t_user_id ) && ( docnote_get_field( $v_new_value, 'view_state' ) == VS_PRIVATE ) ) {
 					continue;
 				}
 			}
@@ -549,16 +549,16 @@ function history_localize_item( $p_field_name, $p_type, $p_old_value, $p_new_val
 				case NEW_BUG:
 					$t_note = lang_get( 'new_bug' );
 					break;
-				case BUGNOTE_ADDED:
-					$t_note = lang_get( 'bugnote_added' ) . ': ' . $p_old_value;
+				case DOCNOTE_ADDED:
+					$t_note = lang_get( 'docnote_added' ) . ': ' . $p_old_value;
 					break;
-				case BUGNOTE_UPDATED:
-					$t_note = lang_get( 'bugnote_edited' ) . ': ' . $p_old_value;
+				case DOCNOTE_UPDATED:
+					$t_note = lang_get( 'docnote_edited' ) . ': ' . $p_old_value;
 					$t_old_value = (int)$p_old_value;
 					$t_new_value = (int)$p_new_value;
 					if( $p_linkify && bug_revision_exists( $t_new_value ) ) {
-						if( bugnote_exists( $t_old_value ) ) {
-							$t_bug_revision_view_page_argument = 'bugnote_id=' . $t_old_value . '#r' . $t_new_value;
+						if( docnote_exists( $t_old_value ) ) {
+							$t_bug_revision_view_page_argument = 'docnote_id=' . $t_old_value . '#r' . $t_new_value;
 						} else {
 							$t_bug_revision_view_page_argument = 'rev_id=' . $t_new_value;
 						}
@@ -567,8 +567,8 @@ function history_localize_item( $p_field_name, $p_type, $p_old_value, $p_new_val
 						$t_raw = false;
 					}
 					break;
-				case BUGNOTE_DELETED:
-					$t_note = lang_get( 'bugnote_deleted' ) . ': ' . $p_old_value;
+				case DOCNOTE_DELETED:
+					$t_note = lang_get( 'docnote_deleted' ) . ': ' . $p_old_value;
 					break;
 				case DESCRIPTION_UPDATED:
 					$t_note = lang_get( 'description_updated' );
@@ -603,9 +603,9 @@ function history_localize_item( $p_field_name, $p_type, $p_old_value, $p_new_val
 				case FILE_DELETED:
 					$t_note = lang_get( 'file_deleted' ) . ': ' . $p_old_value;
 					break;
-				case BUGNOTE_STATE_CHANGED:
+				case DOCNOTE_STATE_CHANGED:
 					$p_old_value = get_enum_element( 'view_state', $p_old_value );
-					$t_note = lang_get( 'bugnote_view_state' ) . ': ' . $p_new_value . ': ' . $p_old_value;
+					$t_note = lang_get( 'docnote_view_state' ) . ': ' . $p_new_value . ': ' . $p_old_value;
 					break;
 				case BUG_MONITOR:
 					$p_old_value = user_get_name( $p_old_value );
@@ -673,8 +673,8 @@ function history_localize_item( $p_field_name, $p_type, $p_old_value, $p_new_val
 				case BUG_REVISION_DROPPED:
 					$t_note = lang_get( 'bug_revision_dropped_history' ) . ': ' . bug_revision_get_type_name( $p_new_value ) . ': ' . $p_old_value;
 					break;
-				case BUGNOTE_REVISION_DROPPED:
-					$t_note = lang_get( 'bugnote_revision_dropped_history' ) . ': ' . $p_new_value . ': ' . $p_old_value;
+				case DOCNOTE_REVISION_DROPPED:
+					$t_note = lang_get( 'docnote_revision_dropped_history' ) . ': ' . $p_new_value . ': ' . $p_old_value;
 					break;
 			}
 	}

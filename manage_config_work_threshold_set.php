@@ -179,13 +179,13 @@ set_capability_enum( 'bug_assigned_status' );
 set_capability_boolean( 'limit_reporters', true );
 
 # Notes
-set_capability_row( 'add_bugnote_threshold' );
-set_capability_row( 'update_bugnote_threshold' );
-set_capability_row( 'bugnote_user_edit_threshold' );
-set_capability_row( 'delete_bugnote_threshold' );
-set_capability_row( 'bugnote_user_delete_threshold' );
-set_capability_row( 'private_bugnote_threshold' );
-set_capability_row( 'bugnote_user_change_view_state_threshold' );
+set_capability_row( 'add_docnote_threshold' );
+set_capability_row( 'update_docnote_threshold' );
+set_capability_row( 'docnote_user_edit_threshold' );
+set_capability_row( 'delete_docnote_threshold' );
+set_capability_row( 'docnote_user_delete_threshold' );
+set_capability_row( 'private_docnote_threshold' );
+set_capability_row( 'docnote_user_change_view_state_threshold' );
 
 # Others
 set_capability_row( 'view_changelog_threshold' );

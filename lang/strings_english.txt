@@ -108,7 +108,7 @@ $s_csv_export = 'CSV Export';
 $s_excel_export = 'Excel Export';
 $s_login_anonymously = 'Login Anonymously';
 $s_anonymous = 'Anonymous';
-$s_jump_to_bugnotes = 'Jump to Notes';
+$s_jump_to_docnotes = 'Jump to Notes';
 $s_public_project_msg = 'This project is public. All users have access.';
 $s_private_project_msg = 'This project is private. Only administrators and manually added users have access.';
 $s_access_level_project = 'Project Access Level';
@@ -130,16 +130,16 @@ $s_field = 'Field';
 $s_old_value = 'Old Value';
 $s_new_value = 'New Value';
 $s_date_modified = 'Date Modified';
-$s_bugnote = 'Note';
+$s_docnote = 'Note';
 $s_change = 'Change';
-$s_bugnote_view_state = 'Note View State';
+$s_docnote_view_state = 'Note View State';
 $s_bug_monitor = 'Issue Monitored';
 $s_bug_end_monitor = 'Issue End Monitor';
 $s_announcement = 'Announcement';
 $s_stays_on_top = 'Stays on Top';
-$s_bugnote_link_title = 'Direct link to note';
-$s_delete_bugnote_button = 'Delete Note';
-$s_delete_bugnote_sure_msg = 'Are you sure you wish to delete this note?';
+$s_docnote_link_title = 'Direct link to note';
+$s_delete_docnote_button = 'Delete Note';
+$s_delete_docnote_sure_msg = 'Are you sure you wish to delete this note?';
 $s_bug_relationships = 'Relationships';
 $s_bug_relationships_label = 'Relationships:';
 $s_empty_password_sure_msg = 'The user has an empty password. Are you sure that is what you want?';
@@ -161,9 +161,9 @@ $s_dependant_on = 'parent of';
 $s_blocks = 'child of';
 
 $s_new_bug = 'New Issue';
-$s_bugnote_added = 'Note Added';
-$s_bugnote_edited = 'Note Edited';
-$s_bugnote_deleted = 'Note Deleted';
+$s_docnote_added = 'Note Added';
+$s_docnote_edited = 'Note Edited';
+$s_docnote_deleted = 'Note Deleted';
 $s_summary_updated = 'Summary Updated';
 $s_description_updated = 'Description Updated';
 $s_additional_information_updated = 'Additional Information Updated';
@@ -228,9 +228,9 @@ $s_printing_preferences_title = 'Choose fields to print';
 $s_printing_options_link = 'Printing Options';
 
 # word and excel export
-$s_bugnote_title = 'Note handler';
-$s_bugnote_date = 'Date of note';
-$s_bugnote_description = 'Note description';
+$s_docnote_title = 'Note handler';
+$s_docnote_date = 'Date of note';
+$s_docnote_description = 'Note description';
 
 $s_error_no_proceed = 'Please use the "Back" button in your web browser to return to the previous page. There you can correct whatever problems were identified in this error or select another action. You can also click an option from the menu bar to go directly to a new section.';
 $s_login_error = 'Your account may be disabled or blocked or the username/password you entered is incorrect.';
@@ -297,7 +297,7 @@ $s_email_notification_title_for_action_bug_updated = 'The following issue has be
 $s_email_notification_title_for_action_sponsorship_added = 'The following issue has been SPONSORED.';
 $s_email_notification_title_for_action_sponsorship_updated = 'A sponsorship of the following issue was modified.';
 $s_email_notification_title_for_action_sponsorship_deleted = 'A sponsorship of the following issue was withdrawn.';
-$s_email_notification_title_for_action_bugnote_submitted = 'A NOTE has been added to this issue.';
+$s_email_notification_title_for_action_docnote_submitted = 'A NOTE has been added to this issue.';
 $s_email_notification_title_for_action_duplicate_of_relationship_added = 'The following issue has been set as DUPLICATE OF issue %1$s.';
 $s_email_notification_title_for_action_has_duplicate_relationship_added = 'The issue %1$s has been set as DUPLICATE OF the following issue.';
 $s_email_notification_title_for_action_related_to_relationship_added = 'The following issue has been set as RELATED TO issue %1$s.';
@@ -369,19 +369,19 @@ $s_minutes = 'minutes';
 $s_redirect_delay = 'Redirect Delay';
 $s_seconds = 'seconds';
 $s_with_minimum_severity = 'With Minimum Severity of';
-$s_bugnote_order = 'Notes Sort Order';
-$s_bugnote_order_asc = 'Ascending';
-$s_bugnote_order_desc = 'Descending';
+$s_docnote_order = 'Notes Sort Order';
+$s_docnote_order_asc = 'Ascending';
+$s_docnote_order_desc = 'Descending';
 $s_email_on_new = 'E-mail on New';
 $s_email_on_assigned = 'E-mail on Change of Handler';
 $s_email_on_feedback = 'E-mail on Feedback';
 $s_email_on_resolved = 'E-mail on Resolved';
 $s_email_on_closed = 'E-mail on Closed';
 $s_email_on_reopened = 'E-mail on Reopened';
-$s_email_on_bugnote_added = 'E-mail on Note Added';
+$s_email_on_docnote_added = 'E-mail on Note Added';
 $s_email_on_status_change = 'E-mail on Status Change';
 $s_email_on_priority_change = 'E-mail on Priority Change';
-$s_email_bugnote_limit = 'E-mail Notes Limit';
+$s_email_docnote_limit = 'E-mail Notes Limit';
 $s_language = 'Language';
 $s_update_prefs_button = 'Update Prefs';
 $s_reset_prefs_button = 'Reset Prefs';
@@ -497,8 +497,8 @@ $s_file_size_info = '%1$s %2$s'; # $1 = size, $2 = unit (e.g. kb, bytes)
 
 # bug_reopen.php
 $s_bug_reopened_msg = 'Issue has been reopened...';
-$s_reopen_add_bugnote_title = 'Add Note Reason For Reopening Issue';
-$s_bugnote_add_reopen_button = 'Add Note and Reopen Issue';
+$s_reopen_add_docnote_title = 'Add Note Reason For Reopening Issue';
+$s_docnote_add_reopen_button = 'Add Note and Reopen Issue';
 
 # bug_resolve_page.php
 $s_resolved_bug_title = 'Resolve Issue';
@@ -506,8 +506,8 @@ $s_resolved_bug_button = 'Resolve Issue';
 
 # bug_resolve_page2.php
 $s_bug_resolved_msg = 'Issue has been resolved. Enter note below...';
-$s_resolve_add_bugnote_title = 'Add Note Reason For Resolving Issue';
-$s_bugnote_add_resolve_button = 'Add Note';
+$s_resolve_add_docnote_title = 'Add Note Reason For Resolving Issue';
+$s_docnote_add_resolve_button = 'Add Note';
 
 # bug_reminder_page.php
 $s_from = 'From';
@@ -589,7 +589,7 @@ $s_revision = 'Revision';
 $s_revision_by = '%1$s by %2$s';
 $s_revision_drop = 'Drop';
 $s_bug_revision_dropped_history = 'Issue Revision Dropped';
-$s_bugnote_revision_dropped_history = 'Note Revision Dropped';
+$s_docnote_revision_dropped_history = 'Note Revision Dropped';
 $s_all_revisions = 'All Revisions';
 $s_back_to_issue = 'Back to Issue';
 $s_confirm_revision_drop = 'Are you sure you want to drop this issue revision?';
@@ -597,26 +597,26 @@ $s_confirm_revision_drop = 'Are you sure you want to drop this issue revision?';
 # bug_vote_add.php
 $s_vote_added_msg = 'Vote has been added...';
 
-# bugnote_add.php
-$s_bugnote_added_msg = 'Note added...';
+# docnote_add.php
+$s_docnote_added_msg = 'Note added...';
 
-# bugnote_delete.php
-$s_bugnote_deleted_msg = 'Note has been successfully deleted...';
+# docnote_delete.php
+$s_docnote_deleted_msg = 'Note has been successfully deleted...';
 $s_bug_notes_title = 'Notes';
 
-# bugnote_edit_page.php
-$s_edit_bugnote_title = 'Edit Note';
+# docnote_edit_page.php
+$s_edit_docnote_title = 'Edit Note';
 
-# bugnote_inc.php
-$s_no_bugnotes_msg = 'There are no notes attached to this issue.';
+# docnote_inc.php
+$s_no_docnotes_msg = 'There are no notes attached to this issue.';
 $s_delete_link = 'Delete';
-$s_add_bugnote_title = 'Add Note';
-$s_add_bugnote_button = 'Add Note';
-$s_bugnote_edit_link = 'Edit';
+$s_add_docnote_title = 'Add Note';
+$s_add_docnote_button = 'Add Note';
+$s_docnote_edit_link = 'Edit';
 $s_closed_bug_button = 'Close Issue';
 
-# bugnote_update.php
-$s_bugnote_updated_msg = 'Note has been successfully updated...';
+# docnote_update.php
+$s_docnote_updated_msg = 'Note has been successfully updated...';
 $s_last_edited = 'Last edited:';
 
 # file_api.php
@@ -751,7 +751,7 @@ $s_colour_project = 'Project setting overrides others.';
 $s_colour_global = 'All Project settings override default configuration.';
 $s_issue_reporter = 'User who reported the issue';
 $s_issue_handler = 'User who is handling the issue';
-$s_users_added_bugnote = 'Users who added Issue Notes';
+$s_users_added_docnote = 'Users who added Issue Notes';
 $s_change_configuration = 'Update Configuration';
 $s_message = 'Message';
 $s_default_notify = 'Setting default notification flags to';
@@ -792,11 +792,11 @@ $s_assign_issue = 'Assign an issue';
 $s_allow_reporter_close = 'Allow Reporter to close Issue';
 $s_allow_reporter_reopen = 'Allow Reporter to re-open Issue';
 $s_set_status_assigned = 'Set status on assignment of Handler';
-$s_edit_others_bugnotes = 'Edit others\' notes';
-$s_edit_own_bugnotes = 'Edit own notes';
-$s_delete_others_bugnotes = 'Delete others\' notes';
-$s_delete_own_bugnotes = 'Delete own notes';
-$s_change_view_state_own_bugnotes = 'Change view state of own notes';
+$s_edit_others_docnotes = 'Edit others\' notes';
+$s_edit_own_docnotes = 'Edit own notes';
+$s_delete_others_docnotes = 'Delete others\' notes';
+$s_delete_own_docnotes = 'Delete own notes';
+$s_change_view_state_own_docnotes = 'Change view state of own notes';
 $s_limit_access = 'Limit reporter\'s access to their own issues';
 $s_submit_status = 'Status to which a new issue is set';
 $s_assigned_status = 'Status to set auto-assigned issues to';
@@ -1606,7 +1606,7 @@ $MANTIS_ERROR[ERROR_USER_NAME_NOT_UNIQUE] = 'That username is already being used
 $MANTIS_ERROR[ERROR_CONFIG_OPT_NOT_FOUND] = 'Configuration option "%1$s" not found.';
 $MANTIS_ERROR[ERROR_CONFIG_OPT_CANT_BE_SET_IN_DB] = 'Configuration option "%1$s" can not be set in the database. It must be set in config_inc.php.';
 $MANTIS_ERROR[ERROR_LANG_STRING_NOT_FOUND] = 'String "%1$s" not found.';
-$MANTIS_ERROR[ERROR_BUGNOTE_NOT_FOUND] = 'Note not found.';
+$MANTIS_ERROR[ERROR_DOCNOTE_NOT_FOUND] = 'Note not found.';
 $MANTIS_ERROR[ERROR_PROJECT_NOT_FOUND] = 'Project "%1$s" not found.';
 $MANTIS_ERROR[ERROR_DB_FIELD_NOT_FOUND] = 'Database field "%1$s" not found.';
 $MANTIS_ERROR[ERROR_HANDLER_ACCESS_TOO_LOW] = 'Issue handler does not have sufficient access rights to handle issue at this status.';

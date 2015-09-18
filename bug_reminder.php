@@ -25,7 +25,7 @@
  * @uses core.php
  * @uses access_api.php
  * @uses bug_api.php
- * @uses bugnote_api.php
+ * @uses docnote_api.php
  * @uses config_api.php
  * @uses constant_inc.php
  * @uses email_api.php
@@ -42,7 +42,7 @@
 require_once( 'core.php' );
 require_api( 'access_api.php' );
 require_api( 'bug_api.php' );
-require_api( 'bugnote_api.php' );
+require_api( 'docnote_api.php' );
 require_api( 'config_api.php' );
 require_api( 'constant_inc.php' );
 require_api( 'email_api.php' );
@@ -93,7 +93,7 @@ foreach ( $f_to as $t_recipient ) {
 
 $t_result = email_bug_reminder( $f_to, $f_bug_id, $f_body );
 
-# Add reminder as bugnote if store reminders option is ON.
+# Add reminder as docnote if store reminders option is ON.
 if( ON == config_get( 'store_reminders' ) ) {
 	# Build list of recipients, truncated to note_attr fields's length
 	$t_attr = '|';
@@ -108,7 +108,7 @@ if( ON == config_get( 'store_reminders' ) ) {
 		}
 		$t_attr .= $t_recipient;
 	}
-	bugnote_add( $f_bug_id, $f_body, 0, config_get( 'default_reminder_view_status' ) == VS_PRIVATE, REMINDER, $t_attr, null, false );
+	docnote_add( $f_bug_id, $f_body, 0, config_get( 'default_reminder_view_status' ) == VS_PRIVATE, REMINDER, $t_attr, null, false );
 }
 
 form_security_purge( 'bug_reminder' );

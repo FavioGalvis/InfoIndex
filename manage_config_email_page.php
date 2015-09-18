@@ -228,7 +228,7 @@ function get_section_begin_for_email( $p_section_name ) {
 	echo '<th class="bold" style="text-align:center" rowspan="2">&#160;' . lang_get( 'issue_reporter' ) . '&#160;</th>' . "\n";
 	echo '<th class="bold" style="text-align:center" rowspan="2">&#160;' . lang_get( 'issue_handler' ) . '&#160;</th>' . "\n";
 	echo '<th class="bold" style="text-align:center" rowspan="2">&#160;' . lang_get( 'users_monitoring_bug' ) . '&#160;</th>' . "\n";
-	echo '<th class="bold" style="text-align:center" rowspan="2">&#160;' . lang_get( 'users_added_bugnote' ) . '&#160;</th>' . "\n";
+	echo '<th class="bold" style="text-align:center" rowspan="2">&#160;' . lang_get( 'users_added_docnote' ) . '&#160;</th>' . "\n";
 	echo '<th class="bold" style="text-align:center" colspan="' . count( $t_access_levels ) . '">&#160;' . lang_get( 'access_levels' ) . '&#160;</th>' . "\n";
 	echo '  </tr><tr>' . "\n";
 
@@ -255,7 +255,7 @@ function get_capability_row_for_email( $p_caption, $p_message_type ) {
 	echo '  <td' . color_notify_flag( $p_message_type, 'reporter' ) . '>' . show_notify_flag( $p_message_type, 'reporter' )  . '</td>' . "\n";
 	echo '  <td' . color_notify_flag( $p_message_type, 'handler' ) . '>' . show_notify_flag( $p_message_type, 'handler' ) . '</td>' . "\n";
 	echo '  <td' . color_notify_flag( $p_message_type, 'monitor' ) . '>' . show_notify_flag( $p_message_type, 'monitor' ) . '</td>' . "\n";
-	echo '  <td' . color_notify_flag( $p_message_type, 'bugnotes' ) . '>' . show_notify_flag( $p_message_type, 'bugnotes' ) . '</td>' . "\n";
+	echo '  <td' . color_notify_flag( $p_message_type, 'docnotes' ) . '>' . show_notify_flag( $p_message_type, 'docnotes' ) . '</td>' . "\n";
 
 	foreach( $t_access_levels as $t_access_level ) {
 		echo '  <td' . color_threshold_flag( $t_access_level, $p_message_type ) . '>' . show_notify_threshold( $t_access_level, $p_message_type ) . '</td>' . "\n";
@@ -287,7 +287,7 @@ $t_access = current_user_get_access_level();
 $t_project = helper_get_current_project();
 
 # build a list of all of the actions
-$t_actions = array( 'owner', 'reopened', 'deleted', 'bugnote' );
+$t_actions = array( 'owner', 'reopened', 'deleted', 'docnote' );
 if( config_get( 'enable_sponsorship' ) == ON ) {
 	$t_actions[] = 'sponsor';
 }
@@ -361,7 +361,7 @@ if( config_get( 'enable_email_notification' ) == ON ) {
 	get_capability_row_for_email( lang_get( 'email_on_assigned' ), 'owner' );
 	get_capability_row_for_email( lang_get( 'email_on_reopened' ), 'reopened' );
 	get_capability_row_for_email( lang_get( 'email_on_deleted' ), 'deleted' );
-	get_capability_row_for_email( lang_get( 'email_on_bugnote_added' ), 'bugnote' );
+	get_capability_row_for_email( lang_get( 'email_on_docnote_added' ), 'docnote' );
 	if( config_get( 'enable_sponsorship' ) == ON ) {
 		get_capability_row_for_email( lang_get( 'email_on_sponsorship_changed' ), 'sponsor' );
 	}

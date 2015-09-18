@@ -335,7 +335,7 @@ function column_get_title( $p_column ) {
 	switch( $p_column ) {
 		case 'attachment_count':
 			return lang_get( 'attachments' );
-		case 'bugnotes_count':
+		case 'docnotes_count':
 			return '#';
 		case 'category_id':
 			return lang_get( 'category' );
@@ -872,7 +872,7 @@ function print_column_title_summary( $p_sort, $p_dir, $p_columns_target = COLUMN
 }
 
 /**
- * Print table header for column bugnotes count
+ * Print table header for column docnotes count
  *
  * @param string  $p_sort           Sort.
  * @param string  $p_dir            Direction.
@@ -880,8 +880,8 @@ function print_column_title_summary( $p_sort, $p_dir, $p_columns_target = COLUMN
  * @return void
  * @access public
  */
-function print_column_title_bugnotes_count( $p_sort, $p_dir, $p_columns_target = COLUMNS_TARGET_VIEW_PAGE ) {
-	echo '<th class="column-bugnotes-count"> <i class="fa fa-comments blue"></i> </th>';
+function print_column_title_docnotes_count( $p_sort, $p_dir, $p_columns_target = COLUMNS_TARGET_VIEW_PAGE ) {
+	echo '<th class="column-docnotes-count"> <i class="fa fa-comments blue"></i> </th>';
 }
 
 /**
@@ -986,7 +986,7 @@ function print_column_selection( BugData $p_bug, $p_columns_target = COLUMNS_TAR
 		access_has_project_level( config_get( 'update_bug_status_threshold', null, null, $p_bug->project_id ), $p_bug->project_id ) ||
 		access_has_project_level( config_get( 'set_bug_sticky_threshold', null, null, $p_bug->project_id ), $p_bug->project_id ) ||
 		access_has_project_level( config_get( 'change_view_status_threshold', null, null, $p_bug->project_id ), $p_bug->project_id ) ||
-		access_has_project_level( config_get( 'add_bugnote_threshold', null, null, $p_bug->project_id ), $p_bug->project_id ) ||
+		access_has_project_level( config_get( 'add_docnote_threshold', null, null, $p_bug->project_id ), $p_bug->project_id ) ||
 		access_has_project_level( config_get( 'tag_attach_threshold', null, null, $p_bug->project_id ), $p_bug->project_id ) ||
 		access_has_project_level( config_get( 'roadmap_update_threshold', null, null, $p_bug->project_id ), $p_bug->project_id ) ) {
 		$g_checkboxes_exist = true;
@@ -1117,32 +1117,32 @@ function print_column_sponsorship_total( BugData $p_bug, $p_columns_target = COL
 }
 
 /**
- * Print column content for column bugnotes count
+ * Print column content for column docnotes count
  *
  * @param BugData $p_bug            BugData object.
  * @param integer $p_columns_target See COLUMNS_TARGET_* in constant_inc.php.
  * @return void
  * @access public
  */
-function print_column_bugnotes_count( BugData $p_bug, $p_columns_target = COLUMNS_TARGET_VIEW_PAGE ) {
+function print_column_docnotes_count( BugData $p_bug, $p_columns_target = COLUMNS_TARGET_VIEW_PAGE ) {
 	global $g_filter;
 
-	# grab the bugnote count
-	$t_bugnote_stats = bug_get_bugnote_stats( $p_bug->id );
-	if( null !== $t_bugnote_stats ) {
-		$t_bugnote_count = $t_bugnote_stats['count'];
-		$v_bugnote_updated = $t_bugnote_stats['last_modified'];
+	# grab the docnote count
+	$t_docnote_stats = bug_get_docnote_stats( $p_bug->id );
+	if( null !== $t_docnote_stats ) {
+		$t_docnote_count = $t_docnote_stats['count'];
+		$v_docnote_updated = $t_docnote_stats['last_modified'];
 	} else {
-		$t_bugnote_count = 0;
+		$t_docnote_count = 0;
 	}
 
-	echo '<td class="column-bugnotes-count">';
-	if( $t_bugnote_count > 0 ) {
-		$t_show_in_bold = $v_bugnote_updated > strtotime( '-' . $g_filter[FILTER_PROPERTY_HIGHLIGHT_CHANGED] . ' hours' );
+	echo '<td class="column-docnotes-count">';
+	if( $t_docnote_count > 0 ) {
+		$t_show_in_bold = $v_docnote_updated > strtotime( '-' . $g_filter[FILTER_PROPERTY_HIGHLIGHT_CHANGED] . ' hours' );
 		if( $t_show_in_bold ) {
 			echo '<span class="bold">';
 		}
-		print_link( string_get_bug_view_url( $p_bug->id ) . '&nbn=' . $t_bugnote_count . '#bugnotes', $t_bugnote_count );
+		print_link( string_get_bug_view_url( $p_bug->id ) . '&nbn=' . $t_docnote_count . '#docnotes', $t_docnote_count );
 		if( $t_show_in_bold ) {
 			echo '</span>';
 		}

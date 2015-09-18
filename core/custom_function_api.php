@@ -24,7 +24,7 @@
  * @link http://www.mantisbt.org
  *
  * @uses bug_api.php
- * @uses bugnote_api.php
+ * @uses docnote_api.php
  * @uses category_api.php
  * @uses columns_api.php
  * @uses config_api.php
@@ -43,7 +43,7 @@
  */
 
 require_api( 'bug_api.php' );
-require_api( 'bugnote_api.php' );
+require_api( 'docnote_api.php' );
 require_api( 'category_api.php' );
 require_api( 'columns_api.php' );
 require_api( 'config_api.php' );
@@ -203,10 +203,10 @@ function custom_function_default_format_issue_summary( $p_issue_id, $p_context =
  *
  * @param integer $p_issue_id       Issue number that can be used to get the existing state.
  * @param BugData $p_new_issue_data Is an object (BugData) with the appropriate fields updated.
- * @param string  $p_bugnote_text   Bugnote text.
+ * @param string  $p_docnote_text   Docnote text.
  * @return void
  */
-function custom_function_default_issue_update_validate( $p_issue_id, BugData $p_new_issue_data, $p_bugnote_text ) {
+function custom_function_default_issue_update_validate( $p_issue_id, BugData $p_new_issue_data, $p_docnote_text ) {
 }
 
 /**

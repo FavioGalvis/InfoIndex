@@ -2,14 +2,14 @@
 <!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
  <!ENTITY % BOOK_ENTITIES SYSTEM "Admin_Guide.ent">
 ]>
-<section id="admin.config.bugnote">
-	<title>Bugnote</title>
+<section id="admin.config.docnote">
+	<title>Docnote</title>
 
 	<variablelist>
 		<varlistentry>
-			<term>$g_bugnote_order</term>
+			<term>$g_docnote_order</term>
 			<listitem>
-				<para>Order to use for sorting bugnotes by submit date. Possible
+				<para>Order to use for sorting docnotes by submit date. Possible
 					values include ASC for ascending and DESC for descending order. The
 					default value is ASC.
 				</para>

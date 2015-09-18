@@ -78,7 +78,7 @@ class ImportXml_Issue implements ImportXml_Interface {
 		$t_user_id = auth_get_current_user_id( );
 
 		$t_custom_fields = array();
-		$t_bugnotes = array();
+		$t_docnotes = array();
 		$t_attachments = array();
 
 		$t_depth = $t_reader->depth;
@@ -175,7 +175,7 @@ class ImportXml_Issue implements ImportXml_Interface {
 						}
 						break;
 
-					case 'bugnotes':
+					case 'docnotes':
 						# store bug notes
 						$i = -1;
 						$t_depth_bn = $t_reader->depth;
@@ -183,26 +183,26 @@ class ImportXml_Issue implements ImportXml_Interface {
 						        ( $t_reader->depth > $t_depth_bn ||
 						          $t_reader->nodeType != XMLReader::END_ELEMENT ) ) {
 							if( $t_reader->nodeType == XMLReader::ELEMENT ) {
-								if( $t_reader->localName == 'bugnote' ) {
-									$t_bugnotes[++$i] = new stdClass();
+								if( $t_reader->localName == 'docnote' ) {
+									$t_docnotes[++$i] = new stdClass();
 								}
 								switch( $t_reader->localName ) {
 									case 'reporter':
 										$t_old_id = $t_reader->getAttribute( 'id' );
 										$t_reader->read( );
-										$t_bugnotes[$i]->reporter_id = $this->get_user_id( $t_reader->value, $t_user_id );
+										$t_docnotes[$i]->reporter_id = $this->get_user_id( $t_reader->value, $t_user_id );
 										break;
 
 									case 'view_state':
 										$t_old_id = $t_reader->getAttribute( 'id' );
 										$t_reader->read( );
-										$t_bugnotes[$i]->private = $t_reader->value == VS_PRIVATE ? true : false;
+										$t_docnotes[$i]->private = $t_reader->value == VS_PRIVATE ? true : false;
 										break;
 
 									default:
 										$t_field = $t_reader->localName;
 										$t_reader->read( );
-										$t_bugnotes[$i]->$t_field = $t_reader->value;
+										$t_docnotes[$i]->$t_field = $t_reader->value;
 								}
 							}
 						}
@@ -254,20 +254,20 @@ class ImportXml_Issue implements ImportXml_Interface {
 			}
 		}
 
-		# add bugnotes
-		if( $this->new_id_ > 0 && is_array( $t_bugnotes ) && count( $t_bugnotes ) > 0 ) {
-			foreach( $t_bugnotes as $t_bugnote ) {
-				bugnote_add(
+		# add docnotes
+		if( $this->new_id_ > 0 && is_array( $t_docnotes ) && count( $t_docnotes ) > 0 ) {
+			foreach( $t_docnotes as $t_docnote ) {
+				docnote_add(
 					$this->new_id_,
-					$t_bugnote->note,
-					$t_bugnote->time_tracking,
-					$t_bugnote->private,
-					$t_bugnote->note_type,
-					$t_bugnote->note_attr,
-					$t_bugnote->reporter_id,
+					$t_docnote->note,
+					$t_docnote->time_tracking,
+					$t_docnote->private,
+					$t_docnote->note_type,
+					$t_docnote->note_attr,
+					$t_docnote->reporter_id,
 					false,
-					$t_bugnote->date_submitted,
-					$t_bugnote->last_modified,
+					$t_docnote->date_submitted,
+					$t_docnote->last_modified,
 					true );
 			}
 		}

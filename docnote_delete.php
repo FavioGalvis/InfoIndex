@@ -15,7 +15,7 @@
 # along with MantisBT.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Remove the bugnote and bugnote text and redirect back to
+ * Remove the docnote and docnote text and redirect back to
  * the viewing page
  *
  * @package MantisBT
@@ -27,7 +27,7 @@
  * @uses access_api.php
  * @uses authentication_api.php
  * @uses bug_api.php
- * @uses bugnote_api.php
+ * @uses docnote_api.php
  * @uses config_api.php
  * @uses constant_inc.php
  * @uses event_api.php
@@ -43,7 +43,7 @@ require_once( 'core.php' );
 require_api( 'access_api.php' );
 require_api( 'authentication_api.php' );
 require_api( 'bug_api.php' );
-require_api( 'bugnote_api.php' );
+require_api( 'docnote_api.php' );
 require_api( 'config_api.php' );
 require_api( 'constant_inc.php' );
 require_api( 'event_api.php' );
@@ -54,11 +54,11 @@ require_api( 'lang_api.php' );
 require_api( 'print_api.php' );
 require_api( 'string_api.php' );
 
-form_security_validate( 'bugnote_delete' );
+form_security_validate( 'docnote_delete' );
 
-$f_bugnote_id = gpc_get_int( 'bugnote_id' );
+$f_docnote_id = gpc_get_int( 'docnote_id' );
 
-$t_bug_id = bugnote_get_field( $f_bugnote_id, 'bug_id' );
+$t_bug_id = docnote_get_field( $f_docnote_id, 'bug_id' );
 
 $t_bug = bug_get( $t_bug_id, true );
 if( $t_bug->project_id != helper_get_current_project() ) {
@@ -67,21 +67,21 @@ if( $t_bug->project_id != helper_get_current_project() ) {
 	$g_project_override = $t_bug->project_id;
 }
 
-# Check if the current user is allowed to delete the bugnote
+# Check if the current user is allowed to delete the docnote
 $t_user_id = auth_get_current_user_id();
-$t_reporter_id = bugnote_get_field( $f_bugnote_id, 'reporter_id' );
+$t_reporter_id = docnote_get_field( $f_docnote_id, 'reporter_id' );
 
 if( $t_user_id == $t_reporter_id ) {
-	access_ensure_bugnote_level( config_get( 'bugnote_user_delete_threshold' ), $f_bugnote_id );
+	access_ensure_docnote_level( config_get( 'docnote_user_delete_threshold' ), $f_docnote_id );
 } else {
-	access_ensure_bugnote_level( config_get( 'delete_bugnote_threshold' ), $f_bugnote_id );
+	access_ensure_docnote_level( config_get( 'delete_docnote_threshold' ), $f_docnote_id );
 }
 
-helper_ensure_confirmed( lang_get( 'delete_bugnote_sure_msg' ),
-						 lang_get( 'delete_bugnote_button' ) );
+helper_ensure_confirmed( lang_get( 'delete_docnote_sure_msg' ),
+						 lang_get( 'delete_docnote_button' ) );
 
-bugnote_delete( $f_bugnote_id );
+docnote_delete( $f_docnote_id );
 
-form_security_purge( 'bugnote_delete' );
+form_security_purge( 'docnote_delete' );
 
-print_successful_redirect( string_get_bug_view_url( $t_bug_id ) . '#bugnotes' );
+print_successful_redirect( string_get_bug_view_url( $t_bug_id ) . '#docnotes' );

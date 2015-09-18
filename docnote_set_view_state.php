@@ -15,7 +15,7 @@
 # along with MantisBT.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Set an existing bugnote private or public.
+ * Set an existing docnote private or public.
  *
  * @package MantisBT
  * @copyright Copyright 2000 - 2002  Kenzaburo Ito - kenito@300baud.org
@@ -26,7 +26,7 @@
  * @uses access_api.php
  * @uses authentication_api.php
  * @uses bug_api.php
- * @uses bugnote_api.php
+ * @uses docnote_api.php
  * @uses config_api.php
  * @uses constant_inc.php
  * @uses error_api.php
@@ -41,7 +41,7 @@ require_once( 'core.php' );
 require_api( 'access_api.php' );
 require_api( 'authentication_api.php' );
 require_api( 'bug_api.php' );
-require_api( 'bugnote_api.php' );
+require_api( 'docnote_api.php' );
 require_api( 'config_api.php' );
 require_api( 'constant_inc.php' );
 require_api( 'error_api.php' );
@@ -51,12 +51,12 @@ require_api( 'helper_api.php' );
 require_api( 'print_api.php' );
 require_api( 'string_api.php' );
 
-form_security_validate( 'bugnote_set_view_state' );
+form_security_validate( 'docnote_set_view_state' );
 
-$f_bugnote_id	= gpc_get_int( 'bugnote_id' );
+$f_docnote_id	= gpc_get_int( 'docnote_id' );
 $f_private		= gpc_get_bool( 'private' );
 
-$t_bug_id = bugnote_get_field( $f_bugnote_id, 'bug_id' );
+$t_bug_id = docnote_get_field( $f_docnote_id, 'bug_id' );
 
 $t_bug = bug_get( $t_bug_id, true );
 if( $t_bug->project_id != helper_get_current_project() ) {
@@ -71,17 +71,17 @@ if( bug_is_readonly( $t_bug_id ) ) {
 	trigger_error( ERROR_BUG_READ_ONLY_ACTION_DENIED, ERROR );
 }
 
-# Check if the current user is allowed to change the view state of this bugnote
-$t_user_id = bugnote_get_field( $f_bugnote_id, 'reporter_id' );
+# Check if the current user is allowed to change the view state of this docnote
+$t_user_id = docnote_get_field( $f_docnote_id, 'reporter_id' );
 if( $t_user_id == auth_get_current_user_id() ) {
-	access_ensure_bugnote_level( config_get( 'bugnote_user_change_view_state_threshold' ), $f_bugnote_id );
+	access_ensure_docnote_level( config_get( 'docnote_user_change_view_state_threshold' ), $f_docnote_id );
 } else {
-	access_ensure_bugnote_level( config_get( 'update_bugnote_threshold' ), $f_bugnote_id );
-	access_ensure_bugnote_level( config_get( 'change_view_status_threshold' ), $f_bugnote_id );
+	access_ensure_docnote_level( config_get( 'update_docnote_threshold' ), $f_docnote_id );
+	access_ensure_docnote_level( config_get( 'change_view_status_threshold' ), $f_docnote_id );
 }
 
-bugnote_set_view_state( $f_bugnote_id, $f_private );
+docnote_set_view_state( $f_docnote_id, $f_private );
 
-form_security_purge( 'bugnote_set_view_state' );
+form_security_purge( 'docnote_set_view_state' );
 
-print_successful_redirect( string_get_bug_view_url( $t_bug_id ) . '#bugnotes' );
+print_successful_redirect( string_get_bug_view_url( $t_bug_id ) . '#docnotes' );

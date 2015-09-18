@@ -392,23 +392,23 @@ function mci_issue_get_notes( $p_issue_id ) {
 	$t_user_id = auth_get_current_user_id();
 	$t_lang = mci_get_user_lang( $t_user_id );
 	$t_project_id = bug_get_field( $p_issue_id, 'project_id' );
-	$t_user_bugnote_order = 'ASC'; # always get the notes in ascending order for consistency to the calling application.
+	$t_user_docnote_order = 'ASC'; # always get the notes in ascending order for consistency to the calling application.
 	$t_has_time_tracking_access = access_has_bug_level( config_get( 'time_tracking_view_threshold' ), $p_issue_id );
 
 	$t_result = array();
-	foreach( bugnote_get_all_visible_bugnotes( $p_issue_id, $t_user_bugnote_order, 0 ) as $t_value ) {
-		$t_bugnote = array();
-		$t_bugnote['id'] = $t_value->id;
-		$t_bugnote['reporter'] = mci_account_get_array_by_id( $t_value->reporter_id );
-		$t_bugnote['date_submitted'] = SoapObjectsFactory::newDateTimeString( $t_value->date_submitted );
-		$t_bugnote['last_modified'] = SoapObjectsFactory::newDateTimeString( $t_value->last_modified );
-		$t_bugnote['text'] = mci_sanitize_xml_string( $t_value->note );
-		$t_bugnote['view_state'] = mci_enum_get_array_by_id( $t_value->view_state, 'view_state', $t_lang );
-		$t_bugnote['time_tracking'] = $t_has_time_tracking_access ? $t_value->time_tracking : 0;
-		$t_bugnote['note_type'] = $t_value->note_type;
-		$t_bugnote['note_attr'] = $t_value->note_attr;
+	foreach( docnote_get_all_visible_docnotes( $p_issue_id, $t_user_docnote_order, 0 ) as $t_value ) {
+		$t_docnote = array();
+		$t_docnote['id'] = $t_value->id;
+		$t_docnote['reporter'] = mci_account_get_array_by_id( $t_value->reporter_id );
+		$t_docnote['date_submitted'] = SoapObjectsFactory::newDateTimeString( $t_value->date_submitted );
+		$t_docnote['last_modified'] = SoapObjectsFactory::newDateTimeString( $t_value->last_modified );
+		$t_docnote['text'] = mci_sanitize_xml_string( $t_value->note );
+		$t_docnote['view_state'] = mci_enum_get_array_by_id( $t_value->view_state, 'view_state', $t_lang );
+		$t_docnote['time_tracking'] = $t_has_time_tracking_access ? $t_value->time_tracking : 0;
+		$t_docnote['note_type'] = $t_value->note_type;
+		$t_docnote['note_attr'] = $t_value->note_attr;
 
-		$t_result[] = $t_bugnote;
+		$t_result[] = $t_docnote;
 	}
 
 	return (count( $t_result ) == 0 ? null : $t_result );
@@ -809,11 +809,11 @@ function mc_issue_add( $p_username, $p_password, stdClass $p_issue ) {
 				$t_view_state = config_get( 'default_docnote_view_status' );
 			}
 
-			$t_note_type = isset( $t_note['note_type'] ) ? (int)$t_note['note_type'] : BUGNOTE;
+			$t_note_type = isset( $t_note['note_type'] ) ? (int)$t_note['note_type'] : DOCNOTE;
 			$t_note_attr = isset( $t_note['note_type'] ) ? $t_note['note_attr'] : '';
 
 			$t_view_state_id = mci_get_enum_id_from_objectref( 'view_state', $t_view_state );
-			$t_note_id = bugnote_add(
+			$t_note_id = docnote_add(
 				$t_issue_id,
 				$t_note['text'],
 				mci_get_time_tracking_from_note( $t_issue_id, $t_note ),
@@ -822,7 +822,7 @@ function mc_issue_add( $p_username, $p_password, stdClass $p_issue ) {
 				$t_note_attr,
 				$t_user_id,
 				false ); # don't send mail
-			log_event( LOG_WEBSERVICE, 'bugnote id \'' . $t_note_id . '\' added to issue \'' . $t_issue_id . '\'' );
+			log_event( LOG_WEBSERVICE, 'docnote id \'' . $t_note_id . '\' added to issue \'' . $t_issue_id . '\'' );
 		}
 	}
 
@@ -1026,10 +1026,10 @@ function mc_issue_update( $p_username, $p_password, $p_issue_id, stdClass $p_iss
 	}
 
 	if( isset( $p_issue['notes'] ) && is_array( $p_issue['notes'] ) ) {
-		$t_bugnotes = bugnote_get_all_visible_bugnotes( $p_issue_id, 'DESC', 0 );
-		$t_bugnotes_by_id = array();
-		foreach( $t_bugnotes as $t_bugnote ) {
-			$t_bugnotes_by_id[$t_bugnote->id] = $t_bugnote;
+		$t_docnotes = docnote_get_all_visible_docnotes( $p_issue_id, 'DESC', 0 );
+		$t_docnotes_by_id = array();
+		foreach( $t_docnotes as $t_docnote ) {
+			$t_docnotes_by_id[$t_docnote->id] = $t_docnote;
 		}
 
 		foreach( $p_issue['notes'] as $t_note ) {
@@ -1042,46 +1042,46 @@ function mc_issue_update( $p_username, $p_password, $p_issue_id, stdClass $p_iss
 			}
 
 			if( isset( $t_note['id'] ) && ( (int)$t_note['id'] > 0 ) ) {
-				$t_bugnote_id = (integer)$t_note['id'];
+				$t_docnote_id = (integer)$t_note['id'];
 
 				$t_view_state_id = mci_get_enum_id_from_objectref( 'view_state', $t_view_state );
 
-				if( array_key_exists( $t_bugnote_id, $t_bugnotes_by_id ) ) {
-					$t_bugnote_changed = false;
+				if( array_key_exists( $t_docnote_id, $t_docnotes_by_id ) ) {
+					$t_docnote_changed = false;
 
-					if( $t_bugnote->note !== $t_note['text'] ) {
-						bugnote_set_text( $t_bugnote_id, $t_note['text'] );
-						$t_bugnote_changed = true;
+					if( $t_docnote->note !== $t_note['text'] ) {
+						docnote_set_text( $t_docnote_id, $t_note['text'] );
+						$t_docnote_changed = true;
 					}
 
-					if( $t_bugnote->view_state != $t_view_state_id ) {
-						bugnote_set_view_state( $t_bugnote_id, $t_view_state_id == VS_PRIVATE );
-						$t_bugnote_changed = true;
+					if( $t_docnote->view_state != $t_view_state_id ) {
+						docnote_set_view_state( $t_docnote_id, $t_view_state_id == VS_PRIVATE );
+						$t_docnote_changed = true;
 					}
 
-					if( isset( $t_note['time_tracking']) && $t_note['time_tracking'] != $t_bugnote->time_tracking ) {
-						bugnote_set_time_tracking( $t_bugnote_id, mci_get_time_tracking_from_note( $p_issue_id, $t_note ) );
-						$t_bugnote_changed = true;
+					if( isset( $t_note['time_tracking']) && $t_note['time_tracking'] != $t_docnote->time_tracking ) {
+						docnote_set_time_tracking( $t_docnote_id, mci_get_time_tracking_from_note( $p_issue_id, $t_note ) );
+						$t_docnote_changed = true;
 					}
 
-					if( $t_bugnote_changed ) {
-						bugnote_date_update( $t_bugnote_id );
+					if( $t_docnote_changed ) {
+						docnote_date_update( $t_docnote_id );
 					}
 
 				}
 			} else {
 				$t_view_state_id = mci_get_enum_id_from_objectref( 'view_state', $t_view_state );
 
-				$t_note_type = isset( $t_note['note_type'] ) ? (int)$t_note['note_type'] : BUGNOTE;
+				$t_note_type = isset( $t_note['note_type'] ) ? (int)$t_note['note_type'] : DOCNOTE;
 				$t_note_attr = isset( $t_note['note_type'] ) ? $t_note['note_attr'] : '';
 
-				bugnote_add( $p_issue_id, $t_note['text'], mci_get_time_tracking_from_note( $p_issue_id, $t_note ), $t_view_state_id == VS_PRIVATE, $t_note_type, $t_note_attr, $t_user_id, false );
+				docnote_add( $p_issue_id, $t_note['text'], mci_get_time_tracking_from_note( $p_issue_id, $t_note ), $t_view_state_id == VS_PRIVATE, $t_note_type, $t_note_attr, $t_user_id, false );
 			}
 		}
 
 		# The issue has been cached earlier in the bug_get() call.  Flush the cache since it is
 		# now stale.  Otherwise, the email notification will be based on the cached data.
-		bugnote_clear_cache( $p_issue_id );
+		docnote_clear_cache( $p_issue_id );
 	}
 
 	if( isset( $p_issue['tags'] ) && is_array( $p_issue['tags'] ) ) {
@@ -1203,7 +1203,7 @@ function mc_issue_note_add( $p_username, $p_password, $p_issue_id, stdClass $p_n
 		return mci_soap_fault_access_denied( $t_user_id );
 	}
 
-	if( !access_has_bug_level( config_get( 'add_bugnote_threshold' ), $p_issue_id, $t_user_id ) ) {
+	if( !access_has_bug_level( config_get( 'add_docnote_threshold' ), $p_issue_id, $t_user_id ) ) {
 		return mci_soap_fault_access_denied( $t_user_id, 'You do not have access rights to add notes to this issue' );
 	}
 
@@ -1236,11 +1236,11 @@ function mc_issue_note_add( $p_username, $p_password, $p_issue_id, stdClass $p_n
 
 	$t_view_state_id = mci_get_enum_id_from_objectref( 'view_state', $t_view_state );
 
-	$t_note_type = isset( $p_note['note_type'] ) ? (int)$p_note['note_type'] : BUGNOTE;
+	$t_note_type = isset( $p_note['note_type'] ) ? (int)$p_note['note_type'] : DOCNOTE;
 	$t_note_attr = isset( $p_note['note_type'] ) ? $p_note['note_attr'] : '';
 
-	log_event( LOG_WEBSERVICE, 'adding bugnote to issue \'' . $p_issue_id . '\'' );
-	return bugnote_add( $p_issue_id, $p_note['text'], mci_get_time_tracking_from_note( $p_issue_id, $p_note ), $t_view_state_id == VS_PRIVATE, $t_note_type, $t_note_attr, $t_reporter_id );
+	log_event( LOG_WEBSERVICE, 'adding docnote to issue \'' . $p_issue_id . '\'' );
+	return docnote_add( $p_issue_id, $p_note['text'], mci_get_time_tracking_from_note( $p_issue_id, $p_note ), $t_view_state_id == VS_PRIVATE, $t_note_type, $t_note_attr, $t_reporter_id );
 }
 
 /**
@@ -1263,27 +1263,27 @@ function mc_issue_note_delete( $p_username, $p_password, $p_issue_note_id ) {
 		return SoapObjectsFactory::newSoapFault( 'Client', 'Invalid issue note id \'' . $p_issue_note_id . '\'.' );
 	}
 
-	if( !bugnote_exists( $p_issue_note_id ) ) {
+	if( !docnote_exists( $p_issue_note_id ) ) {
 		return SoapObjectsFactory::newSoapFault( 'Client', 'Issue note \'' . $p_issue_note_id . '\' does not exist.' );
 	}
 
-	$t_issue_id = bugnote_get_field( $p_issue_note_id, 'bug_id' );
+	$t_issue_id = docnote_get_field( $p_issue_note_id, 'bug_id' );
 	$t_project_id = bug_get_field( $t_issue_id, 'project_id' );
 	$g_project_override = $t_project_id;
 	if( !mci_has_readwrite_access( $t_user_id, $t_project_id ) ) {
 		return mci_soap_fault_access_denied( $t_user_id );
 	}
 
-	$t_reporter_id = bugnote_get_field( $p_issue_note_id, 'reporter_id' );
+	$t_reporter_id = docnote_get_field( $p_issue_note_id, 'reporter_id' );
 
-	# mirrors check from bugnote_delete.php
+	# mirrors check from docnote_delete.php
 	if( $t_user_id == $t_reporter_id ) {
-		$t_threshold_config_name =  'bugnote_user_delete_threshold';
+		$t_threshold_config_name =  'docnote_user_delete_threshold';
 	} else {
-		$t_threshold_config_name =  'delete_bugnote_threshold';
+		$t_threshold_config_name =  'delete_docnote_threshold';
 	}
 
-	if( !access_has_bugnote_level( config_get( $t_threshold_config_name ), $p_issue_note_id ) ) {
+	if( !access_has_docnote_level( config_get( $t_threshold_config_name ), $p_issue_note_id ) ) {
 		return mci_soap_fault_access_denied( $t_user_id );
 	}
 
@@ -1291,8 +1291,8 @@ function mc_issue_note_delete( $p_username, $p_password, $p_issue_note_id ) {
 		return mci_soap_fault_access_denied( $t_user_id, 'Issue \'' . $t_issue_id . '\' is readonly' );
 	}
 
-	log_event( LOG_WEBSERVICE, 'deleting bugnote id \'' . $p_issue_note_id . '\'' );
-	return bugnote_delete( $p_issue_note_id );
+	log_event( LOG_WEBSERVICE, 'deleting docnote id \'' . $p_issue_note_id . '\'' );
+	return docnote_delete( $p_issue_note_id );
 }
 
 /**
@@ -1324,11 +1324,11 @@ function mc_issue_note_update( $p_username, $p_password, stdClass $p_note ) {
 
 	$t_issue_note_id = $p_note['id'];
 
-	if( !bugnote_exists( $t_issue_note_id ) ) {
+	if( !docnote_exists( $t_issue_note_id ) ) {
 		return SoapObjectsFactory::newSoapFault( 'Client', 'Issue note \'' . $t_issue_note_id . '\' does not exist.' );
 	}
 
-	$t_issue_id = bugnote_get_field( $t_issue_note_id, 'bug_id' );
+	$t_issue_id = docnote_get_field( $t_issue_note_id, 'bug_id' );
 	$t_project_id = bug_get_field( $t_issue_id, 'project_id' );
 	$g_project_override = $t_project_id;
 
@@ -1336,20 +1336,20 @@ function mc_issue_note_update( $p_username, $p_password, stdClass $p_note ) {
 		return mci_soap_fault_access_denied( $t_user_id );
 	}
 
-	$t_issue_author_id = bugnote_get_field( $t_issue_note_id, 'reporter_id' );
+	$t_issue_author_id = docnote_get_field( $t_issue_note_id, 'reporter_id' );
 
-	# Check if the user owns the bugnote and is allowed to update their own bugnotes
-	# regardless of the update_bugnote_threshold level.
-	$t_user_owns_the_bugnote = bugnote_is_user_reporter( $t_issue_note_id, $t_user_id );
-	$t_user_can_update_own_bugnote = config_get( 'bugnote_user_edit_threshold', null, $t_user_id, $t_project_id );
-	if( $t_user_owns_the_bugnote && !$t_user_can_update_own_bugnote ) {
+	# Check if the user owns the docnote and is allowed to update their own docnotes
+	# regardless of the update_docnote_threshold level.
+	$t_user_owns_the_docnote = docnote_is_user_reporter( $t_issue_note_id, $t_user_id );
+	$t_user_can_update_own_docnote = config_get( 'docnote_user_edit_threshold', null, $t_user_id, $t_project_id );
+	if( $t_user_owns_the_docnote && !$t_user_can_update_own_docnote ) {
 		return mci_soap_fault_access_denied( $t_user_id );
 	}
 
-	# Check if the user has an access level beyond update_bugnote_threshold for the
-	# project containing the bugnote to update.
-	$t_update_bugnote_threshold = config_get( 'update_bugnote_threshold', null, $t_user_id, $t_project_id );
-	if( !$t_user_owns_the_bugnote && !access_has_bugnote_level( $t_update_bugnote_threshold, $t_issue_note_id, $t_user_id ) ) {
+	# Check if the user has an access level beyond update_docnote_threshold for the
+	# project containing the docnote to update.
+	$t_update_docnote_threshold = config_get( 'update_docnote_threshold', null, $t_user_id, $t_project_id );
+	if( !$t_user_owns_the_docnote && !access_has_docnote_level( $t_update_docnote_threshold, $t_issue_note_id, $t_user_id ) ) {
 		return mci_soap_fault_access_denied( $t_user_id );
 	}
 
@@ -1361,13 +1361,13 @@ function mc_issue_note_update( $p_username, $p_password, stdClass $p_note ) {
 	if( isset( $p_note['view_state'] ) ) {
 		$t_view_state = $p_note['view_state'];
 		$t_view_state_id = mci_get_enum_id_from_objectref( 'view_state', $t_view_state );
-		bugnote_set_view_state( $t_issue_note_id, $t_view_state_id == VS_PRIVATE );
+		docnote_set_view_state( $t_issue_note_id, $t_view_state_id == VS_PRIVATE );
 	}
 
-	log_event( LOG_WEBSERVICE, 'updating bugnote id \'' . $t_issue_note_id . '\'' );
-	bugnote_set_text( $t_issue_note_id, $p_note['text'] );
+	log_event( LOG_WEBSERVICE, 'updating docnote id \'' . $t_issue_note_id . '\'' );
+	docnote_set_text( $t_issue_note_id, $p_note['text'] );
 
-	return bugnote_date_update( $t_issue_note_id );
+	return docnote_date_update( $t_issue_note_id );
 }
 
 /**

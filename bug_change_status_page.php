@@ -345,16 +345,16 @@ if( ( $f_new_status >= $t_resolved ) ) {
 	printf( '	<input type="hidden" name="resolution" value="%s" />' . "\n", config_get( 'bug_reopen_resolution' ) );
 }
 ?>
-			<!-- Bugnote -->
+			<!-- Docnote -->
 			<tr id="bug-change-status-note">
 				<th class="category">
-					<?php echo lang_get( 'add_bugnote_title' ) ?>
+					<?php echo lang_get( 'add_docnote_title' ) ?>
 				</th>
 				<td>
-					<textarea class="form-control" name="bugnote_text" cols="80" rows="10"></textarea>
+					<textarea class="form-control" name="docnote_text" cols="80" rows="10"></textarea>
 				</td>
 			</tr>
-<?php if( access_has_bug_level( config_get( 'private_bugnote_threshold' ), $f_bug_id ) ) { ?>
+<?php if( access_has_bug_level( config_get( 'private_docnote_threshold' ), $f_bug_id ) ) { ?>
 			<tr>
 				<th class="category">
 					<?php echo lang_get( 'view_status' ) ?>
@@ -376,7 +376,7 @@ if( ( $f_new_status >= $t_resolved ) ) {
 <?php } ?>
 
 <?php if( config_get( 'time_tracking_enabled' ) ) { ?>
-<?php 	if( access_has_bug_level( config_get( 'private_bugnote_threshold' ), $f_bug_id ) ) { ?>
+<?php 	if( access_has_bug_level( config_get( 'private_docnote_threshold' ), $f_bug_id ) ) { ?>
 <?php 		if( access_has_bug_level( config_get( 'time_tracking_edit_threshold' ), $f_bug_id ) ) { ?>
 			<tr>
 				<th class="category">
@@ -390,7 +390,7 @@ if( ( $f_new_status >= $t_resolved ) ) {
 <?php 	} ?>
 <?php } ?>
 
-<?php event_signal( 'EVENT_BUGNOTE_ADD_FORM', array( $f_bug_id ) ); ?>
+<?php event_signal( 'EVENT_DOCNOTE_ADD_FORM', array( $f_bug_id ) ); ?>
 
 </tbody>
 </table>

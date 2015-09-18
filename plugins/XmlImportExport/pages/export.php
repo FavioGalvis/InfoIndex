@@ -57,7 +57,7 @@ header( 'Content-Disposition: attachment; filename="' . $t_filename . '"' );
 $t_version = MANTIS_VERSION;
 $t_url = config_get( 'path' );
 $t_bug_link = config_get( 'bug_link_tag' );
-$t_bugnote_link = config_get( 'bugnote_link_tag' );
+$t_docnote_link = config_get( 'docnote_link_tag' );
 
 $t_writer = new XMLWriter;
 
@@ -70,7 +70,7 @@ $t_writer->startElement( 'mantis' );
 $t_writer->writeAttribute( 'version', $t_version );
 $t_writer->writeAttribute( 'urlbase', $t_url );
 $t_writer->writeAttribute( 'issuelink', $t_bug_link );
-$t_writer->writeAttribute( 'notelink', $t_bugnote_link );
+$t_writer->writeAttribute( 'notelink', $t_docnote_link );
 $t_writer->writeAttribute( 'format', '1' );
 
 # Ignored fields, these will be skipped
@@ -175,40 +175,40 @@ foreach( $t_result as $t_row ) {
 		$t_writer->endElement(); # custom_fields
 	}
 
-	# fetch and export bugnotes
-	$t_bugnotes = bugnote_get_all_bugnotes( $t_row->id );
-	if( is_array( $t_bugnotes ) && count( $t_bugnotes ) > 0 ) {
-		$t_writer->startElement( 'bugnotes' );
-		foreach ( $t_bugnotes as $t_bugnote ) {
-			$t_writer->startElement( 'bugnote' );
+	# fetch and export docnotes
+	$t_docnotes = docnote_get_all_docnotes( $t_row->id );
+	if( is_array( $t_docnotes ) && count( $t_docnotes ) > 0 ) {
+		$t_writer->startElement( 'docnotes' );
+		foreach ( $t_docnotes as $t_docnote ) {
+			$t_writer->startElement( 'docnote' );
 			# id
-			$t_writer->writeElement( 'id', $t_bugnote->id );
+			$t_writer->writeElement( 'id', $t_docnote->id );
 			# reporter
 			$t_writer->startElement( 'reporter' );
-			$t_writer->writeAttribute( 'id', $t_bugnote->reporter_id );
-			$t_writer->text( user_get_name( $t_bugnote->reporter_id ) );
+			$t_writer->writeAttribute( 'id', $t_docnote->reporter_id );
+			$t_writer->text( user_get_name( $t_docnote->reporter_id ) );
 			$t_writer->endElement( );
 			# bug note
-			$t_writer->writeElement( 'note', $t_bugnote->note );
+			$t_writer->writeElement( 'note', $t_docnote->note );
 			# view state
 			$t_writer->startElement( 'view_state' );
-			$t_writer->writeAttribute( 'id', $t_bugnote->view_state );
-			$t_writer->text( get_enum_element( 'view_state', $t_bugnote->view_state ) );
+			$t_writer->writeAttribute( 'id', $t_docnote->view_state );
+			$t_writer->text( get_enum_element( 'view_state', $t_docnote->view_state ) );
 			$t_writer->endElement( );
 			# date submitted
-			$t_writer->writeElement( 'date_submitted', $t_bugnote->date_submitted );
+			$t_writer->writeElement( 'date_submitted', $t_docnote->date_submitted );
 			# last modified
-			$t_writer->writeElement( 'last_modified', $t_bugnote->last_modified );
+			$t_writer->writeElement( 'last_modified', $t_docnote->last_modified );
 			# note type
-			$t_writer->writeElement( 'note_type', $t_bugnote->note_type );
+			$t_writer->writeElement( 'note_type', $t_docnote->note_type );
 			# note attr
-			$t_writer->writeElement( 'note_attr', $t_bugnote->note_attr );
+			$t_writer->writeElement( 'note_attr', $t_docnote->note_attr );
 			# time tracking
-			$t_writer->writeElement( 'time_tracking', $t_bugnote->time_tracking );
+			$t_writer->writeElement( 'time_tracking', $t_docnote->time_tracking );
 
-			$t_writer->endElement(); # bugnote
+			$t_writer->endElement(); # docnote
 		}
-		$t_writer->endElement(); # bugnotes
+		$t_writer->endElement(); # docnotes
 	}
 
 	# fetch and export attachments
@@ -236,7 +236,7 @@ foreach( $t_result as $t_row ) {
 
 			$t_writer->endElement(); # attachment
 		}
-		$t_writer->endElement(); # bugnotes
+		$t_writer->endElement(); # docnotes
 	}
 
 	$t_writer->endElement(); # issue

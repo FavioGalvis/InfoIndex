@@ -20,7 +20,7 @@
 			<term>$g_time_tracking_without_note</term>
 			<listitem>
 				<para>
-					Allow time tracking to be recorded without writing some text in the associated bugnote - Default is ON
+					Allow time tracking to be recorded without writing some text in the associated docnote - Default is ON
 				</para>
 			</listitem>
 		</varlistentry>

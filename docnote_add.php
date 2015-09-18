@@ -15,7 +15,7 @@
 # along with MantisBT.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Insert the bugnote into the database then redirect to the bug page
+ * Insert the docnote into the database then redirect to the bug page
  *
  * @package MantisBT
  * @copyright Copyright 2000 - 2002  Kenzaburo Ito - kenito@300baud.org
@@ -25,7 +25,7 @@
  * @uses core.php
  * @uses access_api.php
  * @uses bug_api.php
- * @uses bugnote_api.php
+ * @uses docnote_api.php
  * @uses config_api.php
  * @uses constant_inc.php
  * @uses file_api.php
@@ -40,7 +40,7 @@
 require_once( 'core.php' );
 require_api( 'access_api.php' );
 require_api( 'bug_api.php' );
-require_api( 'bugnote_api.php' );
+require_api( 'docnote_api.php' );
 require_api( 'config_api.php' );
 require_api( 'constant_inc.php' );
 require_api( 'file_api.php' );
@@ -51,12 +51,12 @@ require_api( 'helper_api.php' );
 require_api( 'lang_api.php' );
 require_api( 'print_api.php' );
 
-form_security_validate( 'bugnote_add' );
+form_security_validate( 'docnote_add' );
 
 $f_bug_id		= gpc_get_int( 'bug_id' );
 $f_private		= gpc_get_bool( 'private' );
 $f_time_tracking	= gpc_get_string( 'time_tracking', '0:00' );
-$f_bugnote_text	= trim( gpc_get_string( 'bugnote_text', '' ) );
+$f_docnote_text	= trim( gpc_get_string( 'docnote_text', '' ) );
 $f_files		= gpc_get_file( 'ufile', null );
 
 $t_bug = bug_get( $f_bug_id, true );
@@ -71,7 +71,7 @@ if( bug_is_readonly( $t_bug->id ) ) {
 	trigger_error( ERROR_BUG_READ_ONLY_ACTION_DENIED, ERROR );
 }
 
-access_ensure_bug_level( config_get( 'add_bugnote_threshold' ), $t_bug->id );
+access_ensure_bug_level( config_get( 'add_docnote_threshold' ), $t_bug->id );
 
 if( $f_private ) {
 	access_ensure_bug_level( config_get( 'set_view_status_threshold' ), $t_bug->id );
@@ -86,11 +86,11 @@ if( $f_files !== null ) {
 	file_process_posted_files_for_bug( $f_bug_id, $f_files );
 }
 
-# We always set the note time to BUGNOTE, and the API will overwrite it with TIME_TRACKING
+# We always set the note time to DOCNOTE, and the API will overwrite it with TIME_TRACKING
 # if $f_time_tracking is not 0 and the time tracking feature is enabled.
-$t_bugnote_id = bugnote_add( $t_bug->id, $f_bugnote_text, $f_time_tracking, $f_private, BUGNOTE );
-if( !$t_bugnote_id ) {
-	error_parameters( lang_get( 'bugnote' ) );
+$t_docnote_id = docnote_add( $t_bug->id, $f_docnote_text, $f_time_tracking, $f_private, DOCNOTE );
+if( !$t_docnote_id ) {
+	error_parameters( lang_get( 'docnote' ) );
 	trigger_error( ERROR_EMPTY_FIELD, ERROR );
 }
 
@@ -110,6 +110,6 @@ if( config_get( 'reassign_on_feedback' ) &&
 	}
 }
 
-form_security_purge( 'bugnote_add' );
+form_security_purge( 'docnote_add' );
 
 print_successful_redirect_to_bug( $t_bug->id );

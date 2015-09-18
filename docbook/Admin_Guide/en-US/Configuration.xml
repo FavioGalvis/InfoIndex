@@ -21,7 +21,7 @@
 	<xi:include href="config/news.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
 	<xi:include href="config/defaults.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
 	<xi:include href="config/summary.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-	<xi:include href="config/bugnote.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+	<xi:include href="config/docnote.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
 	<xi:include href="config/uploads.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
 	<xi:include href="config/html.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
 	<xi:include href="config/auth.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>

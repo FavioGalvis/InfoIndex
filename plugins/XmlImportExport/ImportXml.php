@@ -60,7 +60,7 @@ class SourceData {
 	}
 
 	/**
-	 * Get url to view bugnote
+	 * Get url to view docnote
 	 * @param integer $p_issue_id An issue identifier.
 	 * @param integer $p_note_id  A note identifier.
 	 * @return string

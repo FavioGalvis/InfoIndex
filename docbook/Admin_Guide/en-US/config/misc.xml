@@ -137,7 +137,7 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term>$g_bugnote_link_tag</term>
+			<term>$g_docnote_link_tag</term>
 			<listitem>
 				<para>If a number follows this tag it will create a link to a
 					bug note. Default is '~'.
@@ -146,7 +146,7 @@
 							<para>'~': a link would be ~45</para>
 						</listitem>
 						<listitem>
-							<para>'bugnote:' a link would be bugnote:98</para>
+							<para>'docnote:' a link would be docnote:98</para>
 						</listitem>
 					</itemizedlist>
 				</para>

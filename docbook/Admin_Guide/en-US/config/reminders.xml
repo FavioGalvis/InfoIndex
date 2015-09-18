@@ -21,8 +21,8 @@
 		<varlistentry>
 			<term>$g_store_reminders</term>
 			<listitem>
-				<para>Specifies if reminders should be stored as bugnotes. The
-					bugnote will still reflect that it is a reminder and list the names
+				<para>Specifies if reminders should be stored as docnotes. The
+					docnote will still reflect that it is a reminder and list the names
 					of users that got it. Default is ON.
 				</para>
 			</listitem>

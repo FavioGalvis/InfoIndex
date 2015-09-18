@@ -90,7 +90,7 @@ $t_prefs->email_on_feedback	= gpc_get_bool( 'email_on_feedback' );
 $t_prefs->email_on_resolved	= gpc_get_bool( 'email_on_resolved' );
 $t_prefs->email_on_closed	= gpc_get_bool( 'email_on_closed' );
 $t_prefs->email_on_reopened	= gpc_get_bool( 'email_on_reopened' );
-$t_prefs->email_on_bugnote	= gpc_get_bool( 'email_on_bugnote' );
+$t_prefs->email_on_docnote	= gpc_get_bool( 'email_on_docnote' );
 $t_prefs->email_on_status	= gpc_get_bool( 'email_on_status' );
 $t_prefs->email_on_priority	= gpc_get_bool( 'email_on_priority' );
 $t_prefs->email_on_new_min_severity			= gpc_get_int( 'email_on_new_min_severity' );
@@ -99,12 +99,12 @@ $t_prefs->email_on_feedback_min_severity	= gpc_get_int( 'email_on_feedback_min_s
 $t_prefs->email_on_resolved_min_severity	= gpc_get_int( 'email_on_resolved_min_severity' );
 $t_prefs->email_on_closed_min_severity		= gpc_get_int( 'email_on_closed_min_severity' );
 $t_prefs->email_on_reopened_min_severity	= gpc_get_int( 'email_on_reopened_min_severity' );
-$t_prefs->email_on_bugnote_min_severity		= gpc_get_int( 'email_on_bugnote_min_severity' );
+$t_prefs->email_on_docnote_min_severity		= gpc_get_int( 'email_on_docnote_min_severity' );
 $t_prefs->email_on_status_min_severity		= gpc_get_int( 'email_on_status_min_severity' );
 $t_prefs->email_on_priority_min_severity	= gpc_get_int( 'email_on_priority_min_severity' );
 
-$t_prefs->bugnote_order = gpc_get_string( 'bugnote_order' );
-$t_prefs->email_bugnote_limit = gpc_get_int( 'email_bugnote_limit' );
+$t_prefs->docnote_order = gpc_get_string( 'docnote_order' );
+$t_prefs->email_docnote_limit = gpc_get_int( 'email_docnote_limit' );
 
 # make sure the delay isn't too low
 if( ( config_get( 'min_refresh_delay' ) > $t_prefs->refresh_delay )&&

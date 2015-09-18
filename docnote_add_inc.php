@@ -15,7 +15,7 @@
 # along with MantisBT.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Bugnote add include file
+ * Docnote add include file
  *
  * @package MantisBT
  * @copyright Copyright 2000 - 2002  Kenzaburo Ito - kenito@300baud.org
@@ -34,7 +34,7 @@
  * @uses lang_api.php
  */
 
-if( !defined( 'BUGNOTE_ADD_INC_ALLOW' ) ) {
+if( !defined( 'DOCNOTE_ADD_INC_ALLOW' ) ) {
 	return;
 }
 
@@ -51,26 +51,26 @@ require_api( 'lang_api.php' );
 
 ?>
 <?php if( ( !bug_is_readonly( $f_bug_id ) ) &&
-		( access_has_bug_level( config_get( 'add_bugnote_threshold' ), $f_bug_id ) ) ) { ?>
-<?php # Bugnote Add Form BEGIN ?>
+		( access_has_bug_level( config_get( 'add_docnote_threshold' ), $f_bug_id ) ) ) { ?>
+<?php # Docnote Add Form BEGIN ?>
 
 <div class="col-md-12 col-xs-12">
-<a id="addbugnote"></a>
+<a id="adddocnote"></a>
 <div class="space-10"></div>
 
 <?php
-	$t_collapse_block = is_collapsed( 'bugnote_add' );
+	$t_collapse_block = is_collapsed( 'docnote_add' );
 	$t_block_css = $t_collapse_block ? 'collapsed' : '';
 	$t_block_icon = $t_collapse_block ? 'fa-chevron-down' : 'fa-chevron-up';
 ?>
-<form id="bugnoteadd" method="post" action="bugnote_add.php" enctype="multipart/form-data" class="dz dropzone-form">
-	<?php echo form_security_field( 'bugnote_add' ) ?>
+<form id="docnoteadd" method="post" action="docnote_add.php" enctype="multipart/form-data" class="dz dropzone-form">
+	<?php echo form_security_field( 'docnote_add' ) ?>
 	<input type="hidden" name="bug_id" value="<?php echo $f_bug_id ?>" />
-	<div id="bugnote_add" class="widget-box widget-color-blue2 <?php echo $t_block_css ?>">
+	<div id="docnote_add" class="widget-box widget-color-blue2 <?php echo $t_block_css ?>">
 		<div class="widget-header widget-header-small">
 			<h4 class="widget-title lighter">
 				<i class="ace-icon fa fa-comment"></i>
-				<?php echo lang_get( 'add_bugnote_title' ) ?>
+				<?php echo lang_get( 'add_docnote_title' ) ?>
 			</h4>
 			<div class="widget-toolbar">
 				<a data-action="collapse" href="#">
@@ -87,10 +87,10 @@ require_api( 'lang_api.php' );
 		<tbody>
 			<tr>
 				<th class="category" width="15%">
-					<?php echo lang_get( 'bugnote' ) ?>
+					<?php echo lang_get( 'docnote' ) ?>
 				</th>
 				<td width="85%">
-					<textarea name="bugnote_text" class="form-control" rows="7"></textarea>
+					<textarea name="docnote_text" class="form-control" rows="7"></textarea>
 				</td>
 			</tr>
 
@@ -106,8 +106,8 @@ require_api( 'lang_api.php' );
 		$t_default_docnote_view_status = config_get( 'default_docnote_view_status' );
 		if( access_has_bug_level( config_get( 'set_view_status_threshold' ), $f_bug_id ) ) {
 ?>
-				<label for="bugnote_add_view_status">
-					<input type="checkbox" class="ace" id="bugnote_add_view_status" name="private" <?php check_checked( $t_default_docnote_view_status, VS_PRIVATE ); ?> />
+				<label for="docnote_add_view_status">
+					<input type="checkbox" class="ace" id="docnote_add_view_status" name="private" <?php check_checked( $t_default_docnote_view_status, VS_PRIVATE ); ?> />
 					<span class="lbl"> <?php echo lang_get( 'private' ) ?> </span>
 				</label>
 <?php
@@ -178,14 +178,14 @@ require_api( 'lang_api.php' );
 <?php
 	}
 
-	event_signal( 'EVENT_BUGNOTE_ADD_FORM', array( $f_bug_id ) );
+	event_signal( 'EVENT_DOCNOTE_ADD_FORM', array( $f_bug_id ) );
 ?>
 		</tbody>
 </table>
 </div>
 </div>
 	<div class="widget-toolbox padding-8 clearfix">
-		<input type="submit" class="btn btn-primary btn-white btn-round" value="<?php echo lang_get( 'add_bugnote_button' ) ?>" />
+		<input type="submit" class="btn btn-primary btn-white btn-round" value="<?php echo lang_get( 'add_docnote_button' ) ?>" />
 	</div>
 </div>
 </div>

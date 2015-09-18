@@ -35,11 +35,11 @@ require_api( 'database_api.php' );
  * @param integer $p_user_id    User ID.
  * @param integer $p_type       Revision Type.
  * @param string  $p_value      Value.
- * @param integer $p_bugnote_id A Bugnote ID.
+ * @param integer $p_docnote_id A Docnote ID.
  * @param integer $p_timestamp  Integer Timestamp.
  * @return int Revision ID
  */
-function bug_revision_add( $p_bug_id, $p_user_id, $p_type, $p_value, $p_bugnote_id = 0, $p_timestamp = null ) {
+function bug_revision_add( $p_bug_id, $p_user_id, $p_type, $p_value, $p_docnote_id = 0, $p_timestamp = null ) {
 	if( $p_type <= REV_ANY ) {
 		return null;
 	}
@@ -60,13 +60,13 @@ function bug_revision_add( $p_bug_id, $p_user_id, $p_type, $p_value, $p_bugnote_
 	}
 
 	$t_query = 'INSERT INTO {bug_revision} (
-			bug_id, bugnote_id, user_id,
+			bug_id, docnote_id, user_id,
 			timestamp, type, value
 		) VALUES ( ' .
 			db_param() . ', ' . db_param() . ', ' . db_param() . ', ' .
 			db_param() . ', ' . db_param() . ', ' . db_param() . ' )';
 	db_query( $t_query, array(
-			$p_bug_id, $p_bugnote_id, $p_user_id,
+			$p_bug_id, $p_docnote_id, $p_user_id,
 			$t_timestamp, $p_type, $p_value ) );
 
 	return db_insert_id( db_get_table( 'bug_revision' ) );
@@ -122,8 +122,8 @@ function bug_revision_get_type_name( $p_revision_type_id ) {
 		case REV_ADDITIONAL_INFO:
 			$t_type_name = lang_get( 'additional_information' );
 			break;
-		case REV_BUGNOTE:
-			$t_type_name = lang_get( 'bugnote' );
+		case REV_DOCNOTE:
+			$t_type_name = lang_get( 'docnote' );
 			break;
 	}
 	return $t_type_name;
@@ -149,20 +149,20 @@ function bug_revision_drop( $p_revision_id ) {
 		$t_query .= ' )';
 		db_query( $t_query, $p_revision_id );
 		foreach( $p_revision_id as $t_rev_id ) {
-			if( $t_revisions[$t_rev_id]['type'] == REV_BUGNOTE ) {
-				history_log_event_special( $t_revisions[$t_rev_id]['bug_id'], BUGNOTE_REVISION_DROPPED, bugnote_format_id( $t_rev_id ), $t_revisions[$t_rev_id]['bugnote_id'] );
+			if( $t_revisions[$t_rev_id]['type'] == REV_DOCNOTE ) {
+				history_log_event_special( $t_revisions[$t_rev_id]['bug_id'], DOCNOTE_REVISION_DROPPED, docnote_format_id( $t_rev_id ), $t_revisions[$t_rev_id]['docnote_id'] );
 			} else {
-				history_log_event_special( $t_revisions[$t_rev_id]['bug_id'], BUG_REVISION_DROPPED, bugnote_format_id( $t_rev_id ), $t_revisions[$t_rev_id]['type'] );
+				history_log_event_special( $t_revisions[$t_rev_id]['bug_id'], BUG_REVISION_DROPPED, docnote_format_id( $t_rev_id ), $t_revisions[$t_rev_id]['type'] );
 			}
 		}
 	} else {
 		$t_revision = bug_revision_get( $p_revision_id );
 		$t_query = 'DELETE FROM {bug_revision} WHERE id=' . db_param();
 		db_query( $t_query, array( $p_revision_id ) );
-		if( $t_revision['type'] == REV_BUGNOTE ) {
-			history_log_event_special( $t_revision['bug_id'], BUGNOTE_REVISION_DROPPED, bugnote_format_id( $p_revision_id ), $t_revision['bugnote_id'] );
+		if( $t_revision['type'] == REV_DOCNOTE ) {
+			history_log_event_special( $t_revision['bug_id'], DOCNOTE_REVISION_DROPPED, docnote_format_id( $p_revision_id ), $t_revision['docnote_id'] );
 		} else {
-			history_log_event_special( $t_revision['bug_id'], BUG_REVISION_DROPPED, bugnote_format_id( $p_revision_id ), $t_revision['type'] );
+			history_log_event_special( $t_revision['bug_id'], BUG_REVISION_DROPPED, docnote_format_id( $p_revision_id ), $t_revision['type'] );
 		}
 	}
 }
@@ -171,10 +171,10 @@ function bug_revision_drop( $p_revision_id ) {
  * Retrieve a count of revisions to the bug's information.
  * @param integer $p_bug_id     A bug identifier.
  * @param integer $p_type       Revision Type (optional).
- * @param integer $p_bugnote_id A bugnote identifier (optional).
+ * @param integer $p_docnote_id A docnote identifier (optional).
  * @return array|null Array of Revision rows
  */
-function bug_revision_count( $p_bug_id, $p_type = REV_ANY, $p_bugnote_id = 0 ) {
+function bug_revision_count( $p_bug_id, $p_type = REV_ANY, $p_docnote_id = 0 ) {
 	$t_params = array( $p_bug_id );
 	$t_query = 'SELECT COUNT(id) FROM {bug_revision} WHERE bug_id=' . db_param();
 
@@ -183,11 +183,11 @@ function bug_revision_count( $p_bug_id, $p_type = REV_ANY, $p_bugnote_id = 0 ) {
 		$t_params[] = $p_type;
 	}
 
-	if( $p_bugnote_id > 0 ) {
-		$t_query .= ' AND bugnote_id=' . db_param();
-		$t_params[] = $p_bugnote_id;
+	if( $p_docnote_id > 0 ) {
+		$t_query .= ' AND docnote_id=' . db_param();
+		$t_params[] = $p_docnote_id;
 	} else {
-		$t_query .= ' AND bugnote_id=0';
+		$t_query .= ' AND docnote_id=0';
 	}
 
 	$t_result = db_query( $t_query, $t_params );
@@ -198,16 +198,16 @@ function bug_revision_count( $p_bug_id, $p_type = REV_ANY, $p_bugnote_id = 0 ) {
 /**
  * Delete all revision history for a bug.
  * @param integer $p_bug_id     A bug identifier.
- * @param integer $p_bugnote_id A bugnote identifier (optional).
+ * @param integer $p_docnote_id A docnote identifier (optional).
  * @return void
  */
-function bug_revision_delete( $p_bug_id, $p_bugnote_id = 0 ) {
-	if( $p_bugnote_id < 1 ) {
+function bug_revision_delete( $p_bug_id, $p_docnote_id = 0 ) {
+	if( $p_docnote_id < 1 ) {
 		$t_query = 'DELETE FROM {bug_revision} WHERE bug_id=' . db_param();
 		db_query( $t_query, array( $p_bug_id ) );
 	} else {
-		$t_query = 'DELETE FROM {bug_revision} WHERE bugnote_id=' . db_param();
-		db_query( $t_query, array( $p_bugnote_id ) );
+		$t_query = 'DELETE FROM {bug_revision} WHERE docnote_id=' . db_param();
+		db_query( $t_query, array( $p_docnote_id ) );
 	}
 }
 
@@ -215,10 +215,10 @@ function bug_revision_delete( $p_bug_id, $p_bugnote_id = 0 ) {
  * Retrieve the last change to the bug's information.
  * @param integer $p_bug_id     A bug identifier.
  * @param integer $p_type       Revision Type (optional).
- * @param integer $p_bugnote_id A bugnote identifier (optional).
+ * @param integer $p_docnote_id A docnote identifier (optional).
  * @return null|array Revision row
  */
-function bug_revision_last( $p_bug_id, $p_type = REV_ANY, $p_bugnote_id = 0 ) {
+function bug_revision_last( $p_bug_id, $p_type = REV_ANY, $p_docnote_id = 0 ) {
 	$t_params = array( $p_bug_id );
 	$t_query = 'SELECT * FROM {bug_revision} WHERE bug_id=' . db_param();
 
@@ -227,11 +227,11 @@ function bug_revision_last( $p_bug_id, $p_type = REV_ANY, $p_bugnote_id = 0 ) {
 		$t_params[] = $p_type;
 	}
 
-	if( $p_bugnote_id > 0 ) {
-		$t_query .= ' AND bugnote_id=' . db_param();
-		$t_params[] = $p_bugnote_id;
+	if( $p_docnote_id > 0 ) {
+		$t_query .= ' AND docnote_id=' . db_param();
+		$t_params[] = $p_docnote_id;
 	} else {
-		$t_query .= ' AND bugnote_id=0';
+		$t_query .= ' AND docnote_id=0';
 	}
 
 	$t_query .= ' ORDER BY timestamp DESC';
@@ -249,10 +249,10 @@ function bug_revision_last( $p_bug_id, $p_type = REV_ANY, $p_bugnote_id = 0 ) {
  * Retrieve a full list of changes to the bug's information.
  * @param integer $p_bug_id     A bug identifier.
  * @param integer $p_type       Revision Type.
- * @param integer $p_bugnote_id A bugnote identifier.
+ * @param integer $p_docnote_id A docnote identifier.
  * @return array/null Array of Revision rows
  */
-function bug_revision_list( $p_bug_id, $p_type = REV_ANY, $p_bugnote_id = 0 ) {
+function bug_revision_list( $p_bug_id, $p_type = REV_ANY, $p_docnote_id = 0 ) {
 	$t_params = array( $p_bug_id );
 	$t_query = 'SELECT * FROM {bug_revision} WHERE bug_id=' . db_param();
 
@@ -261,11 +261,11 @@ function bug_revision_list( $p_bug_id, $p_type = REV_ANY, $p_bugnote_id = 0 ) {
 		$t_params[] = $p_type;
 	}
 
-	if( $p_bugnote_id > 0 ) {
-		$t_query .= ' AND bugnote_id=' . db_param();
-		$t_params[] = $p_bugnote_id;
+	if( $p_docnote_id > 0 ) {
+		$t_query .= ' AND docnote_id=' . db_param();
+		$t_params[] = $p_docnote_id;
 	} else {
-		$t_query .= ' AND bugnote_id=0';
+		$t_query .= ' AND docnote_id=0';
 	}
 
 	$t_query .= ' ORDER BY id DESC';
@@ -286,7 +286,7 @@ function bug_revision_list( $p_bug_id, $p_type = REV_ANY, $p_bugnote_id = 0 ) {
  * @return array|null Array of Revision rows
  */
 function bug_revision_like( $p_rev_id ) {
-	$t_query = 'SELECT bug_id, bugnote_id, type FROM {bug_revision} WHERE id=' . db_param();
+	$t_query = 'SELECT bug_id, docnote_id, type FROM {bug_revision} WHERE id=' . db_param();
 	$t_result = db_query( $t_query, array( $p_rev_id ) );
 
 	$t_row = db_fetch_array( $t_result );
@@ -296,7 +296,7 @@ function bug_revision_like( $p_rev_id ) {
 	}
 
 	$t_bug_id = $t_row['bug_id'];
-	$t_bugnote_id = $t_row['bugnote_id'];
+	$t_docnote_id = $t_row['docnote_id'];
 	$t_type = $t_row['type'];
 
 	$t_params = array( $t_bug_id );
@@ -307,11 +307,11 @@ function bug_revision_like( $p_rev_id ) {
 		$t_params[] = $t_type;
 	}
 
-	if( $t_bugnote_id > 0 ) {
-		$t_query .= ' AND bugnote_id=' . db_param();
-		$t_params[] = $t_bugnote_id;
+	if( $t_docnote_id > 0 ) {
+		$t_query .= ' AND docnote_id=' . db_param();
+		$t_params[] = $t_docnote_id;
 	} else {
-		$t_query .= ' AND bugnote_id=0';
+		$t_query .= ' AND docnote_id=0';
 	}
 
 	$t_query .= ' ORDER BY id DESC';

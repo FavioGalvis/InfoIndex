@@ -245,8 +245,8 @@ function excel_format_reporter_id( BugData $p_bug ) {
  * @param BugData $p_bug A bug object.
  * @return string The number of bug notes.
  */
-function excel_format_bugnotes_count( BugData $p_bug ) {
-	return excel_prepare_string( $p_bug->bugnotes_count );
+function excel_format_docnotes_count( BugData $p_bug ) {
+	return excel_prepare_string( $p_bug->docnotes_count );
 }
 
 /**

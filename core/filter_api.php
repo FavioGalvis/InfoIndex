@@ -637,7 +637,7 @@ function filter_ensure_valid_filter( array $p_filter_arr ) {
 	$t_fields = helper_get_columns_to_view();
 	$t_n_fields = count( $t_fields );
 	for( $i = 0;$i < $t_n_fields;$i++ ) {
-		if( isset( $t_fields[$i] ) && in_array( $t_fields[$i], array( 'selection', 'edit', 'bugnotes_count', 'attachment_count' ) ) ) {
+		if( isset( $t_fields[$i] ) && in_array( $t_fields[$i], array( 'selection', 'edit', 'docnotes_count', 'attachment_count' ) ) ) {
 			unset( $t_fields[$i] );
 		}
 	}
@@ -1840,9 +1840,9 @@ function filter_get_bug_rows( &$p_page_number, &$p_per_page, &$p_page_count, &$p
 
 	# note user id
 	if( !filter_field_is_any( $t_filter[FILTER_PROPERTY_NOTE_USER_ID] ) ) {
-		$t_bugnote_table_alias = 'mbnt';
+		$t_docnote_table_alias = 'mbnt';
 		$t_clauses = array();
-		array_push( $t_join_clauses, 'LEFT JOIN {bugnote} ' . $t_bugnote_table_alias . ' ON {bug}.id = ' . $t_bugnote_table_alias . '.bug_id' );
+		array_push( $t_join_clauses, 'LEFT JOIN {docnote} ' . $t_docnote_table_alias . ' ON {bug}.id = ' . $t_docnote_table_alias . '.bug_id' );
 
 		foreach( $t_filter[FILTER_PROPERTY_NOTE_USER_ID] as $t_filter_member ) {
 			$c_note_user_id = (int)$t_filter_member;
@@ -1858,10 +1858,10 @@ function filter_get_bug_rows( &$p_page_number, &$p_per_page, &$p_page_count, &$p
 				$t_where_tmp[] = db_param();
 				$t_where_params[] = $t_clause;
 			}
-			array_push( $t_where_clauses, '( ' . $t_bugnote_table_alias . '.reporter_id in (' . implode( ', ', $t_where_tmp ) . ') )' );
+			array_push( $t_where_clauses, '( ' . $t_docnote_table_alias . '.reporter_id in (' . implode( ', ', $t_where_tmp ) . ') )' );
 		} else {
 			$t_where_params[] = $t_clauses[0];
-			array_push( $t_where_clauses, '( ' . $t_bugnote_table_alias . '.reporter_id=' . db_param() . ' )' );
+			array_push( $t_where_clauses, '( ' . $t_docnote_table_alias . '.reporter_id=' . db_param() . ' )' );
 		}
 	}
 
@@ -2004,7 +2004,7 @@ function filter_get_bug_rows( &$p_page_number, &$p_per_page, &$p_page_count, &$p
 				' OR ' . db_helper_like( '{bug_text}.description' ) .
 				' OR ' . db_helper_like( '{bug_text}.steps_to_reproduce' ) .
 				' OR ' . db_helper_like( '{bug_text}.additional_information' ) .
-				' OR ' . db_helper_like( '{bugnote_text}.note' );
+				' OR ' . db_helper_like( '{docnote_text}.note' );
 
 			$t_where_params[] = $c_search;
 			$t_where_params[] = $c_search;
@@ -2023,7 +2023,7 @@ function filter_get_bug_rows( &$p_page_number, &$p_per_page, &$p_page_count, &$p
 				if( $t_search_term <= $t_search_max ) {
 					$c_search_int = (int)$t_search_term;
 					$t_textsearch_where_clause .= ' OR {bug}.id = ' . db_param();
-					$t_textsearch_where_clause .= ' OR {bugnote}.id = ' . db_param();
+					$t_textsearch_where_clause .= ' OR {docnote}.id = ' . db_param();
 					$t_where_params[] = $c_search_int;
 					$t_where_params[] = $c_search_int;
 				}
@@ -2037,9 +2037,9 @@ function filter_get_bug_rows( &$p_page_number, &$p_per_page, &$p_page_count, &$p
 		# add text query elements to arrays
 		if( !$t_first ) {
 			$t_join_clauses[] = 'JOIN {bug_text} ON {bug}.bug_text_id = {bug_text}.id';
-			$t_join_clauses[] = 'LEFT JOIN {bugnote} ON {bug}.id = {bugnote}.bug_id';
+			$t_join_clauses[] = 'LEFT JOIN {docnote} ON {bug}.id = {docnote}.bug_id';
 			# Outer join required otherwise we don't retrieve issues without notes
-			$t_join_clauses[] = 'LEFT JOIN {bugnote_text} ON {bugnote}.bugnote_text_id = {bugnote_text}.id';
+			$t_join_clauses[] = 'LEFT JOIN {docnote_text} ON {docnote}.docnote_text_id = {docnote_text}.id';
 			$t_where_clauses[] = $t_textsearch_where_clause;
 		}
 	}
@@ -2098,15 +2098,15 @@ function filter_get_bug_rows( &$p_page_number, &$p_per_page, &$p_page_count, &$p
 }
 
 /**
- *  Cache the filter results with bugnote stats for later use
+ *  Cache the filter results with docnote stats for later use
  * @param array $p_rows             Results of the filter query.
  * @param array $p_id_array_lastmod Array of bug ids.
  * @return array
  */
 function filter_cache_result( array $p_rows, array $p_id_array_lastmod ) {
 	$t_id_array_lastmod = array_unique( $p_id_array_lastmod );
-	$t_where_string = ' WHERE {bugnote}.bug_id in (' . implode( ', ', $t_id_array_lastmod ) . ')';
-	$t_query = 'SELECT DISTINCT bug_id,MAX(last_modified) as last_modified, COUNT(last_modified) as count FROM {bugnote} ' . $t_where_string . ' GROUP BY bug_id';
+	$t_where_string = ' WHERE {docnote}.bug_id in (' . implode( ', ', $t_id_array_lastmod ) . ')';
+	$t_query = 'SELECT DISTINCT bug_id,MAX(last_modified) as last_modified, COUNT(last_modified) as count FROM {docnote} ' . $t_where_string . ' GROUP BY bug_id';
 
 	# perform query
 	$t_result = db_query( $t_query );
@@ -3371,7 +3371,7 @@ function filter_draw_selection_area2( $p_page_number, $p_for_screen = true, $p_e
 					$t_field_name = string_get_field_name( $t_sort );
 				}
 
-				echo $t_field_name . ' ' . lang_get( 'bugnote_order_' . utf8_strtolower( $t_dir_fields[$i] ) );
+				echo $t_field_name . ' ' . lang_get( 'docnote_order_' . utf8_strtolower( $t_dir_fields[$i] ) );
 				echo '<input type="hidden" name="', FILTER_PROPERTY_SORT_FIELD_NAME, '_', $i, '" value="', string_attribute( $t_sort_fields[$i] ), '" />';
 				echo '<input type="hidden" name="', FILTER_PROPERTY_SORT_DIRECTION, '_', $i, '" value="', string_attribute( $t_dir_fields[$i] ), '" />';
 			}
@@ -4053,7 +4053,7 @@ function print_filter_tag_string() {
 function print_filter_note_user_id() {
 	global $g_select_modifier, $g_filter, $f_view_type;
 	?>
-	<!-- BUGNOTE REPORTER -->
+	<!-- DOCNOTE REPORTER -->
 	<select class="input-xs" <?php echo $g_select_modifier;?> name="<?php echo FILTER_PROPERTY_NOTE_USER_ID;?>[]">
 		<option value="<?php echo META_FILTER_ANY?>"<?php check_selected( $g_filter[FILTER_PROPERTY_NOTE_USER_ID], META_FILTER_ANY );?>>[<?php echo lang_get( 'any' )?>]</option>
 		<?php if( access_has_project_level( config_get( 'view_handler_threshold' ) ) ) {?>
@@ -4195,7 +4195,7 @@ function print_filter_show_sort() {
 	$t_n_fields = count( $t_fields );
 	$t_shown_fields[''] = '';
 	for( $i = 0;$i < $t_n_fields;$i++ ) {
-		if( !in_array( $t_fields[$i], array( 'selection', 'edit', 'bugnotes_count', 'attachment_count' ) ) ) {
+		if( !in_array( $t_fields[$i], array( 'selection', 'edit', 'docnotes_count', 'attachment_count' ) ) ) {
 			if( strpos( $t_fields[$i], 'custom_' ) === 0 ) {
 				$t_field_name = string_display( lang_get_defaulted( utf8_substr( $t_fields[$i], utf8_strlen( 'custom_' ) ) ) );
 			} else {
@@ -4205,8 +4205,8 @@ function print_filter_show_sort() {
 		}
 	}
 	$t_shown_dirs[''] = '';
-	$t_shown_dirs['ASC'] = lang_get( 'bugnote_order_asc' );
-	$t_shown_dirs['DESC'] = lang_get( 'bugnote_order_desc' );
+	$t_shown_dirs['ASC'] = lang_get( 'docnote_order_asc' );
+	$t_shown_dirs['DESC'] = lang_get( 'docnote_order_desc' );
 
 	# get default values from filter structure
 	$t_sort_fields = explode( ',', $g_filter[FILTER_PROPERTY_SORT_FIELD_NAME] );
@@ -4253,7 +4253,7 @@ function print_filter_show_sort() {
 		}
 		echo '</select>';
 	} else {
-		echo lang_get_defaulted( 'last_updated' ) . lang_get( 'bugnote_order_desc' );
+		echo lang_get_defaulted( 'last_updated' ) . lang_get( 'docnote_order_desc' );
 		echo '<input type="hidden" name="', FILTER_PROPERTY_SORT_FIELD_NAME, '_1" value="last_updated" />';
 		echo '<input type="hidden" name="', FILTER_PROPERTY_SORT_DIRECTION, '_1" value="DESC" />';
 	}

@@ -26,7 +26,7 @@
  * @uses access_api.php
  * @uses authentication_api.php
  * @uses bug_api.php
- * @uses bugnote_api.php
+ * @uses docnote_api.php
  * @uses config_api.php
  * @uses constant_inc.php
  * @uses custom_field_api.php
@@ -46,7 +46,7 @@ require_once( 'core.php' );
 require_api( 'access_api.php' );
 require_api( 'authentication_api.php' );
 require_api( 'bug_api.php' );
-require_api( 'bugnote_api.php' );
+require_api( 'docnote_api.php' );
 require_api( 'config_api.php' );
 require_api( 'constant_inc.php' );
 require_api( 'custom_field_api.php' );
@@ -108,8 +108,8 @@ $t_updated_bug->target_version = gpc_get_string( 'target_version', $t_existing_b
 $t_updated_bug->version = gpc_get_string( 'version', $t_existing_bug->version );
 $t_updated_bug->view_state = gpc_get_int( 'view_state', $t_existing_bug->view_state );
 
-$t_bug_note = new BugNoteData();
-$t_bug_note->note = gpc_get_string( 'bugnote_text', '' );
+$t_bug_note = new DocnoteData();
+$t_bug_note->note = gpc_get_string( 'docnote_text', '' );
 $t_bug_note->view_state = gpc_get_bool( 'private', config_get( 'default_docnote_view_status' ) == VS_PRIVATE ) ? VS_PRIVATE : VS_PUBLIC;
 $t_bug_note->time_tracking = gpc_get_string( 'time_tracking', '0:00' );
 
@@ -333,10 +333,10 @@ if( $t_updated_bug->duplicate_id !== 0 ) {
 if( $t_bug_note->note ||
 	 ( config_get( 'time_tracking_enabled' ) &&
 	   helper_duration_to_minutes( $t_bug_note->time_tracking ) > 0 ) ) {
-	access_ensure_bug_level( config_get( 'add_bugnote_threshold' ), $f_bug_id );
+	access_ensure_bug_level( config_get( 'add_docnote_threshold' ), $f_bug_id );
 	if( !$t_bug_note->note &&
 	     !config_get( 'time_tracking_without_note' ) ) {
-		error_parameters( lang_get( 'bugnote' ) );
+		error_parameters( lang_get( 'docnote' ) );
 		trigger_error( ERROR_EMPTY_FIELD, ERROR );
 	}
 	if( $t_bug_note->view_state !== config_get( 'default_docnote_view_status' ) ) {
@@ -391,7 +391,7 @@ foreach ( $t_custom_fields_to_set as $t_custom_field_to_set ) {
 
 # Add a bug note if there is one.
 if( $t_bug_note->note || helper_duration_to_minutes( $t_bug_note->time_tracking ) > 0 ) {
-	bugnote_add( $f_bug_id, $t_bug_note->note, $t_bug_note->time_tracking, $t_bug_note->view_state == VS_PRIVATE, 0, '', null, false );
+	docnote_add( $f_bug_id, $t_bug_note->note, $t_bug_note->time_tracking, $t_bug_note->view_state == VS_PRIVATE, 0, '', null, false );
 }
 
 # Add a duplicate relationship if requested.

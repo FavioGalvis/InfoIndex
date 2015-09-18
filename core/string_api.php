@@ -26,7 +26,7 @@
  * @uses access_api.php
  * @uses authentication_api.php
  * @uses bug_api.php
- * @uses bugnote_api.php
+ * @uses docnote_api.php
  * @uses config_api.php
  * @uses constant_inc.php
  * @uses email_api.php
@@ -40,7 +40,7 @@
 require_api( 'access_api.php' );
 require_api( 'authentication_api.php' );
 require_api( 'bug_api.php' );
-require_api( 'bugnote_api.php' );
+require_api( 'docnote_api.php' );
 require_api( 'config_api.php' );
 require_api( 'constant_inc.php' );
 require_api( 'email_api.php' );
@@ -383,7 +383,7 @@ function string_process_bug_link( $p_string, $p_include_anchor = true, $p_detail
 }
 
 /**
- * Process $p_string, looking for bugnote ID references and creating bug view
+ * Process $p_string, looking for docnote ID references and creating bug view
  * links for them.
  *
  * Returns the processed string.
@@ -391,7 +391,7 @@ function string_process_bug_link( $p_string, $p_include_anchor = true, $p_detail
  * If $p_include_anchor is true, include the href tag, otherwise just insert
  * the URL
  *
- * The bugnote tag ('~' by default) must be at the beginning of the string or
+ * The docnote tag ('~' by default) must be at the beginning of the string or
  * preceeded by a character that is not a letter, a number or an underscore
  *
  * if $p_include_anchor = false, $p_fqdn is ignored and assumed to true.
@@ -401,36 +401,36 @@ function string_process_bug_link( $p_string, $p_include_anchor = true, $p_detail
  * @param boolean $p_fqdn           Whether to return an absolute or relative link.
  * @return string
  */
-function string_process_bugnote_link( $p_string, $p_include_anchor = true, $p_detail_info = true, $p_fqdn = false ) {
-	static $s_bugnote_link_callback = array();
+function string_process_docnote_link( $p_string, $p_include_anchor = true, $p_detail_info = true, $p_fqdn = false ) {
+	static $s_docnote_link_callback = array();
 
-	$t_tag = config_get( 'bugnote_link_tag' );
+	$t_tag = config_get( 'docnote_link_tag' );
 
 	# bail if the link tag is blank
 	if( '' == $t_tag || $p_string == '' ) {
 		return $p_string;
 	}
 
-	if( !isset( $s_bugnote_link_callback[$p_include_anchor][$p_detail_info][$p_fqdn] ) ) {
+	if( !isset( $s_docnote_link_callback[$p_include_anchor][$p_detail_info][$p_fqdn] ) ) {
 		if( $p_include_anchor ) {
-			$s_bugnote_link_callback[$p_include_anchor][$p_detail_info][$p_fqdn] =
+			$s_docnote_link_callback[$p_include_anchor][$p_detail_info][$p_fqdn] =
 				function( $p_array ) use( $p_detail_info, $p_fqdn ) {
 					global $g_project_override;
-					if( bugnote_exists( (int)$p_array[2] ) ) {
-						$t_bug_id = bugnote_get_field( (int)$p_array[2], 'bug_id' );
+					if( docnote_exists( (int)$p_array[2] ) ) {
+						$t_bug_id = docnote_get_field( (int)$p_array[2], 'bug_id' );
 						if( bug_exists( $t_bug_id ) ) {
 							$g_project_override = bug_get_field( $t_bug_id, 'project_id' );
 							if(   access_compare_level(
 										user_get_access_level( auth_get_current_user_id(),
 										bug_get_field( $t_bug_id, 'project_id' ) ),
-										config_get( 'private_bugnote_threshold' )
+										config_get( 'private_docnote_threshold' )
 								   )
-								|| bugnote_get_field( (int)$p_array[2], 'reporter_id' ) == auth_get_current_user_id()
-								|| bugnote_get_field( (int)$p_array[2], 'view_state' ) == VS_PUBLIC
+								|| docnote_get_field( (int)$p_array[2], 'reporter_id' ) == auth_get_current_user_id()
+								|| docnote_get_field( (int)$p_array[2], 'view_state' ) == VS_PUBLIC
 							) {
 								$g_project_override = null;
 								return $p_array[1] .
-									string_get_bugnote_view_link(
+									string_get_docnote_view_link(
 										$t_bug_id,
 										(int)$p_array[2],
 										null,
@@ -442,23 +442,23 @@ function string_process_bugnote_link( $p_string, $p_include_anchor = true, $p_de
 						}
 					}
 					return $p_array[0];
-				}; # end of bugnote link callback closure
+				}; # end of docnote link callback closure
 		} else {
-			$s_bugnote_link_callback[$p_include_anchor][$p_detail_info][$p_fqdn] =
+			$s_docnote_link_callback[$p_include_anchor][$p_detail_info][$p_fqdn] =
 				function( $p_array ) {
-					$t_bug_id = bugnote_get_field( (int)$p_array[2], 'bug_id' );
+					$t_bug_id = docnote_get_field( (int)$p_array[2], 'bug_id' );
 					if( $t_bug_id && bug_exists( $t_bug_id ) ) {
 						return $p_array[1] .
-							string_get_bugnote_view_url_with_fqdn( $t_bug_id, (int)$p_array[2], null );
+							string_get_docnote_view_url_with_fqdn( $t_bug_id, (int)$p_array[2], null );
 					} else {
 						return $p_array[0];
 					}
-				}; # end of bugnote link callback closure
+				}; # end of docnote link callback closure
 		}
 	}
 	$p_string = preg_replace_callback(
 		'/(^|[^\w])' . preg_quote( $t_tag, '/' ) . '(\d+)\b/',
-		$s_bugnote_link_callback[$p_include_anchor][$p_detail_info][$p_fqdn],
+		$s_docnote_link_callback[$p_include_anchor][$p_detail_info][$p_fqdn],
 		$p_string
 	);
 	return $p_string;
@@ -651,16 +651,16 @@ function string_get_bug_view_link( $p_bug_id, $p_user_id = null, $p_detail_info 
  * return an href anchor that links to a bug VIEW page for the given bug
  * account for the user preference and site override
  * @param integer $p_bug_id      A bug identifier.
- * @param integer $p_bugnote_id  A bugnote identifier.
+ * @param integer $p_docnote_id  A docnote identifier.
  * @param integer $p_user_id     A valid user identifier.
  * @param boolean $p_detail_info Whether to include more detailed information (e.g. title attribute / project) in the returned string.
  * @param boolean $p_fqdn        Whether to return an absolute or relative link.
  * @return string
  */
-function string_get_bugnote_view_link( $p_bug_id, $p_bugnote_id, $p_user_id = null, $p_detail_info = true, $p_fqdn = false ) {
+function string_get_docnote_view_link( $p_bug_id, $p_docnote_id, $p_user_id = null, $p_detail_info = true, $p_fqdn = false ) {
 	$t_bug_id = (int)$p_bug_id;
 
-	if( bug_exists( $t_bug_id ) && bugnote_exists( $p_bugnote_id ) ) {
+	if( bug_exists( $t_bug_id ) && docnote_exists( $p_docnote_id ) ) {
 		$t_link = '<a href="';
 		if( $p_fqdn ) {
 			$t_link .= config_get_global( 'path' );
@@ -668,16 +668,16 @@ function string_get_bugnote_view_link( $p_bug_id, $p_bugnote_id, $p_user_id = nu
 			$t_link .= config_get_global( 'short_path' );
 		}
 
-		$t_link .= string_get_bugnote_view_url( $p_bug_id, $p_bugnote_id, $p_user_id ) . '"';
+		$t_link .= string_get_docnote_view_url( $p_bug_id, $p_docnote_id, $p_user_id ) . '"';
 		if( $p_detail_info ) {
-			$t_reporter = string_attribute( user_get_name( bugnote_get_field( $p_bugnote_id, 'reporter_id' ) ) );
-			$t_update_date = string_attribute( date( config_get( 'normal_date_format' ), ( bugnote_get_field( $p_bugnote_id, 'last_modified' ) ) ) );
+			$t_reporter = string_attribute( user_get_name( docnote_get_field( $p_docnote_id, 'reporter_id' ) ) );
+			$t_update_date = string_attribute( date( config_get( 'normal_date_format' ), ( docnote_get_field( $p_docnote_id, 'last_modified' ) ) ) );
 			$t_link .= ' title="' . bug_format_id( $t_bug_id ) . ': [' . $t_update_date . '] ' . $t_reporter . '"';
 		}
 
-		$t_link .= '>' . bug_format_id( $t_bug_id ) . ':' . bugnote_format_id( $p_bugnote_id ) . '</a>';
+		$t_link .= '>' . bug_format_id( $t_bug_id ) . ':' . docnote_format_id( $p_docnote_id ) . '</a>';
 	} else {
-		$t_link = bugnote_format_id( $t_bug_id ) . ':' . bugnote_format_id( $p_bugnote_id );
+		$t_link = docnote_format_id( $t_bug_id ) . ':' . docnote_format_id( $p_docnote_id );
 	}
 
 	return $t_link;
@@ -695,11 +695,11 @@ function string_get_bug_view_url( $p_bug_id ) {
 /**
  * return the name and GET parameters of a bug VIEW page for the given bug
  * @param integer $p_bug_id     A bug identifier.
- * @param integer $p_bugnote_id A bugnote identifier.
+ * @param integer $p_docnote_id A docnote identifier.
  * @return string
  */
-function string_get_bugnote_view_url( $p_bug_id, $p_bugnote_id ) {
-	return 'view.php?id=' . $p_bug_id . '#c' . $p_bugnote_id;
+function string_get_docnote_view_url( $p_bug_id, $p_docnote_id ) {
+	return 'view.php?id=' . $p_bug_id . '#c' . $p_docnote_id;
 }
 
 /**
@@ -708,12 +708,12 @@ function string_get_bugnote_view_url( $p_bug_id, $p_bugnote_id ) {
  * The returned url includes the fully qualified domain, hence it is suitable to be included
  * in emails.
  * @param integer $p_bug_id     A bug identifier.
- * @param integer $p_bugnote_id A bug note identifier.
+ * @param integer $p_docnote_id A bug note identifier.
  * @param integer $p_user_id    A valid user identifier.
  * @return string
  */
-function string_get_bugnote_view_url_with_fqdn( $p_bug_id, $p_bugnote_id, $p_user_id = null ) {
-	return config_get( 'path' ) . string_get_bug_view_url( $p_bug_id, $p_user_id ) . '#c' . $p_bugnote_id;
+function string_get_docnote_view_url_with_fqdn( $p_bug_id, $p_docnote_id, $p_user_id = null ) {
+	return config_get( 'path' ) . string_get_bug_view_url( $p_bug_id, $p_user_id ) . '#c' . $p_docnote_id;
 }
 
 /**

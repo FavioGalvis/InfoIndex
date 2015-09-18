@@ -175,15 +175,15 @@ define( 'NO_USER', 0 );
 # history constants
 define( 'NORMAL_TYPE', 0 );
 define( 'NEW_BUG', 1 );
-define( 'BUGNOTE_ADDED', 2 );
-define( 'BUGNOTE_UPDATED', 3 );
-define( 'BUGNOTE_DELETED', 4 );
+define( 'DOCNOTE_ADDED', 2 );
+define( 'DOCNOTE_UPDATED', 3 );
+define( 'DOCNOTE_DELETED', 4 );
 define( 'DESCRIPTION_UPDATED', 6 );
 define( 'ADDITIONAL_INFO_UPDATED', 7 );
 define( 'STEP_TO_REPRODUCE_UPDATED', 8 );
 define( 'FILE_ADDED', 9 );
 define( 'FILE_DELETED', 10 );
-define( 'BUGNOTE_STATE_CHANGED', 11 );
+define( 'DOCNOTE_STATE_CHANGED', 11 );
 define( 'BUG_MONITOR', 12 );
 define( 'BUG_UNMONITOR', 13 );
 define( 'BUG_DELETED', 14 );
@@ -200,7 +200,7 @@ define( 'TAG_ATTACHED', 25 );
 define( 'TAG_DETACHED', 26 );
 define( 'TAG_RENAMED', 27 );
 define( 'BUG_REVISION_DROPPED', 28 );
-define( 'BUGNOTE_REVISION_DROPPED', 29 );
+define( 'DOCNOTE_REVISION_DROPPED', 29 );
 define( 'PLUGIN_HISTORY', 100 );
 
 # bug revisions
@@ -208,7 +208,7 @@ define( 'REV_ANY', 0 );
 define( 'REV_DESCRIPTION', 1 );
 define( 'REV_STEPS_TO_REPRODUCE', 2 );
 define( 'REV_ADDITIONAL_INFO', 3 );
-define( 'REV_BUGNOTE', 4 );
+define( 'REV_DOCNOTE', 4 );
 
 # bug relationship constants
 define( 'BUG_REL_NONE', -2 );
@@ -280,8 +280,8 @@ define( 'ERROR_FILE_NO_UPLOAD_FAILURE', 504 );
 define( 'ERROR_FILE_MOVE_FAILED', 505 );
 define( 'ERROR_FILE_NOT_FOUND', 506 );
 
-# ERROR_BUGNOTE_*
-define( 'ERROR_BUGNOTE_NOT_FOUND', 600 );
+# ERROR_DOCNOTE_*
+define( 'ERROR_DOCNOTE_NOT_FOUND', 600 );
 
 # ERROR_PROJECT_*
 define( 'ERROR_PROJECT_NOT_FOUND', 700 );
@@ -469,8 +469,8 @@ define( 'SUMMARY_CAPTION', 1 );
 define( 'SUMMARY_FIELD', 2 );
 define( 'SUMMARY_EMAIL', 3 );
 
-# bugnote types
-define( 'BUGNOTE', 0 );
+# docnote types
+define( 'DOCNOTE', 0 );
 define( 'REMINDER', 1 );
 define( 'TIME_TRACKING', 2 );
 
@@ -512,7 +512,7 @@ define( 'CUSTOM_FIELD_DATE_ONORAFTER', 7 );
 # custom field types
 define( 'CUSTOM_FIELD_TYPE_BUG', 0 );
 define( 'CUSTOM_FIELD_TYPE_USER', 1 );
-define( 'CUSTOM_FIELD_TYPE_BUGNOTE', 2 );
+define( 'CUSTOM_FIELD_TYPE_DOCNOTE', 2 );
 define( 'CUSTOM_FIELD_TYPE_PROJECT', 3 );
 define( 'CUSTOM_FIELD_TYPE_FILE', 4 );
 

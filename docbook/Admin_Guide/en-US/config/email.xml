@@ -59,10 +59,10 @@
 					should be notified.The default will be used if the action is not
 					included in $g_notify_flags or if the flag is not included in the
 					specific action definition. The list of actions include: new,
-					assigned, resolved, bugnote, reopened, closed, deleted,
+					assigned, resolved, docnote, reopened, closed, deleted,
 					feedback.The default is:
 					$g_default_notify_flags = array('reporter' =&gt; ON, 'handler'
-					=&gt; ON, 'monitor' =&gt; ON, 'bugnotes' =&gt; ON, 'explicit' =&gt; ON,
+					=&gt; ON, 'monitor' =&gt; ON, 'docnotes' =&gt; ON, 'explicit' =&gt; ON,
 					'threshold_min' =&gt; NOBODY, 'threshold_max' =&gt; NOBODY);
 					threshold_min and threshold_max are used to send messages to all
 					members of the project whose status is greater than or equal to
@@ -78,9 +78,9 @@
 			<listitem>
 				<para>Defines the notification flags that are different from the
 					defaults that are defined in $g_default_notify_flags. The following
-					code overrides the default by disabling notifications to bugnote
+					code overrides the default by disabling notifications to docnote
 					authors and users monitoring the bug on submitting a new bug:
-					$g_notify_flags['new'] = array('bugnotes' =&gt; OFF, 'monitor'
+					$g_notify_flags['new'] = array('docnotes' =&gt; OFF, 'monitor'
 					=&gt; OFF);
 					Available actions include:
 					<itemizedlist>
@@ -97,7 +97,7 @@
 							<para>'owner': the bug has been assigned a new owner</para>
 						</listitem>
 						<listitem>
-							<para>'bugnote': a bugnote has been added to a bug</para>
+							<para>'docnote': a docnote has been added to a bug</para>
 						</listitem>
 						<listitem>
 							<para>'sponsor': the sponsorship for the bug has changed
@@ -361,8 +361,8 @@
 				</para>
 			</listitem>
 			<listitem>
-				<para>anyone who has ever added a bugnote the bug, qualified by
-					the notify flag 'bugnotes' below
+				<para>anyone who has ever added a docnote the bug, qualified by
+					the notify flag 'docnotes' below
 				</para>
 			</listitem>
 			<listitem>

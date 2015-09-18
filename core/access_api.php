@@ -25,7 +25,7 @@
  *
  * @uses authentication_api.php
  * @uses bug_api.php
- * @uses bugnote_api.php
+ * @uses docnote_api.php
  * @uses config_api.php
  * @uses constant_inc.php
  * @uses current_user_api.php
@@ -41,7 +41,7 @@
 
 require_api( 'authentication_api.php' );
 require_api( 'bug_api.php' );
-require_api( 'bugnote_api.php' );
+require_api( 'docnote_api.php' );
 require_api( 'config_api.php' );
 require_api( 'constant_inc.php' );
 require_api( 'current_user_api.php' );
@@ -457,44 +457,44 @@ function access_ensure_bug_level( $p_access_level, $p_bug_id, $p_user_id = null 
 /**
  * Check the current user's access against the given value and return true
  * if the user's access is equal to or higher, false otherwise.
- * This function looks up the bugnote's bug and performs an access check
+ * This function looks up the docnote's bug and performs an access check
  * against that bug
  * @param integer      $p_access_level Integer representing access level.
- * @param integer      $p_bugnote_id   Integer representing bugnote id to check access against.
+ * @param integer      $p_docnote_id   Integer representing docnote id to check access against.
  * @param integer|null $p_user_id      Integer representing user id, defaults to null to use current user.
  * @return boolean whether user has access level specified
  * @access public
  */
-function access_has_bugnote_level( $p_access_level, $p_bugnote_id, $p_user_id = null ) {
+function access_has_docnote_level( $p_access_level, $p_docnote_id, $p_user_id = null ) {
 	if( null === $p_user_id ) {
 		$p_user_id = auth_get_current_user_id();
 	}
 
-	$t_bug_id = bugnote_get_field( $p_bugnote_id, 'bug_id' );
+	$t_bug_id = docnote_get_field( $p_docnote_id, 'bug_id' );
 	$t_project_id = bug_get_field( $t_bug_id, 'project_id' );
 
 	# If the bug is private and the user is not the reporter, then the
 	# the user must also have higher access than private_bug_threshold
-	if( bugnote_get_field( $p_bugnote_id, 'view_state' ) == VS_PRIVATE && !bugnote_is_user_reporter( $p_bugnote_id, $p_user_id ) ) {
-		$t_private_bugnote_threshold = config_get( 'private_bugnote_threshold', null, $p_user_id, $t_project_id );
-		$p_access_level = max( $p_access_level, $t_private_bugnote_threshold );
+	if( docnote_get_field( $p_docnote_id, 'view_state' ) == VS_PRIVATE && !docnote_is_user_reporter( $p_docnote_id, $p_user_id ) ) {
+		$t_private_docnote_threshold = config_get( 'private_docnote_threshold', null, $p_user_id, $t_project_id );
+		$p_access_level = max( $p_access_level, $t_private_docnote_threshold );
 	}
 
 	return access_has_bug_level( $p_access_level, $t_bug_id, $p_user_id );
 }
 
 /**
- * Check if the user has the specified access level for the given bugnote
+ * Check if the user has the specified access level for the given docnote
  * and deny access to the page if not
- * @see access_has_bugnote_level
+ * @see access_has_docnote_level
  * @param integer      $p_access_level Integer representing access level.
- * @param integer      $p_bugnote_id   Integer representing bugnote id to check access against.
+ * @param integer      $p_docnote_id   Integer representing docnote id to check access against.
  * @param integer|null $p_user_id      Integer representing user id, defaults to null to use current user.
  * @access public
  * @return void
  */
-function access_ensure_bugnote_level( $p_access_level, $p_bugnote_id, $p_user_id = null ) {
-	if( !access_has_bugnote_level( $p_access_level, $p_bugnote_id, $p_user_id ) ) {
+function access_ensure_docnote_level( $p_access_level, $p_docnote_id, $p_user_id = null ) {
+	if( !access_has_docnote_level( $p_access_level, $p_docnote_id, $p_user_id ) ) {
 		access_denied();
 	}
 }

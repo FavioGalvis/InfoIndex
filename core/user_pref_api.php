@@ -67,9 +67,9 @@ class UserPreferences {
 	protected $redirect_delay = null;
 
 	/**
-	 * Bugnote order - oldest/newest first
+	 * Docnote order - oldest/newest first
 	 */
-	protected $bugnote_order = null;
+	protected $docnote_order = null;
 
 	/**
 	 * Receive email on new bugs
@@ -102,9 +102,9 @@ class UserPreferences {
 	protected $email_on_reopened = null;
 
 	/**
-	 * Receive email on new bugnote
+	 * Receive email on new docnote
 	 */
-	protected $email_on_bugnote = null;
+	protected $email_on_docnote = null;
 
 	/**
 	 * Receive email on bug status change
@@ -149,7 +149,7 @@ class UserPreferences {
 	/**
 	 * Minimum Severity on which to trigger email if set to receive
 	 */
-	protected $email_on_bugnote_min_severity = null;
+	protected $email_on_docnote_min_severity = null;
 
 	/**
 	 * Minimum Severity on which to trigger email if set to receive
@@ -164,7 +164,7 @@ class UserPreferences {
 	/**
 	 * Number of bug notes to include in generated emails
 	 */
-	protected $email_bugnote_limit = null;
+	protected $email_docnote_limit = null;
 
 	/**
 	 * Users language preference
@@ -194,14 +194,14 @@ class UserPreferences {
 	'default_project' => array( 'default_project', 'int' ),
 	'refresh_delay' => array( 'default_refresh_delay', 'int' ),
 	'redirect_delay' => array( 'default_redirect_delay', 'int' ),
-	'bugnote_order' => array( 'default_docnote_order', 'string' ),
+	'docnote_order' => array( 'default_docnote_order', 'string' ),
 	'email_on_new' => array( 'default_email_on_new', 'int' ),
 	'email_on_assigned' => array(  'default_email_on_assigned', 'int' ),
 	'email_on_feedback' => array(  'default_email_on_feedback', 'int' ),
 	'email_on_resolved' => array(  'default_email_on_resolved', 'int' ),
 	'email_on_closed' => array(  'default_email_on_closed', 'int' ),
 	'email_on_reopened' => array(  'default_email_on_reopened', 'int' ),
-	'email_on_bugnote' => array(  'default_email_on_bugnote', 'int' ),
+	'email_on_docnote' => array(  'default_email_on_docnote', 'int' ),
 	'email_on_status' => array(  'default_email_on_status', 'int' ),
 	'email_on_priority' => array(  'default_email_on_priority', 'int' ),
 	'email_on_new_min_severity' => array(  'default_email_on_new_minimum_severity', 'int' ),
@@ -210,10 +210,10 @@ class UserPreferences {
 	'email_on_resolved_min_severity' => array(  'default_email_on_resolved_minimum_severity', 'int' ),
 	'email_on_closed_min_severity' => array(  'default_email_on_closed_minimum_severity', 'int' ),
 	'email_on_reopened_min_severity' => array(  'default_email_on_reopened_minimum_severity', 'int' ),
-	'email_on_bugnote_min_severity' => array(  'default_email_on_bugnote_minimum_severity', 'int' ),
+	'email_on_docnote_min_severity' => array(  'default_email_on_docnote_minimum_severity', 'int' ),
 	'email_on_status_min_severity' => array(  'default_email_on_status_minimum_severity', 'int' ),
 	'email_on_priority_min_severity' => array(  'default_email_on_priority_minimum_severity', 'int' ),
-	'email_bugnote_limit' => array(  'default_email_bugnote_limit', 'int' ),
+	'email_docnote_limit' => array(  'default_email_docnote_limit', 'int' ),
 	'language' => array(  'default_language', 'string' ),
 	'timezone' => array( 'default_timezone', 'string' ),
 	);

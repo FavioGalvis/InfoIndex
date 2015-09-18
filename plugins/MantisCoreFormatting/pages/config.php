@@ -86,7 +86,7 @@ print_manage_menu( 'manage_plugin_page.php' );
 		<br />
 		<span class="small"><?php
 			printf( lang_get( 'plugin_format_process_buglinks_info' ),
-				config_get( 'bug_link_tag' ), config_get( 'bugnote_link_tag' ) );
+				config_get( 'bug_link_tag' ), config_get( 'docnote_link_tag' ) );
 		?></span>
 	</th>
 	<td class="center">

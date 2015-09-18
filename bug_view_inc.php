@@ -251,8 +251,8 @@ echo '<div class="widget-body">';
 echo '<div class="widget-toolbox padding-8 clearfix">';
 echo '<div class="btn-group pull-left">';
 
-# Jump to Bugnotes
-print_small_button( '#bugnotes', lang_get( 'jump_to_bugnotes' ) );
+# Jump to Docnotes
+print_small_button( '#docnotes', lang_get( 'jump_to_docnotes' ) );
 
 # Send Bug Reminder
 if( $t_show_reminder_link ) {
@@ -766,23 +766,23 @@ if( $t_show_monitor_box ) {
 	include( $t_mantis_dir . 'bug_monitor_list_view_inc.php' );
 }
 
-# Bugnotes and "Add Note" box
-if( 'ASC' == current_user_get_pref( 'bugnote_order' ) ) {
-	define( 'BUGNOTE_VIEW_INC_ALLOW', true );
-	include( $t_mantis_dir . 'bugnote_view_inc.php' );
+# Docnotes and "Add Note" box
+if( 'ASC' == current_user_get_pref( 'docnote_order' ) ) {
+	define( 'DOCNOTE_VIEW_INC_ALLOW', true );
+	include( $t_mantis_dir . 'docnote_view_inc.php' );
 
 	if( !$t_force_readonly ) {
-		define( 'BUGNOTE_ADD_INC_ALLOW', true );
-		include( $t_mantis_dir . 'bugnote_add_inc.php' );
+		define( 'DOCNOTE_ADD_INC_ALLOW', true );
+		include( $t_mantis_dir . 'docnote_add_inc.php' );
 	}
 } else {
 	if( !$t_force_readonly ) {
-		define( 'BUGNOTE_ADD_INC_ALLOW', true );
-		include( $t_mantis_dir . 'bugnote_add_inc.php' );
+		define( 'DOCNOTE_ADD_INC_ALLOW', true );
+		include( $t_mantis_dir . 'docnote_add_inc.php' );
 	}
 
-	define( 'BUGNOTE_VIEW_INC_ALLOW', true );
-	include( $t_mantis_dir . 'bugnote_view_inc.php' );
+	define( 'DOCNOTE_VIEW_INC_ALLOW', true );
+	include( $t_mantis_dir . 'docnote_view_inc.php' );
 }
 
 # Allow plugins to display stuff after notes
@@ -791,8 +791,8 @@ event_signal( 'EVENT_VIEW_BUG_EXTRA', array( $f_bug_id ) );
 # Time tracking statistics
 if( config_get( 'time_tracking_enabled' ) &&
 	access_has_bug_level( config_get( 'time_tracking_view_threshold' ), $f_bug_id ) ) {
-	define( 'BUGNOTE_STATS_INC_ALLOW', true );
-	include( $t_mantis_dir . 'bugnote_stats_inc.php' );
+	define( 'DOCNOTE_STATS_INC_ALLOW', true );
+	include( $t_mantis_dir . 'docnote_stats_inc.php' );
 }
 
 # History

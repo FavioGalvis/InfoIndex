@@ -161,24 +161,24 @@ $g_upgrade[16] = array('CreateTableSQL',array(db_get_table( 'bug_text' ),'
   steps_to_reproduce 	XL ' . $t_notnull . ',
   additional_information XL ' . $t_notnull . '
 ',array('mysql' => 'ENGINE=MyISAM DEFAULT CHARSET=utf8', 'pgsql' => 'WITHOUT OIDS')));
-$g_upgrade[17] = array('CreateTableSQL',array(db_get_table( 'bugnote' ),"
+$g_upgrade[17] = array('CreateTableSQL',array(db_get_table( 'docnote' ),"
   id 			 I  UNSIGNED PRIMARY NOTNULL AUTOINCREMENT,
   bug_id 		 I  UNSIGNED NOTNULL DEFAULT '0',
   reporter_id 		 I  UNSIGNED NOTNULL DEFAULT '0',
-  bugnote_text_id 	 I  UNSIGNED NOTNULL DEFAULT '0',
+  docnote_text_id 	 I  UNSIGNED NOTNULL DEFAULT '0',
   view_state 		I2 NOTNULL DEFAULT '10',
   date_submitted 	T NOTNULL DEFAULT '" . db_null_date() . "',
   last_modified 	T NOTNULL DEFAULT '" . db_null_date() . "',
   note_type 		 I  DEFAULT '0',
   note_attr 		C(250) DEFAULT \" '' \"
 ",array('mysql' => 'ENGINE=MyISAM DEFAULT CHARSET=utf8', 'pgsql' => 'WITHOUT OIDS')));
-$g_upgrade[18] = array('CreateIndexSQL',array('idx_bug',db_get_table( 'bugnote' ),'bug_id'));
-$g_upgrade[19] = array('CreateIndexSQL',array('idx_last_mod',db_get_table( 'bugnote' ),'last_modified'));
+$g_upgrade[18] = array('CreateIndexSQL',array('idx_bug',db_get_table( 'docnote' ),'bug_id'));
+$g_upgrade[19] = array('CreateIndexSQL',array('idx_last_mod',db_get_table( 'docnote' ),'last_modified'));
 
 # ----------------------------------------------------------------------------
 # Schema version: 20
 #
-$g_upgrade[20] = array('CreateTableSQL',array(db_get_table( 'bugnote_text' ),'
+$g_upgrade[20] = array('CreateTableSQL',array(db_get_table( 'docnote_text' ),'
   id 			 I  UNSIGNED NOTNULL PRIMARY AUTOINCREMENT,
   note 			XL NOTNULL
 ',array('mysql' => 'ENGINE=MyISAM DEFAULT CHARSET=utf8', 'pgsql' => 'WITHOUT OIDS')));
@@ -329,26 +329,26 @@ $g_upgrade[43] = array('CreateTableSQL',array(db_get_table( 'user_pref' ),'
   advanced_update 	L NOTNULL DEFAULT " \'0\' ",
   refresh_delay 	 I  NOTNULL DEFAULT \'0\',
   redirect_delay 	L ' . $t_notnull . ' DEFAULT " \'0\' ",
-  bugnote_order 	C(4) NOTNULL DEFAULT \'ASC\',
+  docnote_order 	C(4) NOTNULL DEFAULT \'ASC\',
   email_on_new 		L NOTNULL DEFAULT " \'0\' ",
   email_on_assigned 	L NOTNULL DEFAULT " \'0\' ",
   email_on_feedback 	L NOTNULL DEFAULT " \'0\' ",
   email_on_resolved	L NOTNULL DEFAULT " \'0\' ",
   email_on_closed 	L NOTNULL DEFAULT " \'0\' ",
   email_on_reopened 	L NOTNULL DEFAULT " \'0\' ",
-  email_on_bugnote 	L NOTNULL DEFAULT " \'0\' ",
+  email_on_docnote 	L NOTNULL DEFAULT " \'0\' ",
   email_on_status 	L $t_notnull DEFAULT " \'0\' ",
   email_on_priority 	L $t_notnull DEFAULT " \'0\' ",
   email_on_priority_min_severity 	I2 NOTNULL DEFAULT \'10\',
   email_on_status_min_severity 	I2 NOTNULL DEFAULT \'10\',
-  email_on_bugnote_min_severity 	I2 NOTNULL DEFAULT \'10\',
+  email_on_docnote_min_severity 	I2 NOTNULL DEFAULT \'10\',
   email_on_reopened_min_severity 	I2 NOTNULL DEFAULT \'10\',
   email_on_closed_min_severity 	I2 NOTNULL DEFAULT \'10\',
   email_on_resolved_min_severity 	I2 NOTNULL DEFAULT \'10\',
   email_on_feedback_min_severity	I2 NOTNULL DEFAULT \'10\',
   email_on_assigned_min_severity 	I2 NOTNULL DEFAULT \'10\',
   email_on_new_min_severity 	I2 NOTNULL DEFAULT \'10\',
-  email_bugnote_limit 	I2 NOTNULL DEFAULT \'0\',
+  email_docnote_limit 	I2 NOTNULL DEFAULT \'0\',
   language 		C(32) NOTNULL DEFAULT \'english\'
 ',array('mysql' => 'ENGINE=MyISAM DEFAULT CHARSET=utf8', 'pgsql' => 'WITHOUT OIDS')));
 $g_upgrade[44] = array('CreateTableSQL',array(db_get_table( 'user_print_pref' ),"
@@ -412,7 +412,7 @@ $g_upgrade[55] = db_is_oracle()
 	: array('CreateIndexSQL',array('idx_email_id',db_get_table( 'email' ),'email_id'));
 
 $g_upgrade[56] = array('AddColumnSQL',array(db_get_table( 'bug' ), 'target_version C(64) NOTNULL DEFAULT " \'\' "'));
-$g_upgrade[57] = array('AddColumnSQL',array(db_get_table( 'bugnote' ), 'time_tracking I UNSIGNED NOTNULL DEFAULT " 0 "'));
+$g_upgrade[57] = array('AddColumnSQL',array(db_get_table( 'docnote' ), 'time_tracking I UNSIGNED NOTNULL DEFAULT " 0 "'));
 $g_upgrade[58] = array('CreateIndexSQL',array('idx_diskfile',db_get_table( 'bug_file' ),'diskfile'));
 $g_upgrade[59] = array('AlterColumnSQL', array( db_get_table( 'user_print_pref' ), 'print_pref C(64) ' . $t_notnull ) );
 
@@ -511,7 +511,7 @@ $g_upgrade[83] = array( 'AddColumnSQL', array( db_get_table( 'custom_field' ), "
 $g_upgrade[84] = array( 'CreateTableSQL', array( db_get_table( 'bug_revision' ), '
 	id			I		UNSIGNED NOTNULL PRIMARY AUTOINCREMENT,
 	bug_id		I		UNSIGNED NOTNULL,
-	bugnote_id	I		UNSIGNED NOTNULL DEFAULT \'0\',
+	docnote_id	I		UNSIGNED NOTNULL DEFAULT \'0\',
 	user_id		I		UNSIGNED NOTNULL,
 	timestamp	T		NOTNULL DEFAULT \'' . db_null_date() . '\',
 	type		I		UNSIGNED NOTNULL,
@@ -540,23 +540,23 @@ $g_upgrade[94] = array( 'RenameColumnSQL', array( db_get_table( 'bug' ), 'due_da
 $g_upgrade[95] = array( 'DropColumnSQL', array( db_get_table( 'bug' ), 'last_updated' ) );
 $g_upgrade[96] = array( 'RenameColumnSQL', array( db_get_table( 'bug' ), 'last_updated_int', 'last_updated', 'last_updated_int		I  UNSIGNED     NOTNULL DEFAULT \'1\' ' ) );
 
-$g_upgrade[97] = array('CreateIndexSQL',array('idx_last_mod',db_get_table( 'bugnote' ), 'last_modified', array('DROP')), array( 'db_index_exists', array( db_get_table( 'bugnote' ), 'idx_last_mod')));
+$g_upgrade[97] = array('CreateIndexSQL',array('idx_last_mod',db_get_table( 'docnote' ), 'last_modified', array('DROP')), array( 'db_index_exists', array( db_get_table( 'docnote' ), 'idx_last_mod')));
 
-$g_upgrade[98] = array( 'AddColumnSQL', array( db_get_table( 'bugnote' ), '
+$g_upgrade[98] = array( 'AddColumnSQL', array( db_get_table( 'docnote' ), '
 	last_modified_int		I  UNSIGNED     NOTNULL DEFAULT \'1\' ' ) );
-$g_upgrade[99] = array( 'AddColumnSQL', array( db_get_table( 'bugnote' ), '
+$g_upgrade[99] = array( 'AddColumnSQL', array( db_get_table( 'docnote' ), '
 	date_submitted_int		I  UNSIGNED     NOTNULL DEFAULT \'1\' ' ) );
 
 # ----------------------------------------------------------------------------
 # Schema version: 100
 #
-$g_upgrade[100] = array( 'UpdateFunction', 'date_migrate', array( db_get_table( 'bugnote' ), 'id', array( 'last_modified', 'date_submitted' ), array( 'last_modified_int', 'date_submitted_int' ) ) );
+$g_upgrade[100] = array( 'UpdateFunction', 'date_migrate', array( db_get_table( 'docnote' ), 'id', array( 'last_modified', 'date_submitted' ), array( 'last_modified_int', 'date_submitted_int' ) ) );
 
-$g_upgrade[101] = array( 'DropColumnSQL', array( db_get_table( 'bugnote' ), 'last_modified' ) );
-$g_upgrade[102] = array( 'RenameColumnSQL', array( db_get_table( 'bugnote' ), 'last_modified_int', 'last_modified', 'last_modified_int		I  UNSIGNED     NOTNULL DEFAULT \'1\' ' ) );
-$g_upgrade[103] = array('CreateIndexSQL',array('idx_last_mod',db_get_table( 'bugnote' ),'last_modified'));
-$g_upgrade[104] = array( 'DropColumnSQL', array( db_get_table( 'bugnote' ), 'date_submitted' ) );
-$g_upgrade[105] = array( 'RenameColumnSQL', array( db_get_table( 'bugnote' ), 'date_submitted_int', 'date_submitted', 'date_submitted_int		I  UNSIGNED     NOTNULL DEFAULT \'1\' ' ) );
+$g_upgrade[101] = array( 'DropColumnSQL', array( db_get_table( 'docnote' ), 'last_modified' ) );
+$g_upgrade[102] = array( 'RenameColumnSQL', array( db_get_table( 'docnote' ), 'last_modified_int', 'last_modified', 'last_modified_int		I  UNSIGNED     NOTNULL DEFAULT \'1\' ' ) );
+$g_upgrade[103] = array('CreateIndexSQL',array('idx_last_mod',db_get_table( 'docnote' ),'last_modified'));
+$g_upgrade[104] = array( 'DropColumnSQL', array( db_get_table( 'docnote' ), 'date_submitted' ) );
+$g_upgrade[105] = array( 'RenameColumnSQL', array( db_get_table( 'docnote' ), 'date_submitted_int', 'date_submitted', 'date_submitted_int		I  UNSIGNED     NOTNULL DEFAULT \'1\' ' ) );
 $g_upgrade[106] = array( 'AddColumnSQL', array( db_get_table( 'bug_file' ), '
 	date_added_int		I  UNSIGNED     NOTNULL DEFAULT \'1\' ' ) );
 $g_upgrade[107] = array( 'UpdateFunction', 'date_migrate', array( db_get_table( 'bug_file' ), 'id', 'date_added', 'date_added_int' ) );

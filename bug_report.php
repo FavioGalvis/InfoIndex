@@ -253,19 +253,19 @@ if( $f_master_bug_id > 0 ) {
 	# copy notes from parent
 	if( $f_copy_notes_from_parent ) {
 
-		$t_parent_bugnotes = bugnote_get_all_bugnotes( $f_master_bug_id );
+		$t_parent_docnotes = docnote_get_all_docnotes( $f_master_bug_id );
 
-		foreach ( $t_parent_bugnotes as $t_parent_bugnote ) {
-			$t_private = $t_parent_bugnote->view_state == VS_PRIVATE;
+		foreach ( $t_parent_docnotes as $t_parent_docnote ) {
+			$t_private = $t_parent_docnote->view_state == VS_PRIVATE;
 
-			bugnote_add(
+			docnote_add(
 				$t_bug_id,
-				$t_parent_bugnote->note,
-				$t_parent_bugnote->time_tracking,
+				$t_parent_docnote->note,
+				$t_parent_docnote->time_tracking,
 				$t_private,
-				$t_parent_bugnote->note_type,
-				$t_parent_bugnote->note_attr,
-				$t_parent_bugnote->reporter_id,
+				$t_parent_docnote->note_type,
+				$t_parent_docnote->note_attr,
+				$t_parent_docnote->reporter_id,
 				false,
 				0,
 				0,

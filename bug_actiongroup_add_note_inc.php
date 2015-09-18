@@ -15,7 +15,7 @@
 # along with MantisBT.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Bugnote action group add include file
+ * Docnote action group add include file
  *
  * @package MantisBT
  * @copyright Copyright 2000 - 2002  Kenzaburo Ito - kenito@300baud.org
@@ -54,7 +54,7 @@ require_api( 'utility_api.php' );
  * @return void
  */
 function action_add_note_print_title() {
-	echo lang_get( 'add_bugnote_title' );
+	echo lang_get( 'add_docnote_title' );
 }
 
 /**
@@ -68,10 +68,10 @@ function action_add_note_print_fields() {
 ?>
 	<tr>
 		<th class="category">
-			<?php echo lang_get( 'add_bugnote_title' ); ?>
+			<?php echo lang_get( 'add_docnote_title' ); ?>
 		</th>
 		<td>
-			<textarea class="form-control" name="bugnote_text" cols="80" rows="10"></textarea>
+			<textarea class="form-control" name="docnote_text" cols="80" rows="10"></textarea>
 		</td>
 	</tr>
 
@@ -107,21 +107,21 @@ function action_add_note_print_fields() {
  * @return string|null On failure: the reason why the action could not be validated. On success: null.
  */
 function action_add_note_validate( $p_bug_id ) {
-	$f_bugnote_text = gpc_get_string( 'bugnote_text' );
+	$f_docnote_text = gpc_get_string( 'docnote_text' );
 
-	if( is_blank( $f_bugnote_text ) ) {
-		error_parameters( lang_get( 'bugnote' ) );
+	if( is_blank( $f_docnote_text ) ) {
+		error_parameters( lang_get( 'docnote' ) );
 		trigger_error( ERROR_EMPTY_FIELD, ERROR );
 	}
 
-	$t_add_bugnote_threshold = config_get( 'add_bugnote_threshold' );
+	$t_add_docnote_threshold = config_get( 'add_docnote_threshold' );
 	$t_bug_id = $p_bug_id;
 
 	if( bug_is_readonly( $t_bug_id ) ) {
 		return lang_get( 'actiongroup_error_issue_is_readonly' );
 	}
 
-	if( !access_has_bug_level( $t_add_bugnote_threshold, $t_bug_id ) ) {
+	if( !access_has_bug_level( $t_add_docnote_threshold, $t_bug_id ) ) {
 		return lang_get( 'access_denied' );
 	}
 
@@ -135,8 +135,8 @@ function action_add_note_validate( $p_bug_id ) {
  * @return null Previous validation ensures that this function doesn't fail. Therefore we can always return null to indicate no errors occurred.
  */
 function action_add_note_process( $p_bug_id ) {
-	$f_bugnote_text = gpc_get_string( 'bugnote_text' );
+	$f_docnote_text = gpc_get_string( 'docnote_text' );
 	$f_view_state = gpc_get_int( 'view_state' );
-	bugnote_add( $p_bug_id, $f_bugnote_text, '0:00', $f_view_state != VS_PUBLIC );
+	docnote_add( $p_bug_id, $f_docnote_text, '0:00', $f_view_state != VS_PUBLIC );
 	return null;
 }

@@ -74,9 +74,9 @@ function get_field_names() {
 				'steps_to_reproduce',
 				'additional_information',
 				'attached_files',
-				'bugnote_title',
-				'bugnote_date',
-				'bugnote_description',
+				'docnote_title',
+				'docnote_date',
+				'docnote_description',
 				'time_tracking' );
 }
 

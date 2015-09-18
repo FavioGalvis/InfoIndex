@@ -55,9 +55,9 @@ function timeline_events( $p_start_time, $p_end_time, $p_max_events ) {
 			case NEW_BUG:
 				$t_event = new IssueCreatedTimelineEvent( $t_timestamp, $t_user_id, $t_issue_id );
 				break;
-			case BUGNOTE_ADDED:
-				$t_bugnote_id = $t_history_event['old_value'];
-				$t_event = new IssueNoteCreatedTimelineEvent( $t_timestamp, $t_user_id, $t_issue_id, $t_bugnote_id );
+			case DOCNOTE_ADDED:
+				$t_docnote_id = $t_history_event['old_value'];
+				$t_event = new IssueNoteCreatedTimelineEvent( $t_timestamp, $t_user_id, $t_issue_id, $t_docnote_id );
 				break;
 			case BUG_MONITOR:
 				# Skip monitors added for others due to reminders, only add monitor events where added

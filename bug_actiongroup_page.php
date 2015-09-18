@@ -99,7 +99,7 @@ if( $t_project_id != helper_get_current_project() ) {
 define( 'BUG_ACTIONGROUP_INC_ALLOW', true );
 
 $t_finished = false;
-$t_bugnote = false;
+$t_docnote = false;
 
 $t_external_action_prefix = 'EXT_';
 if( strpos( $f_action, $t_external_action_prefix ) === 0 ) {
@@ -133,7 +133,7 @@ switch( $f_action ) {
 		$t_finished 			= true;
 		$t_question_title 		= lang_get( 'close_bugs_conf_msg' );
 		$t_button_title 		= lang_get( 'close_group_bugs_button' );
-		$t_bugnote				= true;
+		$t_docnote				= true;
 		break;
 	case 'DELETE' :
 		$t_finished 			= true;
@@ -169,7 +169,7 @@ switch( $f_action ) {
 			$t_question_title2 = lang_get( 'fixed_in_version' );
 			$t_form2 = 'fixed_in_version';
 		}
-		$t_bugnote				= true;
+		$t_docnote				= true;
 		break;
 	case 'UP_PRIOR' :
 		$t_question_title 		= lang_get( 'priority_bugs_conf_msg' );
@@ -180,7 +180,7 @@ switch( $f_action ) {
 		$t_question_title 		= lang_get( 'status_bugs_conf_msg' );
 		$t_button_title 		= lang_get( 'status_group_bugs_button' );
 		$t_form 				= 'status';
-		$t_bugnote				= true;
+		$t_docnote				= true;
 		break;
 	case 'UP_CATEGORY' :
 		$t_question_title		= lang_get( 'category_bugs_conf_msg' );
@@ -342,18 +342,18 @@ if( $t_multiple_projects ) {
 <?php
 	}
 
-	if( $t_bugnote ) {
+	if( $t_docnote ) {
 ?>
 				<tr>
 					<th class="category">
-						<?php echo lang_get( 'add_bugnote_title' ); ?>
+						<?php echo lang_get( 'add_docnote_title' ); ?>
 					</th>
 					<td>
-						<textarea class="form-control" name="bugnote_text" cols="80" rows="10"></textarea>
+						<textarea class="form-control" name="docnote_text" cols="80" rows="10"></textarea>
 					</td>
 				</tr>
 <?php
-		if( access_has_project_level( config_get( 'private_bugnote_threshold' ), $t_project_id ) ) {
+		if( access_has_project_level( config_get( 'private_docnote_threshold' ), $t_project_id ) ) {
 ?>
 				<tr>
 					<th class="category">

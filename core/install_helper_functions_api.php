@@ -109,7 +109,7 @@ function check_pgsql_bool_columns() {
 		'project'         => array( 'enabled' ),
 		'project_version' => array( 'released' ),
 		'sponsorship'     => array( 'paid' ),
-		'user_pref'       => array( 'advanced_report', 'advanced_view', 'advanced_update', 'redirect_delay', 'email_on_new', 'email_on_assigned', 'email_on_feedback', 'email_on_resolved', 'email_on_closed', 'email_on_reopened', 'email_on_bugnote', 'email_on_status', 'email_on_priority' ),
+		'user_pref'       => array( 'advanced_report', 'advanced_view', 'advanced_update', 'redirect_delay', 'email_on_new', 'email_on_assigned', 'email_on_feedback', 'email_on_resolved', 'email_on_closed', 'email_on_reopened', 'email_on_docnote', 'email_on_status', 'email_on_priority' ),
 		'user'            => array( 'enabled', 'protected' ),
 	);
 
@@ -559,7 +559,7 @@ function install_update_history_long_custom_fields() {
 								'reproducibility', 'status', 'resolution', 'projection', 'category', 'date_submitted',
 								'last_updated', 'os_build', 'platform', 'version', 'fixed_in_version', 'target_version',
 								'build', 'view_state', 'summary', 'sponsorship_total', 'due_date', 'description',
-								'steps_to_reproduce', 'additional_information', 'attachment_count', 'bugnotes_count',
+								'steps_to_reproduce', 'additional_information', 'attachment_count', 'docnotes_count',
 								'selection', 'edit', 'overdue' );
 	$t_field_list = '';
 	foreach( $t_standard_fields as $t_field ) {

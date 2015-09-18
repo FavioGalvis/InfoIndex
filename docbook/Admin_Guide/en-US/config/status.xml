@@ -176,28 +176,28 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term>$g_bugnote_user_edit_threshold</term>
+			<term>$g_docnote_user_edit_threshold</term>
 			<listitem>
 				<para>Threshold at which a user can edit his/her own
-					bugnotes. The default value is equal to the
-					configuration setting $g_update_bugnote_threshold.
+					docnotes. The default value is equal to the
+					configuration setting $g_update_docnote_threshold.
 				</para>
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term>$g_bugnote_user_delete_threshold</term>
+			<term>$g_docnote_user_delete_threshold</term>
 			<listitem>
 				<para>Threshold at which a user can delete his/her own
-					bugnotes. The default value is equal to the
-					configuration setting $g_delete_bugnote_threshold.
+					docnotes. The default value is equal to the
+					configuration setting $g_delete_docnote_threshold.
 				</para>
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term>$g_bugnote_user_change_view_state_threshold</term>
+			<term>$g_docnote_user_change_view_state_threshold</term>
 			<listitem>
 				<para>Threshold at which a user can change the view status
-					of his/her own bugnotes. The default value is equal to
+					of his/her own docnotes. The default value is equal to
 					the configuration setting $g_change_view_status_threshold.
 				</para>
 			</listitem>

@@ -26,7 +26,7 @@
  * @uses access_api.php
  * @uses authentication_api.php
  * @uses bug_api.php
- * @uses bugnote_api.php
+ * @uses docnote_api.php
  * @uses category_api.php
  * @uses config_api.php
  * @uses constant_inc.php
@@ -53,7 +53,7 @@
 require_api( 'access_api.php' );
 require_api( 'authentication_api.php' );
 require_api( 'bug_api.php' );
-require_api( 'bugnote_api.php' );
+require_api( 'docnote_api.php' );
 require_api( 'category_api.php' );
 require_api( 'config_api.php' );
 require_api( 'constant_inc.php' );
@@ -287,15 +287,15 @@ function email_collect_recipients( $p_bug_id, $p_notify_type, array $p_extra_use
 		}
 	}
 
-	# add users who contributed bugnotes
-	$t_bugnote_id = bugnote_get_latest_id( $p_bug_id );
-	$t_bugnote_view = bugnote_get_field( $t_bugnote_id, 'view_state' );
-	$t_bugnote_date = bugnote_get_field( $t_bugnote_id, 'last_modified' );
+	# add users who contributed docnotes
+	$t_docnote_id = docnote_get_latest_id( $p_bug_id );
+	$t_docnote_view = docnote_get_field( $t_docnote_id, 'view_state' );
+	$t_docnote_date = docnote_get_field( $t_docnote_id, 'last_modified' );
 	$t_bug = bug_get( $p_bug_id );
 	$t_bug_date = $t_bug->last_updated;
 
-	if( ON == email_notify_flag( $p_notify_type, 'bugnotes' ) ) {
-		$t_query = 'SELECT DISTINCT reporter_id FROM {bugnote} WHERE bug_id = ' . db_param();
+	if( ON == email_notify_flag( $p_notify_type, 'docnotes' ) ) {
+		$t_query = 'SELECT DISTINCT reporter_id FROM {docnote} WHERE bug_id = ' . db_param();
 		$t_result = db_query( $t_query, array( $p_bug_id ) );
 		while( $t_row = db_fetch_array( $t_result ) ) {
 			$t_user_id = $t_row['reporter_id'];
@@ -343,7 +343,7 @@ function email_collect_recipients( $p_bug_id, $p_notify_type, array $p_extra_use
 		case 'reopened':
 		case 'resolved':
 		case 'closed':
-		case 'bugnote':
+		case 'docnote':
 			$t_pref_field = 'email_on_' . $p_notify_type;
 			break;
 		case 'owner':
@@ -412,9 +412,9 @@ function email_collect_recipients( $p_bug_id, $p_notify_type, array $p_extra_use
 		}
 
 		# exclude users who don't have at least viewer access to the bug,
-		# or who can't see bugnotes if the last update included a bugnote
+		# or who can't see docnotes if the last update included a docnote
 		if( !access_has_bug_level( config_get( 'view_bug_threshold', null, $t_id, $t_bug->project_id ), $p_bug_id, $t_id )
-		 || $t_bug_date == $t_bugnote_date && !access_has_bugnote_level( config_get( 'view_bug_threshold', null, $t_id, $t_bug->project_id ), $t_bugnote_id, $t_id )
+		 || $t_bug_date == $t_docnote_date && !access_has_docnote_level( config_get( 'view_bug_threshold', null, $t_id, $t_bug->project_id ), $t_docnote_id, $t_id )
 		) {
 			log_event( LOG_EMAIL_RECIPIENT, 'Issue = #%d, drop @U%d (access level)', $p_bug_id, $t_id );
 			continue;
@@ -619,7 +619,7 @@ function email_generic_to_recipients( $p_bug_id, $p_notify_type, array $p_recipi
 
 	ignore_user_abort( true );
 
-	bugnote_get_all_bugnotes( $p_bug_id );
+	docnote_get_all_docnotes( $p_bug_id );
 
 	$t_project_id = bug_get_field( $p_bug_id, 'project_id' );
 
@@ -1300,33 +1300,33 @@ function email_format_bug_message( array $p_visible_bug_data, $p_message_id ) {
 
 	$t_message .= $t_email_separator2 . " \n\n";
 
-	# format bugnotes
+	# format docnotes
 	if( config_get( 'mail_show_bug_notes' ) ) {
-            foreach( $p_visible_bug_data['bugnotes'] as $t_bugnote ) {
-                    $t_last_modified = date( $t_normal_date_format, $t_bugnote->last_modified );
+            foreach( $p_visible_bug_data['docnotes'] as $t_docnote ) {
+                    $t_last_modified = date( $t_normal_date_format, $t_docnote->last_modified );
 
-                    $t_formatted_bugnote_id = bugnote_format_id( $t_bugnote->id );
-                    $t_bugnote_link = string_process_bugnote_link( config_get( 'bugnote_link_tag' ) . $t_bugnote->id, false, false, true );
+                    $t_formatted_docnote_id = docnote_format_id( $t_docnote->id );
+                    $t_docnote_link = string_process_docnote_link( config_get( 'docnote_link_tag' ) . $t_docnote->id, false, false, true );
 
-                    if( $t_bugnote->time_tracking > 0 ) {
-                            $t_time_tracking = ' ' . lang_get( 'time_tracking' ) . ' ' . db_minutes_to_hhmm( $t_bugnote->time_tracking ) . '<br>';
+                    if( $t_docnote->time_tracking > 0 ) {
+                            $t_time_tracking = ' ' . lang_get( 'time_tracking' ) . ' ' . db_minutes_to_hhmm( $t_docnote->time_tracking ) . '<br>';
                     } else {
                             $t_time_tracking = '';
                     }
 
-                    if( user_exists( $t_bugnote->reporter_id ) ) {
-                            $t_access_level = access_get_project_level( $p_visible_bug_data['email_project_id'], $t_bugnote->reporter_id );
+                    if( user_exists( $t_docnote->reporter_id ) ) {
+                            $t_access_level = access_get_project_level( $p_visible_bug_data['email_project_id'], $t_docnote->reporter_id );
                             $t_access_level_string = ' (' . get_enum_element( 'access_levels', $t_access_level ) . ') - ';
                     } else {
                             $t_access_level_string = '';
                     }
 
-                    $t_string = ' (' . $t_formatted_bugnote_id . ') ' . user_get_name( $t_bugnote->reporter_id ) . $t_access_level_string . $t_last_modified . '<br>' . $t_time_tracking . ' ' . $t_bugnote_link;
+                    $t_string = ' (' . $t_formatted_docnote_id . ') ' . user_get_name( $t_docnote->reporter_id ) . $t_access_level_string . $t_last_modified . '<br>' . $t_time_tracking . ' ' . $t_docnote_link;
 
                     $t_message .= $t_email_separator2 . " \n";
                     $t_message .= $t_string . " \n";
                     $t_message .= $t_email_separator2 . " \n";
-                    $t_message .= $t_bugnote->note . '<br>';
+                    $t_message .= $t_docnote->note . '<br>';
             }
         }
 
@@ -1396,8 +1396,8 @@ function email_build_visible_bug_data( $p_user_id, $p_bug_id, $p_message_id ) {
 
 	$t_project_id = bug_get_field( $p_bug_id, 'project_id' );
 	$t_user_access_level = user_get_access_level( $p_user_id, $t_project_id );
-	$t_user_bugnote_order = user_pref_get_pref( $p_user_id, 'bugnote_order' );
-	$t_user_bugnote_limit = user_pref_get_pref( $p_user_id, 'email_bugnote_limit' );
+	$t_user_docnote_order = user_pref_get_pref( $p_user_id, 'docnote_order' );
+	$t_user_docnote_limit = user_pref_get_pref( $p_user_id, 'email_docnote_limit' );
 
 	$t_row = bug_get_extended_row( $p_bug_id );
 	$t_bug_data = array();
@@ -1446,7 +1446,7 @@ function email_build_visible_bug_data( $p_user_id, $p_bug_id, $p_message_id ) {
 	$t_bug_data['set_category'] = '[' . $t_bug_data['email_project'] . '] ' . $t_category_name;
 
 	$t_bug_data['custom_fields'] = custom_field_get_linked_fields( $p_bug_id, $t_user_access_level );
-	$t_bug_data['bugnotes'] = bugnote_get_all_visible_bugnotes( $p_bug_id, $t_user_bugnote_order, $t_user_bugnote_limit, $p_user_id );
+	$t_bug_data['docnotes'] = docnote_get_all_visible_docnotes( $p_bug_id, $t_user_docnote_order, $t_user_docnote_limit, $p_user_id );
 
 	# put history data
 	if( ( ON == config_get( 'history_default_visible' ) ) && access_compare_level( $t_user_access_level, config_get( 'view_history_threshold' ) ) ) {

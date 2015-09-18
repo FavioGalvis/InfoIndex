@@ -77,11 +77,11 @@ config_obsolete( 'php', '' );
 config_obsolete( 'use_experimental_custom_fields', '' );
 config_obsolete( 'mail_send_crlf', '' );
 
-config_obsolete( 'bugnote_include_file', '' );
-config_obsolete( 'bugnote_view_include_file', '' );
-config_obsolete( 'bugnote_add_include_file', '' );
+config_obsolete( 'docnote_include_file', '' );
+config_obsolete( 'docnote_view_include_file', '' );
+config_obsolete( 'docnote_add_include_file', '' );
 config_obsolete( 'history_include_file', '' );
-config_obsolete( 'print_bugnote_include_file', '' );
+config_obsolete( 'print_docnote_include_file', '' );
 config_obsolete( 'view_all_include_file', '' );
 config_obsolete( 'bug_view_inc', '' );
 config_obsolete( 'bug_file_upload_inc', '' );
@@ -147,7 +147,7 @@ config_obsolete( 'default_avatar', '' );
 config_obsolete( 'manage_cookie', 'manage_users_cookie' );
 
 # changes in 1.3.0dev
-config_obsolete( 'bugnote_allow_user_edit_delete', '' );
+config_obsolete( 'docnote_allow_user_edit_delete', '' );
 config_obsolete( 'password_confirm_hash_magic_string', 'crypto_master_salt' );
 config_obsolete( 'rss_key_seed', 'crypto_master_salt' );
 config_obsolete( 'cvs_web' );

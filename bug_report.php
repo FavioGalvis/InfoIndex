@@ -116,12 +116,12 @@ $t_bug_data->profile_id             = gpc_get_int( 'profile_id', 0 );
 $t_bug_data->handler_id             = gpc_get_int( 'handler_id', 0 );
 $t_bug_data->view_state             = gpc_get_int( 'view_state', config_get( 'default_document_view_status' ) );
 $t_bug_data->category_id            = gpc_get_int( 'category_id', 0 );
-$t_bug_data->reproducibility        = gpc_get_int( 'reproducibility', config_get( 'default_bug_reproducibility' ) );
-$t_bug_data->severity               = gpc_get_int( 'severity', config_get( 'default_bug_severity' ) );
-$t_bug_data->priority               = gpc_get_int( 'priority', config_get( 'default_bug_priority' ) );
-$t_bug_data->projection             = gpc_get_int( 'projection', config_get( 'default_bug_projection' ) );
-$t_bug_data->eta                    = gpc_get_int( 'eta', config_get( 'default_bug_eta' ) );
-$t_bug_data->resolution             = gpc_get_string( 'resolution', config_get( 'default_bug_resolution' ) );
+$t_bug_data->reproducibility        = gpc_get_int( 'reproducibility', config_get( 'default_document_reproducibility' ) );
+$t_bug_data->severity               = gpc_get_int( 'severity', config_get( 'default_document_severity' ) );
+$t_bug_data->priority               = gpc_get_int( 'priority', config_get( 'default_document_priority' ) );
+$t_bug_data->projection             = gpc_get_int( 'projection', config_get( 'default_document_projection' ) );
+$t_bug_data->eta                    = gpc_get_int( 'eta', config_get( 'default_document_eta' ) );
+$t_bug_data->resolution             = gpc_get_string( 'resolution', config_get( 'default_document_resolution' ) );
 $t_bug_data->status                 = gpc_get_string( 'status', config_get( 'bug_submit_status' ) );
 $t_bug_data->summary                = gpc_get_string( 'summary' );
 $t_bug_data->description            = gpc_get_string( 'description' );
@@ -291,8 +291,8 @@ if( $t_bug_data->status != config_get( 'bug_submit_status' ) ) {
 	history_log_event( $t_bug_id, 'status', config_get( 'bug_submit_status' ) );
 }
 
-if( $t_bug_data->resolution != config_get( 'default_bug_resolution' ) ) {
-	history_log_event( $t_bug_id, 'resolution', config_get( 'default_bug_resolution' ) );
+if( $t_bug_data->resolution != config_get( 'default_document_resolution' ) ) {
+	history_log_event( $t_bug_id, 'resolution', config_get( 'default_document_resolution' ) );
 }
 
 form_security_purge( 'bug_report' );

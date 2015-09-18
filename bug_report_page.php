@@ -163,10 +163,10 @@ if( $f_master_bug_id > 0 ) {
 	$f_handler_id			= gpc_get_int( 'handler_id', 0 );
 
 	$f_category_id			= gpc_get_int( 'category_id', 0 );
-	$f_reproducibility		= gpc_get_int( 'reproducibility', (int)config_get( 'default_bug_reproducibility' ) );
-	$f_eta					= gpc_get_int( 'eta', (int)config_get( 'default_bug_eta' ) );
-	$f_severity				= gpc_get_int( 'severity', (int)config_get( 'default_bug_severity' ) );
-	$f_priority				= gpc_get_int( 'priority', (int)config_get( 'default_bug_priority' ) );
+	$f_reproducibility		= gpc_get_int( 'reproducibility', (int)config_get( 'default_document_reproducibility' ) );
+	$f_eta					= gpc_get_int( 'eta', (int)config_get( 'default_document_eta' ) );
+	$f_severity				= gpc_get_int( 'severity', (int)config_get( 'default_document_severity' ) );
+	$f_priority				= gpc_get_int( 'priority', (int)config_get( 'default_document_priority' ) );
 	$f_summary				= gpc_get_string( 'summary', '' );
 	$f_description			= gpc_get_string( 'description', '' );
 	$f_steps_to_reproduce	= gpc_get_string( 'steps_to_reproduce', config_get( 'default_document_steps_to_reproduce' ) );
@@ -526,7 +526,7 @@ if( $t_show_attachments ) {
 		<td>
 			<select <?php echo helper_get_tab_index() ?> name="resolution" class="input-sm">
 				<?php
-				print_enum_string_option_list( 'resolution', config_get( 'default_bug_resolution' ) );
+				print_enum_string_option_list( 'resolution', config_get( 'default_document_resolution' ) );
 				?>
 			</select>
 		</td>
@@ -654,7 +654,7 @@ if( $t_show_attachments ) {
 			<?php echo lang_get( 'relationship_with_parent' ) ?>
 		</th>
 		<td>
-			<?php relationship_list_box( config_get( 'default_bug_relationship_clone' ), "rel_type", false, true ) ?>
+			<?php relationship_list_box( config_get( 'default_document_relationship_clone' ), "rel_type", false, true ) ?>
 			<?php echo '<strong>' . lang_get( 'bug' ) . ' ' . bug_format_id( $f_master_bug_id ) . '</strong>' ?>
 		</td>
 	</tr>

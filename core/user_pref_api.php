@@ -194,7 +194,7 @@ class UserPreferences {
 	'default_project' => array( 'default_project', 'int' ),
 	'refresh_delay' => array( 'default_refresh_delay', 'int' ),
 	'redirect_delay' => array( 'default_redirect_delay', 'int' ),
-	'bugnote_order' => array( 'default_bugnote_order', 'string' ),
+	'bugnote_order' => array( 'default_docnote_order', 'string' ),
 	'email_on_new' => array( 'default_email_on_new', 'int' ),
 	'email_on_assigned' => array(  'default_email_on_assigned', 'int' ),
 	'email_on_feedback' => array(  'default_email_on_feedback', 'int' ),

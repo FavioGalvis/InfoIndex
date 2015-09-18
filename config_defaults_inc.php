@@ -1246,61 +1246,61 @@ $g_default_document_steps_to_reproduce = '';
 $g_default_document_additional_info = '';
 
 /**
- * Default Bugnote View Status (VS_PUBLIC or VS_PRIVATE)
+ * Default Docnote View Status (VS_PUBLIC or VS_PRIVATE)
  * @global integer $g_default_docnote_view_status
  */
 $g_default_docnote_view_status = VS_PUBLIC;
 
 /**
- * Default bug resolution when reporting a new bug
- * @global integer $g_default_bug_resolution
+ * Default document resolution when reporting a new bug
+ * @global integer $g_default_document_resolution
  */
-$g_default_bug_resolution = OPEN;
+$g_default_document_resolution = OPEN;
 
 /**
- * Default bug severity when reporting a new bug
- * @global integer $g_default_bug_severity
+ * Default document severity when reporting a new document
+ * @global integer $g_default_document_severity
  */
-$g_default_bug_severity = MINOR;
+$g_default_document_severity = MINOR;
 
 /**
- * Default bug priority when reporting a new bug
- * @global integer $g_default_bug_priority
+ * Default document priority when reporting a new document
+ * @global integer $g_default_document_priority
  */
-$g_default_bug_priority = NORMAL;
+$g_default_document_priority = NORMAL;
 
 /**
- * Default bug reproducibility when reporting a new bug
- * @global integer $g_default_bug_reproducibility
+ * Default document reproducibility when reporting a new document
+ * @global integer $g_default_document_reproducibility
  */
-$g_default_bug_reproducibility = REPRODUCIBILITY_HAVENOTTRIED;
+$g_default_document_reproducibility = REPRODUCIBILITY_HAVENOTTRIED;
 
 /**
- * Default bug projection when reporting a new bug
- * @global integer $g_default_bug_projection
+ * Default document projection when reporting a new document
+ * @global integer $g_default_document_projection
  */
-$g_default_bug_projection = PROJECTION_NONE;
+$g_default_document_projection = PROJECTION_NONE;
 
 /**
- * Default bug ETA when reporting a new bug
- * @global integer $g_default_bug_eta
+ * Default ETA when uploading a new document
+ * @global integer $g_default_document_eta
  */
-$g_default_bug_eta = ETA_NONE;
+$g_default_document_eta = ETA_NONE;
 
 /**
- * Default relationship between a new bug and its parent when cloning it
- * @global integer $g_default_bug_relationship_clone
+ * Default relationship between a new document and its parent when cloning it
+ * @global integer $g_default_document_relationship_clone
  */
-$g_default_bug_relationship_clone = BUG_REL_NONE;
+$g_default_document_relationship_clone = BUG_REL_NONE;
 
 /**
- * Default for new bug relationships
- * @global integer $g_default_bug_relationship
+ * Default for new document relationships
+ * @global integer $g_default_document_relationship
  */
-$g_default_bug_relationship = BUG_RELATED;
+$g_default_document_relationship = BUG_RELATED;
 
 /**
- * Default global category to be used when an issue is moved from a project to another
+ * Default global category to be used when a document is moved from a project to another
  * that does not have a category with a matching name.  The default is 1 which is the "General"
  * category that is created in the default database.
  */
@@ -1351,9 +1351,9 @@ $g_default_redirect_delay = 2;
 
 /**
  *
- * @global string $g_default_bugnote_order
+ * @global string $g_default_docnote_order
  */
-$g_default_bugnote_order = 'ASC';
+$g_default_docnote_order = 'ASC';
 
 /**
  *
@@ -1470,19 +1470,19 @@ $g_default_email_on_priority_minimum_severity = OFF;
 $g_default_email_bugnote_limit = 0;
 
 #############################
-# MantisBT Summary Settings #
+# InfoIndex Summary Settings #
 #############################
 
 /**
- * how many reporters to show
- * this is useful when there are hundreds of reporters
+ * how many uploaders to show
+ * this is useful when there are hundreds of uploaders
  * @global integer $g_reporter_summary_limit
  */
 $g_reporter_summary_limit = 10;
 
 /**
  * summary date displays
- * date lengths to count bugs by (in days)
+ * date lengths to count documents by (in days)
  * @global array $g_date_partitions
  */
 $g_date_partitions = array( 1, 2, 3, 7, 30, 60, 90, 180, 365);
@@ -1519,8 +1519,8 @@ $g_severity_multipliers = array(
 
 /**
  * Define the resolutions which are used to determine the effectiveness
- * of reporters based on the resolution of bugs. Higher multipliers will
- * result in a decrease in reporter effectiveness. The only resolutions
+ * of uploader based on the resolution of documents. Higher multipliers will
+ * result in a decrease in uploader effectiveness. The only resolutions
  * that need to be defined here are those which match or exceed
  * $g_bug_resolution_not_fixed_threshold.
  * @global array $g_resolution_multipliers
@@ -1535,13 +1535,13 @@ $g_resolution_multipliers = array(
 );
 
 #############################
-# MantisBT Bugnote Settings #
+# InfoIndex Docnote Settings #
 #############################
 
 /**
- * bugnote ordering
+ * Docnote ordering
  * change to ASC or DESC
- * @global string $g_bugnote_order
+ * @global string $g_docnote_order
  */
 $g_bugnote_order = 'DESC';
 

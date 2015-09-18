@@ -57,7 +57,7 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term>$g_default_bug_resolution</term>
+			<term>$g_default_document_resolution</term>
 			<listitem>
 				<para>The resolution for a newly created issue. The default
 					is OPEN. Look in constant_inc.php for other values.
@@ -65,7 +65,7 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term>$g_default_bug_severity</term>
+			<term>$g_default_document_severity</term>
 			<listitem>
 				<para>The severity for a newly created issue. The default is
 					MINOR. Look in constant_inc.php for other values.
@@ -73,7 +73,7 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term>$g_default_bug_priority</term>
+			<term>$g_default_document_priority</term>
 			<listitem>
 				<para>The priority for a newly created issue. The default is
 					NORMAL. Look in constant_inc.php for other values.
@@ -81,7 +81,7 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term>$g_default_bug_reproducibility</term>
+			<term>$g_default_document_reproducibility</term>
 			<listitem>
 				<para>The reproducibility for a newly created issue. The
 					default is REPRODUCIBILITY_HAVENOTTRIED. Look in
@@ -90,7 +90,7 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term>$g_default_bug_projection</term>
+			<term>$g_default_document_projection</term>
 			<listitem>
 				<para>The projection for a newly created issue. The default
 					is PROJECTION_NONE. Look in constant_inc.php for other
@@ -99,7 +99,7 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term>$g_default_bug_eta</term>
+			<term>$g_default_document_eta</term>
 			<listitem>
 				<para>The ETA for a newly created issue. The default is
 					ETA_NONE. Look in constant_inc.php for other values.
@@ -178,7 +178,7 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<term>$g_default_bugnote_order</term>
+			<term>$g_default_docnote_order</term>
 			<listitem>
 				<para>This controls the time order in which bug notes are
 					displayed. It can be either ASC (oldest first, the default) or DESC

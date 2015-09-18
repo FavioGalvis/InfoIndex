@@ -283,7 +283,7 @@ if( $t_multiple_projects ) {
 					print_enum_string_option_list( 'resolution', config_get( 'bug_resolution_fixed_threshold' ) );
 					break;
 				case 'UP_PRIOR':
-					print_enum_string_option_list( 'priority', config_get( 'default_bug_priority' ) );
+					print_enum_string_option_list( 'priority', config_get( 'default_document_priority' ) );
 					break;
 				case 'UP_STATUS':
 					print_enum_string_option_list( 'status', config_get( 'bug_submit_status' ) );

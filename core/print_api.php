@@ -1858,6 +1858,22 @@ function print_bug_attachments_list( $p_bug_id ) {
 }
 
 /**
+ * Prints the list of visible attachments from the database, complete list.
+ * @param integer $p_bug_id ID of the bug to print attachments list for.
+ * @return void
+ */
+function print_bug_attachments_list_all() {
+	$t_attachments = file_get_visible_attachments_all();
+	echo "\n<ul>";
+	foreach ( $t_attachments as $t_attachment ) {
+		echo "\n<li>";
+		print_bug_attachment( $t_attachment );
+		echo "\n</li>";
+	}
+	echo "\n</ul>";
+}
+
+/**
  * Prints information about a single attachment including download link, file
  * size, upload timestamp and an expandable preview for text and image file
  * types.

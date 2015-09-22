@@ -1530,6 +1530,31 @@ function bug_get_attachments( $p_bug_id ) {
 }
 
 /**
+ * Get array of complete attachments from the database.  The array will be
+ * sorted in terms of date added (ASC).  The array will include the following fields:
+ * id, bug_id, title, diskfile, filename, filesize, file_type, date_added, user_id.
+ * @param integer $p_bug_id Integer representing bug identifier.
+ * @return array array of results or empty array
+ * @access public
+ * @uses database_api.php
+ * @uses file_api.php
+ */
+function bug_get_attachments_all() {
+	$t_query = 'SELECT id, bug_id, title, diskfile, filename, filesize, file_type, date_added, user_id
+		                FROM {bug_file}
+		                ORDER BY date_added';
+	$t_db_result = db_query( $t_query );
+
+	$t_result = array();
+
+	while( $t_row = db_fetch_array( $t_db_result ) ) {
+		$t_result[] = $t_row;
+	}
+
+	return $t_result;
+}
+
+/**
  * Set the value of a bug field
  * @param integer                $p_bug_id     Integer representing bug identifier.
  * @param string                 $p_field_name Pre-defined field name.

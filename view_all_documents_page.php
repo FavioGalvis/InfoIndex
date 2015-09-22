@@ -1,26 +1,26 @@
 <?php
-# MantisBT - A PHP based bugtracking system
+# InfoIndex - A PHP based Document Management System
 
-# MantisBT is free software: you can redistribute it and/or modify
+# InfoIndex is open software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 2 of the License, or
+# the Open Software Foundation, either version 2 of the License, or
 # (at your option) any later version.
 #
-# MantisBT is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# InfoIndex is distributed under the protection of the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with MantisBT.  If not, see <http://www.gnu.org/licenses/>.
+# along with InfoIndex.  If not, see <http://www.gnu.org/licenses/>.
 
+/*******************************************************************/
+/* InfoIndex - a php based Document Management System               /
+/*                                                                  /
+/* @package Infortributos-InfoIndex                                 /
+/* @copyright Copyright (C) 2015 - Informativa y Tributos S.A.S     /
+/* @developer Favio Galvis                                          /
+/*******************************************************************/
 /**
- * View all bug page
- *
- * @package MantisBT
- * @copyright Copyright 2000 - 2002  Kenzaburo Ito - kenito@300baud.org
- * @copyright Copyright 2002  MantisBT Team - mantisbt-dev@lists.sourceforge.net
- * @link http://www.mantisbt.org
+ * View all documents page
  *
  * @uses core.php
  * @uses authentication_api.php
@@ -70,7 +70,7 @@ $t_page_count = null;
 
 $t_rows = filter_get_bug_rows( $f_page_number, $t_per_page, $t_page_count, $t_bug_count, null, null, null, true );
 if( $t_rows === false ) {
-	print_header_redirect( 'view_all_set.php?type=0' );
+	//print_header_redirect( 'view_all_set.php?type=0' );
 }
 
 $t_bugslist = array();
@@ -105,14 +105,14 @@ if( current_user_get_pref( 'refresh_delay' ) > 0 ) {
 
 	$t_query .= 'refresh=true';
 
-	html_meta_redirect( 'view_all_bug_page.php' . $t_query, current_user_get_pref( 'refresh_delay' ) * 60 );
+	html_meta_redirect( 'view_all_documents_page.php' . $t_query, current_user_get_pref( 'refresh_delay' ) * 60 );
 }
 
 layout_page_header_end();
 
 layout_page_begin( __FILE__ );
 
-define( 'VIEW_ALL_INC_ALLOW', true );
-include( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'view_all_inc.php' );
+define( 'VIEW_ALL_DOCUMENTS_INC_ALLOW', true );
+include( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'view_all_documents_inc.php' );
 
 layout_page_end();

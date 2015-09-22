@@ -1349,9 +1349,9 @@ function user_get_bug_filter( $p_user_id, $p_project_id = null ) {
 function user_update_last_visit( $p_user_id ) {
 	$c_user_id = (int)$p_user_id;
 	$c_value = db_now();
-
+        
 	$t_query = 'UPDATE {user} SET last_visit=' . db_param() . ' WHERE id=' . db_param();
-
+        
 	db_query( $t_query, array( $c_value, $c_user_id ) );
 
 	user_update_cache( $c_user_id, 'last_visit', $c_value );

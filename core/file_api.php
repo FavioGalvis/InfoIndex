@@ -377,6 +377,96 @@ function file_get_visible_attachments( $p_bug_id ) {
 }
 
 /**
+ * Gets an array of attachments that are visible to the currently logged in user.
+ * Each element of the array contains the following:
+ * display_name - The attachment display name (i.e. file name dot extension)
+ * size - The attachment size in bytes.
+ * but_id - The id of the issue they belong to,
+ * date_added - The date where the attachment was added.
+ * can_download - true: logged in user has access to download the attachment, false: otherwise.
+ * diskfile - The name of the file on disk.  Typically this is a hash without an extension.
+ * download_url - The download URL for the attachment (only set if can_download is true).
+ * exists - Applicable for DISK attachments.  true: file exists, otherwise false.
+ * can_delete - The logged in user can delete the attachments.
+ * preview - true: the attachment should be previewable, otherwise false.
+ * type - Can be "image", "text" or empty for other types.
+ * alt - The alternate text to be associated with the icon.
+ * icon - array with icon information, contains 'url' and 'alt' elements.
+ * @param integer $p_bug_id A bug identifier.
+ * @return array
+ */
+function file_get_visible_attachments_all() {
+	$t_attachment_rows = bug_get_attachments_all();
+	$t_visible_attachments = array();
+
+	$t_attachments_count = count( $t_attachment_rows );
+	if( $t_attachments_count === 0 ) {
+		return $t_visible_attachments;
+	}
+
+	$t_attachments = array();
+
+	$t_preview_text_ext = config_get( 'preview_text_extensions' );
+	$t_preview_image_ext = config_get( 'preview_image_extensions' );
+
+	$t_image_previewed = false;
+	for( $i = 0;$i < $t_attachments_count;$i++ ) {
+		$t_row = $t_attachment_rows[$i];
+
+		if( !file_can_view_bug_attachments( $t_row['bug_id'], (int)$t_row['user_id'] ) ) {
+			continue;
+		}
+
+		$t_id = $t_row['id'];
+		$t_filename = $t_row['filename'];
+		$t_filesize = $t_row['filesize'];
+		$t_diskfile = file_normalize_attachment_path( $t_row['diskfile'], bug_get_field( $t_row['bug_id'], 'project_id' ) );
+		$t_date_added = $t_row['date_added'];
+
+		$t_attachment = array();
+		$t_attachment['id'] = $t_id;
+		$t_attachment['display_name'] = file_get_display_name( $t_filename );
+		$t_attachment['size'] = $t_filesize;
+		$t_attachment['date_added'] = $t_date_added;
+		$t_attachment['diskfile'] = $t_diskfile;
+
+		$t_attachment['can_download'] = file_can_download_bug_attachments( $t_row['bug_id'], (int)$t_row['user_id'] );
+		$t_attachment['can_delete'] = file_can_delete_bug_attachments( $t_row['bug_id'], (int)$t_row['user_id'] );
+
+		if( $t_attachment['can_download'] ) {
+			$t_attachment['download_url'] = 'file_download.php?file_id=' . $t_id . '&type=bug';
+		}
+
+		if( $t_image_previewed ) {
+			$t_image_previewed = false;
+		}
+
+		$t_attachment['exists'] = config_get( 'file_upload_method' ) != DISK || file_exists( $t_diskfile );
+		$t_attachment['icon'] = file_get_icon_url( $t_attachment['display_name'] );
+
+		$t_attachment['preview'] = false;
+		$t_attachment['type'] = '';
+
+		$t_ext = strtolower( pathinfo( $t_attachment['display_name'], PATHINFO_EXTENSION ) );
+		$t_attachment['alt'] = $t_ext;
+
+		if( $t_attachment['exists'] && $t_attachment['can_download'] && $t_filesize != 0 && $t_filesize <= config_get( 'preview_attachments_inline_max_size' ) ) {
+			if( in_array( $t_ext, $t_preview_text_ext, true ) ) {
+				$t_attachment['preview'] = true;
+				$t_attachment['type'] = 'text';
+			} else if( in_array( $t_ext, $t_preview_image_ext, true ) ) {
+				$t_attachment['preview'] = true;
+				$t_attachment['type'] = 'image';
+			}
+		}
+
+		$t_attachments[] = $t_attachment;
+	}
+
+	return $t_attachments;
+}
+
+/**
  * delete all files that are associated with the given bug
  * @param integer $p_bug_id A bug identifier.
  * @return boolean

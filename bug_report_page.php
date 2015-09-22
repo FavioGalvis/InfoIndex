@@ -593,7 +593,7 @@ if( $t_show_attachments ) {
 ?>
 	<tr>
 		<th class="category">
-			<label for="file"><?php echo lang_get( $t_file_upload_max_num == 1 ? 'upload_file' : 'upload_files' ) ?></label>
+			<span class="required">*</span><label for="file"><?php echo lang_get( $t_file_upload_max_num == 1 ? 'upload_file' : 'upload_files' ) ?></label>
 			<br />
 			<?php echo print_max_filesize( $t_max_file_size ); ?>
 		</th>

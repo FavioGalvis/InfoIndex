@@ -395,7 +395,8 @@ function db_query( $p_query, array $p_arr_parms = null, $p_limit = -1, $p_offset
 	} else {
 		$t_result = $g_db->Execute( $p_query, $p_arr_parms );
 	}
-
+        
+        echo '(begin)'.$p_query.'(end)';
 	$t_elapsed = number_format( microtime( true ) - $t_start, 4 );
 
 	if( ON == $g_db_log_queries ) {

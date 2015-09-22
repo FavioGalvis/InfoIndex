@@ -197,7 +197,7 @@ if( $t_bug_data->handler_id == NO_USER && $t_bug_data->status >= config_get( 'bu
 
 # Create the bug asigning the correct value for status default.
 $t_bug_data = custom_function_override_issue_create_validate( $t_bug_data );
-$t_bug_id = $t_bug_data->create();
+$t_bug_id = $t_bug_data->create( $f_files );
 
 # Mark the added issue as visited so that it appears on the last visited list.
 last_visited_issue( $t_bug_id );

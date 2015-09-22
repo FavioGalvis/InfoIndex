@@ -684,6 +684,9 @@ function layout_print_sidebar( $p_active_sidebar_page = null ) {
 
 		# View Bugs
 		layout_sidebar_menu( 'view_all_bug_page.php', 'view_bugs_link', 'fa-list-alt', $p_active_sidebar_page );
+                
+                # View Docs
+		layout_sidebar_menu( 'view_all_documents_page.php', 'view_documents_link', 'fa-file-archive-o', $p_active_sidebar_page );
 
 		# Report Bugs
 		if( access_has_project_level( config_get( 'report_bug_threshold' ) ) ) {

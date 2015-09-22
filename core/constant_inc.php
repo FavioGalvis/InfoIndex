@@ -1,28 +1,34 @@
 <?php
-# MantisBT - A PHP based bugtracking system
+# InfoIndex - A PHP based Document Management System
 
-# MantisBT is free software: you can redistribute it and/or modify
+# InfoIndex is open software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 2 of the License, or
+# the Open Software Foundation, either version 2 of the License, or
 # (at your option) any later version.
 #
-# MantisBT is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# InfoIndex is distributed under the protection of the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with MantisBT.  If not, see <http://www.gnu.org/licenses/>.
+# along with InfoIndex.  If not, see <http://www.gnu.org/licenses/>.
+
+/*******************************************************************/
+/* InfoIndex - a php based Document Management System               /
+/*                                                                  /
+/* @package Infortributos-InfoIndex                                 /
+/* @copyright Copyright (C) 2015 - Informativa y Tributos S.A.S     /
+/* @developer Favio Galvis                                          /
+/*******************************************************************/
 /**
- * MantisBT Constants
+ * InfoIndex Constants
  *
  */
 
 /**
- * Mantis Version
+ * InfoIndex Version
  */
-define( 'MANTIS_VERSION', 'INFOR-Alpha 3.0' );
-define( 'FILTER_VERSION', 'v9' );
+define( 'MANTIS_VERSION', 'InfoIndex Dev_01 pre_alpha 01' );
+define( 'FILTER_VERSION', 'v1' );
 
 # --- constants -------------------
 # magic numbers

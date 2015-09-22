@@ -421,8 +421,14 @@ class BugData {
 	 * @param boolean $p_update_extended Whether to validate extended fields.
 	 * @return void
 	 */
-	function validate( $p_update_extended = true ) {
-		# Summary cannot be blank
+	function validate( $p_update_extended = true, $f_files ) {
+		# Upload cannot be blank
+		if( $f_files==null ) {
+			error_parameters( lang_get( 'upload_files' ) );
+			trigger_error( ERROR_EMPTY_FIELD, ERROR );
+		}
+
+                # Summary cannot be blank
 		if( is_blank( $this->summary ) ) {
 			error_parameters( lang_get( 'summary' ) );
 			trigger_error( ERROR_EMPTY_FIELD, ERROR );
@@ -460,8 +466,8 @@ class BugData {
 	 * @uses database_api.php
 	 * @uses lang_api.php
 	 */
-	function create() {
-		self::validate( true );
+	function create( $f_files ) {
+		self::validate( true , $f_files );
 
 		antispam_check();
 

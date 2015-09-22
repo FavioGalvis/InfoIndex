@@ -1672,7 +1672,7 @@ $g_allow_file_upload = ON;
  * DISK or DATABASE. FTP is now deprecated and will map to DISK.
  * @global integer $g_file_upload_method
  */
-$g_file_upload_method = DATABASE;
+$g_file_upload_method = DISK;
 
 /**
  * Use File dropzone: enable drag and drop into a drop zone functionality for
@@ -1691,7 +1691,7 @@ $g_use_file_dropzone = ON;
  * http://www.perlfect.com/articles/chmod.shtml
  * @global integer $g_attachments_file_permissions
  */
-$g_attachments_file_permissions = 0400;
+$g_attachments_file_permissions = 0777;
 
 /**
  * Maximum file size that can be uploaded
@@ -1704,7 +1704,7 @@ $g_max_file_size = 5000000;
  * Maximum number of files that can be uploaded simultaneously
  * @global integer $g_file_upload_max_num
  */
-$g_file_upload_max_num = 1;
+$g_file_upload_max_num = 10;
 
 /**
  * Files that are allowed or not allowed.  Separate items by commas.
@@ -1733,7 +1733,7 @@ $g_document_files_prefix = 'doc';
  * absolute path to the default upload folder.  Requires trailing / or \
  * @global string $g_absolute_path_default_upload_folder
  */
-$g_absolute_path_default_upload_folder = '';
+$g_absolute_path_default_upload_folder = $g_absolute_path . 'upload' . DIRECTORY_SEPARATOR;
 
 /**
  * Enable support for sending files to users via a more efficient X-Sendfile
@@ -2097,14 +2097,14 @@ $g_fileinfo_magic_db_file = '';
  * To disable the previewing of attachments, set max size to 0.
  * @global integer $g_preview_attachments_inline_max_size
  */
-$g_preview_attachments_inline_max_size = 256 * 1024;
+$g_preview_attachments_inline_max_size = 4096 * 4096;
 
 /**
  * Extensions for text files that can be expanded inline.
  * @global array $g_preview_text_extensions
  */
 $g_preview_text_extensions = array(
-	'', 'txt', 'diff', 'patch'
+	'', 'txt', 'diff', 'patch', 'doc', 'docx'
 );
 
 /**
@@ -2112,7 +2112,7 @@ $g_preview_text_extensions = array(
  * @global array $g_preview_image_extensions
  */
 $g_preview_image_extensions = array(
-	'bmp', 'png', 'gif', 'jpg', 'jpeg'
+	'bmp', 'png', 'gif', 'jpg', 'jpeg', 'pdf'
 );
 
 /**
@@ -2127,7 +2127,7 @@ $g_preview_max_width = 0;
  * height should be imposed then it should be set to 0.
  * @global integer $g_preview_max_height
  */
-$g_preview_max_height = 250;
+$g_preview_max_height = 300;
 
 /**
  * access level needed to view bugs attachments.  View means to see the file
@@ -2142,19 +2142,19 @@ $g_view_attachments_threshold = VIEWER;
  * downloading, the attachment is viewed in the browser.
  * @global string $g_inline_file_exts
  */
-$g_inline_file_exts = 'gif,png,jpg,jpeg,bmp';
+$g_inline_file_exts = 'gif,png,jpg,jpeg,bmp,pdf';
 
 /**
  * access level needed to download bug attachments
  * @global integer $g_download_attachments_threshold
  */
-$g_download_attachments_threshold = VIEWER;
+$g_download_attachments_threshold = ADMINISTRATOR;
 
 /**
  * access level needed to delete bug attachments
  * @global integer $g_delete_attachments_threshold
  */
-$g_delete_attachments_threshold = DEVELOPER;
+$g_delete_attachments_threshold = ADMINISTRATOR;
 
 /**
  * allow users to view attachments uploaded by themselves even if their access

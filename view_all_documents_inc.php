@@ -53,11 +53,11 @@ require_api( 'html_api.php' );
 require_api( 'lang_api.php' );
 require_api( 'print_api.php' );
 
-$t_filter = current_user_get_bug_filter();
-filter_init( $t_filter );
+//$t_filter = current_user_get_bug_filter();
+//filter_init( $t_filter );
 
-list( $t_sort, ) = explode( ',', $g_filter['sort'] );
-list( $t_dir, ) = explode( ',', $g_filter['dir'] );
+//list( $t_sort, ) = explode( ',', $g_filter['sort'] );
+//list( $t_dir, ) = explode( ',', $g_filter['dir'] );
 
 $g_checkboxes_exist = false;
 
@@ -73,9 +73,9 @@ if( helper_get_current_project() > 0 ) {
 	}
 	category_cache_array_rows( array_unique( $t_categories ) );
 }
-$g_columns = helper_get_columns_to_view( COLUMNS_TARGET_VIEW_PAGE );
+$g_columns = helper_get_columns_to_view( COLUMNS_TARGET_DOCS_PAGE );
 
-$t_filter_position = config_get( 'filter_position' );
+//$t_filter_position = config_get( 'filter_position' );
 /*
 # -- ====================== FILTER FORM ========================= --
 if( ( $t_filter_position & FILTER_POSITION_TOP ) == FILTER_POSITION_TOP ) {
@@ -155,7 +155,7 @@ if( ( $t_filter_position & FILTER_POSITION_TOP ) == FILTER_POSITION_TOP ) {
 <?php
 	$t_title_function = 'print_column_title';
 	foreach( $g_columns as $t_column ) {
-		helper_call_custom_function( $t_title_function, array( $t_column ) );
+		helper_call_custom_function( $t_title_function, array( $t_column, COLUMNS_TARGET_DOCS_PAGE ) );
 	}
 ?>
 </tr>
@@ -198,6 +198,9 @@ function write_bug_rows( array $p_rows ) {
 		echo '<tr>';
 
 		$t_column_value_function = 'print_column_value';
+                if ( defined( 'VIEW_ALL_DOCUMENTS_INC_ALLOW' ) ){
+                    $t_row = file_get_visible_attachments_all();
+                }
 		foreach( $g_columns as $t_column ) {
 			helper_call_custom_function( $t_column_value_function, array( $t_column, $t_row ) );
 		}
@@ -267,7 +270,7 @@ write_bug_rows( $t_rows );
 <?php
 
 # -- ====================== FILTER FORM ========================= --
-if( ( $t_filter_position & FILTER_POSITION_BOTTOM ) == FILTER_POSITION_BOTTOM ) {
-	filter_draw_selection_area( $f_page_number );
-}
+//if( ( $t_filter_position & FILTER_POSITION_BOTTOM ) == FILTER_POSITION_BOTTOM ) {
+//	filter_draw_selection_area( $f_page_number );
+//}
 # -- ====================== end of FILTER FORM ================== --

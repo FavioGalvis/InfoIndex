@@ -418,6 +418,7 @@ function file_get_visible_attachments_all() {
 		}
 
 		$t_id = $t_row['id'];
+                $t_bug_id = $t_row['bug_id'];
 		$t_filename = $t_row['filename'];
 		$t_filesize = $t_row['filesize'];
 		$t_diskfile = file_normalize_attachment_path( $t_row['diskfile'], bug_get_field( $t_row['bug_id'], 'project_id' ) );
@@ -434,7 +435,7 @@ function file_get_visible_attachments_all() {
 		$t_attachment['can_delete'] = file_can_delete_bug_attachments( $t_row['bug_id'], (int)$t_row['user_id'] );
 
 		if( $t_attachment['can_download'] ) {
-			$t_attachment['download_url'] = 'file_download.php?file_id=' . $t_id . '&type=bug';
+			$t_attachment['download_url'] = 'view_document.php?file_id=' . $t_id . '&id=' . $t_bug_id;
 		}
 
 		if( $t_image_previewed ) {

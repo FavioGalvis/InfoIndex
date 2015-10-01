@@ -544,6 +544,7 @@ define( 'COLUMNS_TARGET_VIEW_PAGE', 1 );
 define( 'COLUMNS_TARGET_PRINT_PAGE', 2 );
 define( 'COLUMNS_TARGET_CSV_PAGE', 3 );
 define( 'COLUMNS_TARGET_EXCEL_PAGE', 4 );
+define( 'COLUMNS_TARGET_DOCS_PAGE', 5 );
 
 # sponsorship "paid" values
 define( 'SPONSORSHIP_UNPAID', 0 );

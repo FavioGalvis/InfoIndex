@@ -980,6 +980,18 @@ $g_excel_columns = array (
 );
 
 /**
+ * The default columns to be included in the Documents view. This can be
+ * overridden using Manage -> Manage Configuration -> Manage Columns. Also each
+ * user can configure their own columns using My Account -> Manage Columns
+ * @global array $g_docs_columns
+ */
+$g_docs_columns = array (
+	'selection', 'edit', 'id', 'bug_id', 'title',
+	'description', 'filename', 'filesize', 'file_type', 'date_added',
+	'user_id', 'diskfile'
+);
+
+/**
  * show projects when in All Projects mode
  * @global integer $g_show_document_project_links
  */
@@ -4244,6 +4256,7 @@ $g_global_settings = array(
 	'class_path','library_path', 'language_path', 'absolute_path_default_upload_folder',
 	'ldap_simulation_file_path', 'plugin_path', 'bottom_include_page', 'top_include_page',
 	'default_home_page', 'logout_redirect_page', 'manual_url', 'logo_url', 'wiki_engine_url',
+        'docs_columns',
 );
 
 # Temporary variables should not remain defined in global scope

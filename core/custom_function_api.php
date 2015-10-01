@@ -297,7 +297,8 @@ function custom_function_default_auth_can_change_password() {
  * @return array
  */
 function custom_function_default_get_columns_to_view( $p_columns_target = COLUMNS_TARGET_VIEW_PAGE, $p_user_id = null ) {
-	$t_project_id = helper_get_current_project();
+        $t_project_id = helper_get_current_project();
+        $t_type_columns = 'BugData';
 
 	if( $p_columns_target == COLUMNS_TARGET_CSV_PAGE ) {
 		$t_columns = config_get( 'csv_columns', '', $p_user_id, $t_project_id );
@@ -305,12 +306,15 @@ function custom_function_default_get_columns_to_view( $p_columns_target = COLUMN
 		$t_columns = config_get( 'excel_columns', '', $p_user_id, $t_project_id );
 	} else if( $p_columns_target == COLUMNS_TARGET_VIEW_PAGE ) {
 		$t_columns = config_get( 'view_issues_page_columns', '', $p_user_id, $t_project_id );
+        } else if( $p_columns_target == COLUMNS_TARGET_DOCS_PAGE ) {
+		$t_columns = config_get( 'docs_columns', '', $p_user_id, $t_project_id );
+                $t_type_columns = 'DocsData';
 	} else {
 		$t_columns = config_get( 'print_issues_page_columns', '', $p_user_id, $t_project_id );
 	}
-
-	$t_columns = columns_remove_invalid( $t_columns, columns_get_all( $t_project_id ) );
-
+        
+	$t_columns = columns_remove_invalid( $t_columns, columns_get_all( $t_project_id, $t_type_columns ) );
+        
 	return $t_columns;
 }
 
@@ -323,7 +327,7 @@ function custom_function_default_get_columns_to_view( $p_columns_target = COLUMN
  */
 function custom_function_default_print_column_title( $p_column, $p_columns_target = COLUMNS_TARGET_VIEW_PAGE ) {
 	global $t_sort, $t_dir;
-
+         
 	$t_custom_field = column_get_custom_field_name( $p_column );
 	if( $t_custom_field !== null ) {
 		if( COLUMNS_TARGET_CSV_PAGE != $p_columns_target ) {
@@ -336,7 +340,7 @@ function custom_function_default_print_column_title( $p_column, $p_columns_targe
 		} else {
 			$t_def = custom_field_get_definition( $t_field_id );
 			$t_custom_field = lang_get_defaulted( $t_def['name'] );
-
+                        
 			if( COLUMNS_TARGET_CSV_PAGE != $p_columns_target ) {
 				print_view_bug_sort_link( $t_custom_field, $p_column, $t_sort, $t_dir, $p_columns_target );
 				print_sort_icon( $t_dir, $t_sort, $p_column );
@@ -354,11 +358,11 @@ function custom_function_default_print_column_title( $p_column, $p_columns_targe
 		$t_function = 'print_column_title_' . $p_column;
 		if( function_exists( $t_function ) ) {
 			$t_function( $t_sort, $t_dir, $p_columns_target );
-
+                        
 		} else if( isset( $t_plugin_columns[$p_column] ) ) {
 			$t_column_object = $t_plugin_columns[$p_column];
 			print_column_title_plugin( $p_column, $t_column_object, $t_sort, $t_dir, $p_columns_target );
-
+                        
 		} else {
 			echo '<th>';
 			print_view_bug_sort_link( column_get_title( $p_column ), $p_column, $t_sort, $t_dir, $p_columns_target );

@@ -525,8 +525,12 @@ function helper_project_specific_where( $p_project_id, $p_user_id = null ) {
  * @return array
  */
 function helper_get_columns_to_view( $p_columns_target = COLUMNS_TARGET_VIEW_PAGE, $p_viewable_only = true, $p_user_id = null ) {
-	$t_columns = helper_call_custom_function( 'get_columns_to_view', array( $p_columns_target, $p_user_id ) );
-
+        $t_columns = helper_call_custom_function( 'get_columns_to_view', array( $p_columns_target, $p_user_id ) );
+        /*
+        foreach ($t_columns as $t_t){
+            echo '{'.$t_t.'}';
+        }
+        */
 	if( !$p_viewable_only ) {
 		return $t_columns;
 	}

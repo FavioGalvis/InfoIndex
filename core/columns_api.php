@@ -116,49 +116,56 @@ function columns_filter_disabled( array $p_columns ) {
 /**
  * Get a list of standard columns.
  * @param boolean $p_enabled_columns_only Default true, if false returns all columns regardless of configuration settings.
+ * @param string $p_type_columns Default 'BugData', if the type of columns searched its diferent from the BugData, asign DocnoteData.
  * @return array of column names
  */
-function columns_get_standard( $p_enabled_columns_only = true ) {
-	$t_reflection = new ReflectionClass( 'BugData' );
-	$t_columns = $t_reflection->getDefaultProperties();
-
+function columns_get_standard( $p_enabled_columns_only = true, $p_type_columns = 'BugData' ) {
+        if ( $p_type_columns != 'DocsData' ){
+            $t_reflection = new ReflectionClass( $p_type_columns );
+            $t_columns = $t_reflection->getDefaultProperties();
+        } elseif ( $p_type_columns === 'DocsData' ){
+            $t_columns_docs = config_get( 'docs_columns' );
+            $t_flipped = array_flip( $t_columns_docs );
+            $t_columns = $t_flipped;
+        }
 	$t_columns['selection'] = null;
 	$t_columns['edit'] = null;
-
+        
 	# Overdue icon column (icons appears if an issue is beyond due_date)
 	$t_columns['overdue'] = null;
 
-	if( $p_enabled_columns_only && OFF == config_get( 'enable_profiles' ) ) {
-		unset( $t_columns['os'] );
-		unset( $t_columns['os_build'] );
-		unset( $t_columns['platform'] );
-	}
+        if ( $p_type_columns == 'BugData') {
+            if( $p_enabled_columns_only && OFF == config_get( 'enable_profiles' ) ) {
+                    unset( $t_columns['os'] );
+                    unset( $t_columns['os_build'] );
+                    unset( $t_columns['platform'] );
+            }
 
-	if( $p_enabled_columns_only && config_get( 'enable_eta' ) == OFF ) {
-		unset( $t_columns['eta'] );
-	}
+            if( $p_enabled_columns_only && config_get( 'enable_eta' ) == OFF ) {
+                    unset( $t_columns['eta'] );
+            }
 
-	if( $p_enabled_columns_only && config_get( 'enable_projection' ) == OFF ) {
-		unset( $t_columns['projection'] );
-	}
+            if( $p_enabled_columns_only && config_get( 'enable_projection' ) == OFF ) {
+                    unset( $t_columns['projection'] );
+            }
 
-	if( $p_enabled_columns_only && config_get( 'enable_project_build' ) == OFF ) {
-		unset( $t_columns['build'] );
-	}
+            if( $p_enabled_columns_only && config_get( 'enable_project_build' ) == OFF ) {
+                    unset( $t_columns['build'] );
+            }
 
-	if( $p_enabled_columns_only && config_get( 'enable_sponsorship' ) == OFF ) {
-		unset( $t_columns['sponsorship_total'] );
-	}
+            if( $p_enabled_columns_only && config_get( 'enable_sponsorship' ) == OFF ) {
+                    unset( $t_columns['sponsorship_total'] );
+            }
 
-	# The following fields are used internally and don't make sense as columns
-	unset( $t_columns['_stats'] );
-	unset( $t_columns['profile_id'] );
-	unset( $t_columns['sticky'] );
-	unset( $t_columns['loading'] );
+            # The following fields are used internally and don't make sense as columns
+            unset( $t_columns['_stats'] );
+            unset( $t_columns['profile_id'] );
+            unset( $t_columns['sticky'] );
+            unset( $t_columns['loading'] );
 
-	# legacy field
-	unset( $t_columns['duplicate_id'] );
-
+            # legacy field
+            unset( $t_columns['duplicate_id'] );
+        }
 	return array_keys( $t_columns );
 }
 
@@ -222,9 +229,9 @@ function columns_plugin_cache_issue_data( array $p_bugs ) {
  * @return array array of columns
  * @access public
  */
-function columns_get_all( $p_project_id = null ) {
-	$t_columns = columns_get_standard();
-
+function columns_get_all( $p_project_id = null , $p_type_columns = 'BugData' ) {
+        $t_columns = columns_get_standard( true, $p_type_columns );
+        
 	# add plugin columns
 	$t_columns = array_merge( $t_columns, array_keys( columns_get_plugin_columns() ) );
 

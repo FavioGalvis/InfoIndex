@@ -52,9 +52,12 @@ require_api( 'user_api.php' );
 require_js( 'bugFilter.js' );
 require_css( 'status_config.php' );
 
+# Verify if the user is authenticated using current user cookie or open session
 auth_ensure_user_authenticated();
 
+# User supplied page list number through HTTP GET, HTTP POST and cookies.
 $f_page_number		= gpc_get_int( 'page_number', 1 );
+
 # Get Project Id and set it as current
 $t_project_id = gpc_get_int( 'project_id', helper_get_current_project() );
 if( ( ALL_PROJECTS == $t_project_id || project_exists( $t_project_id ) ) && $t_project_id != helper_get_current_project() ) {
@@ -68,11 +71,13 @@ $t_per_page = null;
 $t_bug_count = null;
 $t_page_count = null;
 
+# Use filter to call the first 10 bug_rows
 $t_rows = filter_get_bug_rows( $f_page_number, $t_per_page, $t_page_count, $t_bug_count, null, null, null, true );
 if( $t_rows === false ) {
 	//print_header_redirect( 'view_all_set.php?type=0' );
 }
 
+# Get the bug ID, handlers and project_ids from the first page of bug rows
 $t_bugslist = array();
 $t_users_handlers = array();
 $t_project_ids  = array();
@@ -84,18 +89,22 @@ for( $i=0; $i < $t_row_count; $i++ ) {
 }
 $t_unique_users_handlers = array_unique( $t_users_handlers );
 $t_unique_project_ids = array_unique( $t_project_ids );
+# Cache users and project from the bug list
 user_cache_array_rows( $t_unique_users_handlers );
 project_cache_array_rows( $t_unique_project_ids );
 
+# Set cookie with bug_id from the list to show
 gpc_set_cookie( config_get( 'bug_list_cookie' ), implode( ',', $t_bugslist ) );
 
+# Use navigator compresion for faster load times
 compress_enable();
 
-# don't index view issues pages
+# Don't index view issues pages
 html_robots_noindex();
 
 layout_page_header_begin( lang_get( 'view_bugs_link' ) );
 
+# Hold the redirection if a delay is set on the config
 if( current_user_get_pref( 'refresh_delay' ) > 0 ) {
 	$t_query = '?';
 
@@ -112,6 +121,7 @@ layout_page_header_end();
 
 layout_page_begin( __FILE__ );
 
+# Redirect to the view_all page.
 define( 'VIEW_ALL_DOCUMENTS_INC_ALLOW', true );
 include( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'view_all_documents_inc.php' );
 

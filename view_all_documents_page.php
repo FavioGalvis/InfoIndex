@@ -68,14 +68,15 @@ if( ( ALL_PROJECTS == $t_project_id || project_exists( $t_project_id ) ) && $t_p
 }
 
 $t_per_page = null;
-$t_bug_count = null;
+$t_docs_count = null;
 $t_page_count = null;
 
 # Use filter to call the first 10 bug_rows
-$t_rows = filter_get_bug_rows( $f_page_number, $t_per_page, $t_page_count, $t_bug_count, null, null, null, true );
-if( $t_rows === false ) {
+//$t_rows = filter_get_docs_rows( $f_page_number, $t_per_page, $t_page_count, $t_docs_count, null, null, null, true );
+//if( $t_rows === false ) {
 	//print_header_redirect( 'view_all_set.php?type=0' );
-}
+//}
+$t_rows = file_get_visible_attachments_all();
 
 # Get the bug ID, handlers and project_ids from the first page of bug rows
 $t_bugslist = array();
@@ -83,9 +84,9 @@ $t_users_handlers = array();
 $t_project_ids  = array();
 $t_row_count = count( $t_rows );
 for( $i=0; $i < $t_row_count; $i++ ) {
-	array_push( $t_bugslist, $t_rows[$i]->id );
-	$t_users_handlers[] = $t_rows[$i]->handler_id;
-	$t_project_ids[] = $t_rows[$i]->project_id;
+	array_push( $t_bugslist, $t_rows[$i]['id'] );
+	$t_users_handlers[] = $t_rows[$i]['id'];
+	$t_project_ids[] = $t_rows[$i]['id'];
 }
 $t_unique_users_handlers = array_unique( $t_users_handlers );
 $t_unique_project_ids = array_unique( $t_project_ids );

@@ -43,6 +43,7 @@
  */
 
 require_api( 'bug_api.php' );
+require_api( 'file_api.php' );
 require_api( 'docnote_api.php' );
 require_api( 'category_api.php' );
 require_api( 'columns_api.php' );

@@ -73,6 +73,8 @@ if( helper_get_current_project() > 0 ) {
 	}
 	category_cache_array_rows( array_unique( $t_categories ) );
 }
+
+# Get the array of columns to print in the page
 $g_columns = helper_get_columns_to_view( COLUMNS_TARGET_DOCS_PAGE );
 
 //$t_filter_position = config_get( 'filter_position' );
@@ -86,6 +88,7 @@ if( ( $t_filter_position & FILTER_POSITION_TOP ) == FILTER_POSITION_TOP ) {
 
 # -- ====================== BUG LIST ============================ --
 
+# Print buttons and columns headers 
 ?>
 <div class="col-md-12 col-xs-12">
 <div class="space-10"></div>
@@ -100,11 +103,11 @@ if( ( $t_filter_position & FILTER_POSITION_TOP ) == FILTER_POSITION_TOP ) {
 			# -- Viewing range info --
 			$v_start = 0;
 			$v_end = 0;
-			if (count($t_rows) > 0) {
+			/*if (count($t_rows) > 0) {
 				$v_start = $g_filter['per_page'] * ($f_page_number - 1) + 1;
 				$v_end = $v_start + count($t_rows) - 1;
-			}
-			echo '<span class="badge"> ' . $v_start . ' - ' . $v_end . ' / ' . $t_bug_count . '</span>' ;
+			}*/
+			echo '<span class="badge"> ' . $v_start . ' - ' . $v_end . ' / ' . $t_docs_count . '</span>' ;
 		?>
 	</h4>
 	</div>
@@ -175,14 +178,18 @@ function write_bug_rows( array $p_rows ) {
 	$t_in_stickies = ( $g_filter && ( 'on' == $g_filter[FILTER_PROPERTY_STICKY] ) );
 
 	# pre-cache custom column data
-	columns_plugin_cache_issue_data( $p_rows );
+	//columns_plugin_cache_issue_data( $p_rows );
 
 	# -- Loop over bug rows --
 
+        if ( defined( 'VIEW_ALL_DOCUMENTS_INC_ALLOW' ) ){
+            $p_rows = file_get_visible_attachments_all();
+        }
 	$t_rows = count( $p_rows );
 	for( $i=0; $i < $t_rows; $i++ ) {
 		$t_row = $p_rows[$i];
-
+                $z=0;
+                /*
 		if( ( 0 == $t_row->sticky ) && ( 0 == $i ) ) {
 			$t_in_stickies = false;
 		}
@@ -194,15 +201,16 @@ function write_bug_rows( array $p_rows ) {
 <?php
 			$t_in_stickies = false;
 		}
-
+                */
 		echo '<tr>';
-
-		$t_column_value_function = 'print_column_value';
-                if ( defined( 'VIEW_ALL_DOCUMENTS_INC_ALLOW' ) ){
-                    $t_row = file_get_visible_attachments_all();
+                foreach( $t_row as $t_valuez ){
+                    $z=$z+1;
+                    echo ' - '.$t_valuez.'['.$z.']'.' - ';
                 }
+		$t_column_value_function = 'print_column_value';
 		foreach( $g_columns as $t_column ) {
-			helper_call_custom_function( $t_column_value_function, array( $t_column, $t_row ) );
+                        //echo $t_row[$t_column];
+			//helper_call_custom_function( $t_column_value_function, array( $t_column, $t_row ) );
 		}
 		echo '</tr>';
 	}

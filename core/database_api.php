@@ -376,7 +376,7 @@ function db_query( $p_query, array $p_arr_parms = null, $p_limit = -1, $p_offset
 			$s_suffix = '_' . $s_suffix;
 		}
 	}
-
+        //echo $p_query;
 	$p_query = strtr($p_query, array(
 							'{' => $s_prefix,
 							'}' => $s_suffix,
@@ -385,7 +385,7 @@ function db_query( $p_query, array $p_arr_parms = null, $p_limit = -1, $p_offset
 							'%b' => db_param(),
 							'%l' => db_param(),
 							) );
-
+        //echo $p_query;
 	if( db_is_oracle() ) {
 		$p_query = db_oracle_adapt_query_syntax( $p_query, $p_arr_parms );
 	}

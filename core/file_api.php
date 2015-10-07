@@ -50,6 +50,68 @@ require_api( 'history_api.php' );
 require_api( 'project_api.php' );
 require_api( 'utility_api.php' );
 
+class DocsData {
+    /**
+    * Document ID
+    */
+   protected $id;
+
+   /**
+    * Bud ID associated to the document
+    */
+   protected $bug_id;
+
+   /**
+    * title of the document
+    */
+   protected $title;
+
+   /**
+    * specific description of the document
+    */
+   protected $description;
+
+   /**
+    * SHA-1 diskfile cripto value
+    */
+   protected $diskfile;
+
+   /**
+    * file name witch was originaly uploaded
+    */
+   protected $filename;
+
+   /**
+    * Server folder where the file resides
+    */
+   protected $folder;
+
+   /**
+    * Size in bytes
+    */
+   protected $filesize;
+
+   /**
+    * File type defined by MIME/TYPE
+    */
+   protected $file_type;
+
+   /**
+    * Content description of the file
+    */
+   protected $content;
+
+   /**
+    * Date when the file was added to the server
+    */
+   protected $date_added;
+
+   /**
+    * User ID of the Uploader
+    */
+   protected $user_id;
+}
+
 $g_cache_file_count = array();
 
 /**
